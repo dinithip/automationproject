@@ -178,11 +178,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.TableLayout
             HtmlTable teblw = sadsa.Find.AllByTagName("table")[0].As<HtmlTable>();
 
             HtmlTableRow dragitem1 = teblw.Rows[1];
-            HtmlTableRow drop = teblw.Rows[4];
+            HtmlTableRow drop = teblw.Rows[3];
 
             teblw.Refresh();
 
-            dragitem1.DragTo(teblw.Rows[4]);
+            dragitem1.DragTo(drop);
            
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();          
