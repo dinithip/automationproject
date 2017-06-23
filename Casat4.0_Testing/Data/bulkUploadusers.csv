@@ -1,0 +1,2 @@
+url,username,password,username1,firstname,lastname,emailaddress,phone,role,department
+http://146.185.172.122:8280/QA/#/login,admin,admin,bulkuser1,Dinithi,Poornima,dinithi@mvv.se,1777676767,ROLE_ADMIN,dep2

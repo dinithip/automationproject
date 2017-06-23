@@ -1,0 +1,2 @@
+url,username,password,articlenumber,amount,unit,freetext,code,group,pos,post,op,articlegroupid,producttype,modulefamily,fromco,toco,impldate,expirationdate,variantstring
+http://146.185.172.122:8280/QA/#/login,admin,admin,35503,4,cm,Free Text 01,234,G2,pos2,post2,op1,group1,Test Product1,Test Module1,,,10-Jun-17,,TESTV

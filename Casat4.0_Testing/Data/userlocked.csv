@@ -1,0 +1,2 @@
+url,username,password,usern,pwd,searchusername,status,searchstatus,status1,status2,username1,password1,searchbatch
+http://146.185.172.122:8280/QA/#/login,admin,admin,chana,123,chana,LOCKED,LOCKED,ACTIVE,INACTIVE,chana,chana,userbatchlock

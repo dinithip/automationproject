@@ -1,0 +1,2 @@
+url,username,password,usernamebatch,statustype,accessrole,department
+http://146.185.172.122:8280/QA/#/login,admin,admin,batchedit,INACTIVE,ROLE_USER,dep2

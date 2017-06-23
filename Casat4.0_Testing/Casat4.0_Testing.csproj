@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A048DF9-5EAE-46CF-A270-86B5BC1E3CC8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Casat4._0_Testing</RootNamespace>
+    <AssemblyName>Casat4.0_Testing</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ArtOfTest.WebAii, Version=2017.2.530.0, Culture=neutral, PublicKeyToken=4fd5f65be123776c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Telerik\Test Studio\Bin\ArtOfTest.WebAii.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Telerik.TestingFramework.Json, Version=2017.2.530.0, Culture=neutral, PublicKeyToken=4fc62bbc3827ab1d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Telerik.TestingFramework.Json\v4.0_2017.2.530.0__4fc62bbc3827ab1d\Telerik.TestingFramework.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="ObjectRepo\AccessRole\ObjAccessRole.cs" />
+    <Compile Include="ObjectRepo\AccessRole\ObjAccessroleMessages.cs" />
+    <Compile Include="ObjectRepo\ActiveDeactiveuser\ObjActiveDeactive.cs" />
+    <Compile Include="ObjectRepo\Articles\AddArticle\ObjAddArticle.cs" />
+    <Compile Include="ObjectRepo\Articles\ObjArticle.cs" />
+    <Compile Include="ObjectRepo\ArticleUsageGroup\ObjArticleUsageGroup.cs" />
+    <Compile Include="ObjectRepo\CasatUser\Adduser\ObjCasatPageContents.cs" />
+    <Compile Include="ObjectRepo\CasatUser\BatchEdit\ObjBatchEdit.cs" />
+    <Compile Include="ObjectRepo\CasatUser\Edit\ObjEditUser.cs" />
+    <Compile Include="ObjectRepo\CasatUser\DeleteUser\ObjDeleteUser.cs" />
+    <Compile Include="ObjectRepo\CasatUser\Messages\ObjCasatUserMsgs.cs" />
+    <Compile Include="ObjectRepo\DIuser\AdduserDI\ObjDItableContents.cs" />
+    <Compile Include="ObjectRepo\DIuser\BatchEditDI\ObjBatchEditDI.cs" />
+    <Compile Include="ObjectRepo\DIuser\EditDIUser\ObjEditDIuser.cs" />
+    <Compile Include="ObjectRepo\DIuser\ObjDIuserPageContents.cs" />
+    <Compile Include="ObjectRepo\Filters\ObjFilters.cs" />
+    <Compile Include="ObjectRepo\Login\ObjFirstTimeLogin.cs" />
+    <Compile Include="ObjectRepo\Menus\ObjMenus.cs" />
+    <Compile Include="ObjectRepo\Orders\ObjCreateOrder.cs" />
+    <Compile Include="ObjectRepo\Orders\ObjOrderTable.cs" />
+    <Compile Include="ObjectRepo\Process\ObjAddStandardActivity.cs" />
+    <Compile Include="ObjectRepo\Process\ObjStandardActivity.cs" />
+    <Compile Include="ObjectRepo\Products\ObjProduct.cs" />
+    <Compile Include="ObjectRepo\Products\ObjVariant.cs" />
+    <Compile Include="ObjectRepo\TableLayout\ObjTableLayout.cs" />
+    <Compile Include="ObjectRepo\UnlockUser\ObjUnlockUser.cs" />
+    <Compile Include="Testcases\AccessRoles\CreateAccessRole\CreateAccessRole.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\AddArticle\disable.cs" />
+    <Compile Include="Testcases\AccessRoles\CreateAccessRole\ExistingAccessRole.cs" />
+    <Compile Include="Testcases\AccessRoles\ViewAccessRole\VerifyPageContent.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\AddArticle\AddArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\AddArticle\ExistingArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\AddArticle\VerifyBackButton.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\BatchEditArticle\BatchEditArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\BatchDeleteArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\SingleDeleteArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\EditArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\ExistingEditArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\VerifyBackButton.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\VerifyPage.cs" />
+    <Compile Include="Testcases\ArticlesManagement\ArticlesAUG\AddAUG.cs" />
+    <Compile Include="Testcases\ArticlesManagement\PageVerifications\AddArticlePage.cs" />
+    <Compile Include="Testcases\ArticlesManagement\PageVerifications\EditArticlePage.cs" />
+    <Compile Include="Testcases\ArticlesManagement\PageVerifications\ViewArticlePage.cs" />
+    <Compile Include="Testcases\LoginCasat\FirstTimeLogin\passwordMismatchFirsttime.cs" />
+    <Compile Include="Testcases\LoginCasat\InvalidLogin.cs" />
+    <Compile Include="Testcases\LoginCasat\UserLocked\userLocked.cs" />
+    <Compile Include="Testcases\Orders\CreateOrder.cs" />
+    <Compile Include="Testcases\Orders\createOrderTable.cs" />
+    <Compile Include="Testcases\Orders\ExistingOrder.cs" />
+    <Compile Include="Testcases\Products\PageVerifications\productPage.cs" />
+    <Compile Include="Testcases\Products\PageVerifications\variantPage.cs" />
+    <Compile Include="Testcases\Products\Prouct\AddProducts\addInvalidProduct.cs" />
+    <Compile Include="Testcases\Products\Prouct\AddProducts\AddProduct.cs" />
+    <Compile Include="Testcases\Products\Prouct\AddProducts\addProductBackbtn.cs" />
+    <Compile Include="Testcases\Products\Prouct\AddProducts\AddProductPage.cs" />
+    <Compile Include="Testcases\Products\Prouct\AddProducts\ExistingProduct.cs" />
+    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batcgEditProdPage.cs" />
+    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProdBackbtn.cs" />
+    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProduct.cs" />
+    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\invalidBatchEditProduct.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActBackbtn.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\ExistingStandardactivity.cs" />
+    <Compile Include="Testcases\StandardActivity\standardActivitytable.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIBackbutton.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\UnlockUser\batchLockedtoActive.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\UnlockUser\lockedToInactive.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\UnlockUser\lockToActive.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\AddDIpage.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\AddDIuser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\AddUserDI.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\ExistinguserDI.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\validateOprtID.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\BatchEditDIuser\BatchDIDeactive.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\BatchEditDIuser\BatchEditBackbutton.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\BatchEditDIuser\BatchDIActive.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\EditdiBackButton.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\BatcheditDIPage.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\EditDiPageContents.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\EditExistingOprtid.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\EditOprtIdLength.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\MandatoryFieldsEditdi.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\ActiveInactiveUser\BatchEditActivate.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\ActiveInactiveUser\BatchEditDeactiveUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\ActiveInactiveUser\SingleEditActivate.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\ActiveInactiveUser\SingleEditDeactivate.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\ValidateUsername.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\BatchEditCasatUser\BatchEditBackButton.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\BatchEditPage.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\DeleteCasatUser\BatchDeleteCasatUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\EditUserBackButton.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\EditUserContents.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\EditUserExisting.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\EditUsernameLength.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\VerifyCasatUserPage.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\BatchEditDIuser\BatchEditDIuser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\EditUserDI.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\AddCasatuser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\BackButton.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\ExistingUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\MandatoryFields.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\BatchEditCasatUser\BatchEditCasatUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\DeleteCasatUser\DeleteButton.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\DeleteCasatUser\SingleDeleteCasatuser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\EditCasatUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\MandatoryFields.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\Filter\FilterbyID.cs" />
+    <Compile Include="Testcases\LoginCasat\FirstTimeLogin\FirstTimeLogin.cs" />
+    <Compile Include="Testcases\LoginCasat\Login.cs" />
+    <Compile Include="ObjectRepo\DIuser\AdduserDI\ObjAdduserDI.cs" />
+    <Compile Include="ObjectRepo\CasatUser\Adduser\ObjAdduser.cs" />
+    <Compile Include="ObjectRepo\Login\ObjLogin.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\TableLayoutEdit\dragDropCOlumns.cs" />
+    <Compile Include="Testcases\UserManagement\PageVerifications\VerifyDIusersTable.cs" />
+    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\CommonFunctionAddArticle.cs" />
+    <Compile Include="Utilities\CommonFunctionCreateAUG.cs" />
+    <Compile Include="Utilities\CommonFunctionCreateDIuser.cs" />
+    <Compile Include="Utilities\CommonFunctionDragandDrop.cs" />
+    <Compile Include="Utilities\CommonFunctions.cs" />
+    <Compile Include="Utilities\CommonFunctionsCreateCasatUser.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\activeuser.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\addProduct.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\addstandardactivity.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\addUserDI.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\addUsers.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\casatBatchEdit.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\createArticle.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\createAUG.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\createOrder.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\dataSheet.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\deactiveuser.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\deleteuser.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\DIBatchEdit.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\EditArticle.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\editExistingUsername.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\editUser.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\editUserDI.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\userlocked.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Testcases\UserManagement\CreateDIuser\DeleteDIuser\" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,2 @@
+url,username,password,searchusername,searchbatchdelete
+http://146.185.172.122:8280/QA/#/login,admin,admin,singledelete,batchdelete

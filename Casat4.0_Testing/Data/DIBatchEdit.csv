@@ -1,0 +1,2 @@
+url,username,password,searchoperatorid,status,department,searchoperatorid2,activestatus,searchoperatorid3,deactivestatus
+http://146.185.172.122:8280/QA/#/login,admin,admin,45,INACTIVE,dep2,45,ACTIVE,45,INACTIVE
