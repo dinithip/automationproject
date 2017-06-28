@@ -58,8 +58,11 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
 
         string _articlenumber;
         string _articlename;
-        string _amount;
+        
         string _articletype;
+        string _fromco;
+        string _toco;
+
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -160,24 +163,85 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
 
             ObjArticle objarticle = new ObjArticle(myManager);
 
-            Element addArticlebutton = objarticle.addArticlebtn;            
+            Element addArticlebutton = objarticle.addArticlebtn;
             myManager.ActiveBrowser.Actions.Click(addArticlebutton);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            CommonFunctionAddArticle.Addaticle(myManager, _Url, _articlenumber, _articlename, _amount, _articletype,false);
 
+            add();
+            //verifyarticle();
+
+        }
+
+        public void add()
+        {
+            ObjArticle objarticle = new ObjArticle(myManager);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            HtmlInputText artnum = objarticle.numbertxt.As<HtmlInputText>();
+            HtmlInputText artname = objarticle.nametxt.As<HtmlInputText>();
 
+            artnum.Text = _articlenumber;
+            artname.Text = _articlename;
 
+            myManager.ActiveBrowser.RefreshDomTree();
 
+            HtmlSelect arttype = objarticle.typetxt.As<HtmlSelect>();
+            arttype.MouseClick();
+            Thread.Sleep(1000);
+            arttype.SelectByText(_articletype, true);
 
+            Thread.Sleep(1000);
+
+            HtmlSelect fromcodropdwn = objarticle.fromcotxt.As<HtmlSelect>();
+            fromcodropdwn.MouseClick();
+            Thread.Sleep(1000);
+            fromcodropdwn.SelectByText(_fromco, true);
+
+            /*
+            HtmlSelect tocodropdwn = objarticle.tocotxt.As<HtmlSelect>();
+            tocodropdwn.MouseClick();
+            Thread.Sleep(1000);
+            arttype.SelectByText(_toco, true);
+            */
+
+            Thread.Sleep(1000);
+
+            Element savebutton = objarticle.savebtn;
+            myManager.ActiveBrowser.Actions.Click(savebutton);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+           
 
         }
+        /*
+        public void verifyarticle()
+        {
+            ObjArticle objarticle = new ObjArticle(myManager);
+
+            HtmlInputText search = objarticle.searcharticlenum.As<HtmlInputText>();
+
+            search.Text = _articlenumber;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, search.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
+
+            Assert.AreEqual(articletbl.BodyRows[0].Cells[1].InnerText, _articlenumber);
+            Assert.AreEqual(articletbl.BodyRows[0].Cells[2].InnerText, _articlename);
+
+        }
+        */
 
         public void readData()
         {
@@ -186,9 +250,11 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
             _password = TestContext.DataRow["password"].ToString();
             _articlenumber = TestContext.DataRow["articlenumber"].ToString();
             _articlename = TestContext.DataRow["articlename"].ToString();
-            _amount = TestContext.DataRow["amount"].ToString();
+            
             _articletype = TestContext.DataRow["articletype"].ToString();
-           // _articlenumber = CommonFunctionAddArticle.GenarateRandom(_articlenumber);
+            _fromco = TestContext.DataRow["fromco"].ToString();
+            _toco = TestContext.DataRow["toco"].ToString();
+            _articlenumber = CommonGenerateRandom.GenarateRandom(_articlenumber);
         }
 
 
@@ -207,6 +273,8 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

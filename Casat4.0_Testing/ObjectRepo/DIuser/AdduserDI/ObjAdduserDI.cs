@@ -67,12 +67,27 @@ namespace Casat4._0_Testing.ObjectRepo.AdduserDI
         public Element dptLabel2 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[6]/div[3]/label"); } }
 
         // Messages
-        public Element successmsgdi { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
+        public Element savesuccessmsgdi { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
         public Element existingmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
         // Length message
         public Element optLengthmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[1]/div[2]/span[2]"); } }
+
+        // Mandatory Messages
+
+        public Element oprmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[1]/div[2]/span[1]"); } }
+        //Operator ID is mandatory.
+        public Element fnmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span"); } }
+        //First name is mandatory.
+        public Element lnmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[3]/div[2]/span"); } }
+        //Last name is mandatory
+        public Element emailmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[4]/div[2]/span[2]"); } }
+        //Email is mandatory
+        public Element phnmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div[2]/span[2]"); } }
+        //Phone number is mandatory
+
+
 
 
     }

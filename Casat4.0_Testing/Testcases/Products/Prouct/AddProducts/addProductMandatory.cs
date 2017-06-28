@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
+namespace Casat4._0_Testing.Testcases.Products.Prouct.AddProducts
 {
     /// <summary>
-    /// Summary description for EditdiBackButton
+    /// Summary description for addProductMandatory
     /// </summary>
     [TestClass]
-    public class EditdiBackButton : BaseTest
+    public class addProductMandatory : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,11 +52,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         Settings mySettings;
         Manager myManager;
 
-        string _url;
+        string _Url;
         string _username;
         string _password;
 
-        string _searchoperatorid;
+        string _prodnamemandatory;
+        string _variantmandatory;
+        
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -129,75 +131,68 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\editUserDI.csv", "editUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\editUserDI.csv")]
-        public void TestMethod_editDIBackButton()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addProduct.csv", "addProduct#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addProduct.csv")]
+        public void TextMethod_addProductMandatoryFields()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
-
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjProduct objproduct = new ObjProduct(myManager);
+
+            Element addproductbutton = objproduct.addproductbtn;
+            myManager.ActiveBrowser.Actions.Click(addproductbutton);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText productnm = objproduct.nametxt.As<HtmlInputText>();
+            HtmlInputText variant = objproduct.varianttxt.As<HtmlInputText>();
+
+            productnm.Text = _prodnamemandatory;
+            variant.Text = _variantmandatory;
+
+            Element prodname = objproduct.prodnamemandatorymsg;
+            Assert.IsTrue(prodname.InnerText.Contains("Product Name is mandatory"));
+
+            Element variantname = objproduct.variantmandatorymsg;
+            Assert.IsTrue(variantname.InnerText.Contains("Variant String is mandatory"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            // Search DI user to Edit
-
-            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
-
-            HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
-
-            HtmlInputText operid = objeditdiuser.searchoperatorid.As<HtmlInputText>();
-            operid.Text = _searchoperatorid;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, operid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            // Select one DI user                    
-
-            HtmlInputCheckBox firstrowcheck = objeditdiuser.row1.As<HtmlInputCheckBox>();
-            firstrowcheck.Check(true);
-
-            Element editbutton = objeditdiuser.editdibtn;
-            myManager.ActiveBrowser.Actions.Click(editbutton);
-
-            Thread.Sleep(4000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element backbutton = objeditdiuser.backbtn;
-            myManager.ActiveBrowser.Actions.Click(backbutton);
-
-            Element verifypg = objeditdiuser.userpgtitle;
-            Assert.IsTrue(verifypg.InnerText.Contains("DI Users"));
-
-            Thread.Sleep(2000);
         }
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+            _prodnamemandatory = TestContext.DataRow["prodnamemandatory"].ToString();
+            _variantmandatory = TestContext.DataRow["variantmandatory"].ToString();
+            
         }
+
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

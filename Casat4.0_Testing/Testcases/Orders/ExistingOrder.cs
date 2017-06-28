@@ -184,7 +184,7 @@ namespace Casat4._0_Testing.Testcases.Orders
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element existingmessag = objcreateorder.existingmsg;
-            Assert.IsTrue(existingmessag.InnerText.Contains("Order number (myOrder3) already exists"));
+            Assert.IsTrue(existingmessag.InnerText.Contains("already exists"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -210,9 +210,16 @@ namespace Casat4._0_Testing.Testcases.Orders
         public void MyTestCleanup()
         {
 
-            //
-            // Place any additional cleanup here
-            //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

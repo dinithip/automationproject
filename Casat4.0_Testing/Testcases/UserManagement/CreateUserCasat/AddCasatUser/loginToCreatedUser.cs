@@ -18,15 +18,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.AdduserDI;
+using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Login;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
 {
     /// <summary>
-    /// Summary description for AddUserDI
+    /// Summary description for loginToCreatedUser
     /// </summary>
     [TestClass]
-    public class AddUserDI : BaseTest
+    public class loginToCreatedUser : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,16 +53,17 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         Settings mySettings;
         Manager myManager;
 
+
+        string _username2;
+        string _firstname;
+        string _lastname;
+        string _emailaddress;
+        string _phone;
+        string _accessrole;
+        string _dept;
         string _url;
         string _username;
         string _password;
-
-        string _operatorid;
-        string _firstname;
-        string _lastname;
-        string _email;
-        string _phone;
-        string _department;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -134,8 +136,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUserDI.csv", "addUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUserDI.csv")]
-        public void TestMethod_AddUserDI()
+
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUsers.csv", "addUsers#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUsers.csv")]
+        public void TestMethod_logintoCreatedUser()
         {
             readData();
 
@@ -143,7 +146,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
 
             myManager.ActiveBrowser.Window.Maximize();
 
-            // -- End of Login ---
+            //--- Add New User ---
 
             ObjMenus menus = new ObjMenus(myManager);
 
@@ -151,6 +154,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             system.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
+
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
@@ -160,132 +164,152 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            Element addbutton = objadddiuser.addbtn;
-            myManager.ActiveBrowser.Actions.Click(addbutton);
+            Element addbtn = objadduser.createbtn;
+            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
-
-            addUser();
-            verifyDIuser();
             
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            create();
+            logintocreated();
+
         }
 
-        public void addUser()
+        public void create()
         {
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            HtmlInputText operatorid = objadddiuser.operatoridtxt.As<HtmlInputText>();
-            HtmlInputText firstname = objadddiuser.txtfirstname.As<HtmlInputText>();
-            HtmlInputText lastname = objadddiuser.txtlastname.As<HtmlInputText>();
-            HtmlInputEmail email = objadddiuser.txtemail.As<HtmlInputEmail>();
-            HtmlInputText phone = objadddiuser.txtphone.As<HtmlInputText>();
-            HtmlSelect dep = objadddiuser.txtdept.As<HtmlSelect>();
-            Element savebtn = objadddiuser.savebtn;
+            HtmlInputText usernametxt = objadduser.usernametxt.As<HtmlInputText>();
+            HtmlInputText firstname = objadduser.txtfrstname.As<HtmlInputText>();
+            HtmlInputText lastname = objadduser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
+            HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();
+            HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();
+            HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
 
-            operatorid.Text = _operatorid;
+            Element savebtn = objadduser.btnsave;
+
+            usernametxt.Text = _username2;
             firstname.Text = _firstname;
             lastname.Text = _lastname;
-            email.Text = _email;
+            emailaddress.Text = _emailaddress;
             phone.Text = _phone;
 
             myManager.ActiveBrowser.RefreshDomTree();
 
             //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
-
-            dep.MouseClick();
+            accessR.MouseClick();
             Thread.Sleep(1000);
-            dep.SelectByText(_department);
-            dep.MouseHover();
-            dep.SelectByText(_department);
+            accessR.SelectByText(_accessrole);
+            accessR.MouseHover();
+            accessR.SelectByText(_accessrole,true);
 
-            Element movetobutton = objadddiuser.movetobtn;
-            myManager.ActiveBrowser.Actions.Click(movetobutton);
+
+            deptm.MouseClick();
+            Thread.Sleep(1000);
+            deptm.SelectByText(_dept);
+            deptm.MouseHover();
+            deptm.SelectByText(_dept);
+
+            Element assignbtn = objadduser.moveto;
+            myManager.ActiveBrowser.Actions.Click(assignbtn);
 
             myManager.ActiveBrowser.Actions.Click(savebtn);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifySave = objadduser.saveMsg;
+            Assert.IsTrue(verifySave.InnerText.Contains("CASAT user has been created successfully..!"));
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
-        public void verifyDIuser()
-        {           
+        public void logintocreated()
+        {
+            ObjMenus menus = new ObjMenus(myManager);
+            ObjLogin objlogin = new ObjLogin(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
+
+
+            HtmlListItem uslink = menus.user.As<HtmlListItem>();
+            uslink.MouseHover();
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor logout = menus.logoutlink.As<HtmlAnchor>();
+            logout.MouseClick();
+
+            Thread.Sleep(30000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifylg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div/div/div/div[2]/h3");
+            Assert.IsTrue(verifylg.InnerText.Contains("Welcome to Casat"));
+
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
+
+            //HtmlInputText un = objlogin.txtusername.As<HtmlInputText>();
+            //HtmlInputPassword pw = objlogin.txtpassword.As<HtmlInputPassword>();
             
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            //un.Text = _username2;
+            //pw.Text = _username2;
 
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+            //Element log = objlogin.btnlogin;
+            //myManager.ActiveBrowser.Actions.Click(log);
 
-            //Element verrifysave = objadddiuser.successmsgdi;
-            //Assert.IsTrue(verrifysave.InnerText.Contains("User has been created successfully"));
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            //Element verifyresetpg = objadduser.pageheadingtxt;
+            //Assert.IsTrue(verifyresetpg.InnerText.Contains("You are logging in for the first time. Please change your password first."));
 
-            HtmlTable diTable = objadddiuser.ditable.As<HtmlTable>();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText searchid = objadddiuser.searchdiuser.As<HtmlInputText>();
-            searchid.Text = _operatorid;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-           
-            //Assert.AreEqual(diTable.BodyRows[0].Cells[2].InnerText, _operatorid);
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
         }
 
-        public static string GenarateRandom(string strPrefix)
-        {
-            string strRandomText = "";
-
-            Random random = new Random();
-            int intNumber = random.Next(10000);
-            string strNumber = intNumber.ToString();
-            strRandomText = strPrefix + strNumber;
-
-            return strRandomText;
-        }
 
         public void readData()
-        {           
+        {
+            _username2 = TestContext.DataRow["username2"].ToString();
+            _firstname = TestContext.DataRow["firstname"].ToString();
+            _lastname = TestContext.DataRow["lastname"].ToString();
+            _emailaddress = TestContext.DataRow["emailaddress"].ToString();
+            _phone = TestContext.DataRow["phone"].ToString();
+            _accessrole = TestContext.DataRow["accessrole"].ToString();
+            _dept = TestContext.DataRow["department"].ToString();
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _operatorid = TestContext.DataRow["operatorid"].ToString();
-            _operatorid = TestContext.DataRow["operatorid"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
-            _lastname = TestContext.DataRow["lastname"].ToString();
-            _email = TestContext.DataRow["email"].ToString();
-            _phone = TestContext.DataRow["phone"].ToString();
-            _department = TestContext.DataRow["department"].ToString();
-            _operatorid = CommonFunctionCreateDIuser.GenarateRandom(_operatorid);
+            
         }
-
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
+
             //Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
                 System.Drawing.Image img = myManager.ActiveBrowser.Capture();
                 string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

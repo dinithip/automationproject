@@ -17,6 +17,8 @@ namespace Casat4._0_Testing.ObjectRepo.CasatUser.Edit
             _manager = m;
         }
 
+        public Element casattable { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]"); } }
+
         public Element editbutton { get { return _manager.ActiveBrowser.Find.ById("edit"); } }
 
         public Element titletxt { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/h3"); } }
@@ -44,7 +46,7 @@ namespace Casat4._0_Testing.ObjectRepo.CasatUser.Edit
         public Element backbtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[9]/div/div[2]/div[2]/button"); } }
 
         public Element yesbtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[2]"); } }
-
+        
         public Element nobtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[1]"); } }
 
         public Element accessMoveto { get { return _manager.ActiveBrowser.Find.ById("moveATo"); } }

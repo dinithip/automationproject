@@ -56,7 +56,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
         string _username;
         string _password;
 
-        string _operatorid;
+        string _existingid;
         string _firstname;
         string _lastname;
         string _email;
@@ -179,7 +179,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             HtmlSelect dep = objadddiuser.txtdept.As<HtmlSelect>();
             Element savebtn = objadddiuser.savebtn;
 
-            operatorid.Text = _operatorid;
+            operatorid.Text = _existingid;
             firstname.Text = _firstname;
             lastname.Text = _lastname;
             email.Text = _email;
@@ -198,131 +198,36 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             Element movetobutton = objadddiuser.movetobtn;
             myManager.ActiveBrowser.Actions.Click(movetobutton);
 
-            myManager.ActiveBrowser.Actions.Click(savebtn);
-
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            myManager.ActiveBrowser.Actions.Click(savebtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifyExist = objadddiuser.existingmsg;
-            Assert.IsTrue(verifyExist.InnerText.Contains(" Operator ID already exist"));
+            Assert.IsTrue(verifyExist.InnerText.Contains("Operator ID already exist"));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-
-            //CommonFunctionCreateDIuser.AdduserDI(myManager, _url, _operatorid, _firstname, _lastname, _email, _phone, _department,false);
-
-            //addDIuser();
-            //existinguserDI(true);
-            //verifydiuser();
+                       
         }
 
-        /*
-        public void addDIuser()
-        {
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
-
-            HtmlInputText operatorid = objadddiuser.operatoridtxt.As<HtmlInputText>();
-            HtmlInputText firstname = objadddiuser.txtfirstname.As<HtmlInputText>();
-            HtmlInputText lastname = objadddiuser.txtlastname.As<HtmlInputText>();
-            HtmlInputEmail email = objadddiuser.txtemail.As<HtmlInputEmail>();
-            HtmlInputText phone = objadddiuser.txtphone.As<HtmlInputText>();
-            HtmlSelect dep = objadddiuser.txtdept.As<HtmlSelect>();
-            Element savebtn = objadddiuser.savebtn;
-
-            operatorid.Text = _operatorid;
-            firstname.Text = _firstname;
-            lastname.Text = _lastname;
-            email.Text = _email;
-            phone.Text = _phone;
-
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
-
-            dep.MouseClick();
-            Thread.Sleep(1000);
-            dep.SelectByText(_department);
-            dep.MouseHover();
-            dep.SelectByText(_department);
-
-            Element movetobutton = objadddiuser.movetobtn;
-            myManager.ActiveBrowser.Actions.Click(movetobutton);
-
-            myManager.ActiveBrowser.Actions.Click(savebtn);
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
-        }
-*/
-
-            /*
-        public void existinguserDI(bool isexisting)
-        {
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
-
-            if (isexisting == true)
-            {
-                //verify is existing messege
-                Element verifyExist = objadddiuser.existingmsg;
-                Assert.IsTrue(verifyExist.InnerText.Contains("Username already exist"));
-        }
-            else
-            {
-                verifydiuser();
-    }*/
-
-
-
-/*
-        public void verifydiuser()
-        {
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
-
-            //Element verrifysave = objadddiuser.successmsgdi;
-            //Assert.IsTrue(verrifysave.InnerText.Contains("User has been created successfully"));
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlTable diTable = objadddiuser.ditable.As<HtmlTable>();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText searchid = objadddiuser.searchdiuser.As<HtmlInputText>();
-            searchid.Text = _operatorid;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            //Assert.AreEqual(diTable.BodyRows[0].Cells[2].InnerText, _operatorid);
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-
-        }*/
 
         public void readData()
         {
-            _operatorid = TestContext.DataRow["operatorId"].ToString();
+            _url = TestContext.DataRow["url"].ToString();
+            _username = TestContext.DataRow["username"].ToString();
+            _password = TestContext.DataRow["password"].ToString();
+
+            _existingid = TestContext.DataRow["existingid"].ToString();
             _firstname = TestContext.DataRow["firstname"].ToString();
             _lastname = TestContext.DataRow["lastname"].ToString();
             _email = TestContext.DataRow["email"].ToString();
             _phone = TestContext.DataRow["phone"].ToString();
-            _department = TestContext.DataRow["department"].ToString();
-            _url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
-            
+            _department = TestContext.DataRow["department"].ToString();                     
         }
 
 
@@ -339,6 +244,8 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

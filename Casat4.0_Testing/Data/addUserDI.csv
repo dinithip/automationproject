@@ -1,2 +1,2 @@
-url,username,password,operatorId,firstname,lastname,email,phone,department
-http://146.185.172.122:8280/QA/#/login,admin,admin,5555,F1,L2,5555@gmail.com,1777654456,dep1
+url,username,password,operatorId,firstname,lastname,email,phone,department,operatormandatory,fnmandatory,lnmandatory,emailmandatory,phnmandatory,existingid
+http://146.185.172.122:8280/QA/#/login,admin,admin,5555,F1,L2,5555@gmail.com,1777654456,dep1,,,,,,8888

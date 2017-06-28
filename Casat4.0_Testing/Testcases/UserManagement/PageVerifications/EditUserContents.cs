@@ -154,7 +154,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
 
             ObjEditUser objedit = new ObjEditUser(myManager);
 
-            HtmlTable usertable = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]").As<HtmlTable>();
+            HtmlTable casattbl = objedit.casattable.As<HtmlTable>();
 
             HtmlInputCheckBox firstrowcheck = objedit.rowcheck.As<HtmlInputCheckBox>();
             firstrowcheck.Check(true);
@@ -222,9 +222,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
         public void MyTestCleanup()
         {
 
-            //
-            // Place any additional cleanup here
-            //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

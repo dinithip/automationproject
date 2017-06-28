@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser;
+using Casat4._0_Testing.ObjectRepo.Adduser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
 {
     /// <summary>
-    /// Summary description for EditdiBackButton
+    /// Summary description for MandatoryFields
     /// </summary>
     [TestClass]
-    public class EditdiBackButton : BaseTest
+    public class userMandatorydata : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -56,7 +56,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         string _username;
         string _password;
 
-        string _searchoperatorid;
+        string _usermandatory;
+        string _fnmandatory;
+        string _lnmandatory;
+        string _emailmandatory;
+        string _phonemandatory;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -129,8 +133,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\editUserDI.csv", "editUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\editUserDI.csv")]
-        public void TestMethod_editDIBackButton()
+
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUsers.csv", "addUsers#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUsers.csv")]
+        public void TestMethod_addUserMandatryFields()
         {
             readData();
 
@@ -138,7 +143,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             myManager.ActiveBrowser.Window.Maximize();
 
-            // -- End of Login ---
+            //--- Add New User ---
 
             ObjMenus menus = new ObjMenus(myManager);
 
@@ -156,39 +161,63 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Search DI user to Edit
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+            Element addbtn = objadduser.createbtn;
+            myManager.ActiveBrowser.Actions.Click(addbtn);
 
-            HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
-
-            HtmlInputText operid = objeditdiuser.searchoperatorid.As<HtmlInputText>();
-            operid.Text = _searchoperatorid;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, operid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Select one DI user                    
 
-            HtmlInputCheckBox firstrowcheck = objeditdiuser.row1.As<HtmlInputCheckBox>();
-            firstrowcheck.Check(true);
+            verifymandatory();
 
-            Element editbutton = objeditdiuser.editdibtn;
-            myManager.ActiveBrowser.Actions.Click(editbutton);
 
-            Thread.Sleep(4000);
-            myManager.ActiveBrowser.RefreshDomTree();
+        }
 
-            Element backbutton = objeditdiuser.backbtn;
-            myManager.ActiveBrowser.Actions.Click(backbutton);
+        public void verifymandatory()
+        {
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            Element verifypg = objeditdiuser.userpgtitle;
-            Assert.IsTrue(verifypg.InnerText.Contains("DI Users"));
+            HtmlInputText un = objadduser.usernametxt.As<HtmlInputText>();
+            HtmlInputText fn = objadduser.txtfrstname.As<HtmlInputText>();
+            HtmlInputText ln = objadduser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail em = objadduser.txtemailaddress.As<HtmlInputEmail>();
+            HtmlInputText phn = objadduser.txtphone.As<HtmlInputText>();
+
+            un.Text = _usermandatory;
+            fn.Text = _fnmandatory;
+            ln.Text = _lnmandatory;
+            em.Text = _emailmandatory;
+            phn.Text = _phonemandatory;
+
+            Element usermsg = objadduser.unmandatorymsg;
+            Assert.IsTrue(usermsg.InnerText.Contains("Username is mandatory."));
 
             Thread.Sleep(2000);
+            
+            Element firstnmmsg = objadduser.fnmandatorymsg;
+            Assert.IsTrue(firstnmmsg.InnerText.Contains("First name is mandatory."));
+
+            Thread.Sleep(2000);
+            
+            Element lastnmmsg = objadduser.lnmandatorymsg;
+            Assert.IsTrue(lastnmmsg.InnerText.Contains("Last name is mandatory"));
+
+            Thread.Sleep(1000);
+            
+            Element emailmsg = objadduser.emailmandatorymsg;
+            Assert.IsTrue(emailmsg.InnerText.Contains("Email is mandatory"));
+
+            Thread.Sleep(1000);
+            
+            Element phnmsg = objadduser.phonemandatorymsg;
+            Assert.IsTrue(phnmsg.InnerText.Contains("Phone number is mandatory"));
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+
         }
 
         public void readData()
@@ -196,7 +225,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+
+            _usermandatory = TestContext.DataRow["usermandatory"].ToString();
+            _fnmandatory = TestContext.DataRow["fnmandatory"].ToString();
+            _lnmandatory = TestContext.DataRow["lnmandatory"].ToString();
+            _emailmandatory = TestContext.DataRow["emailmandatory"].ToString();
+            _phonemandatory = TestContext.DataRow["phonemandatory"].ToString();            
         }
 
         // Use TestCleanup to run code after each test has run

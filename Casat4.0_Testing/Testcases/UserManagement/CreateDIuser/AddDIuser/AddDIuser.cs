@@ -167,16 +167,84 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
 
             Element addbutton = objadddiuser.addbtn;            
             myManager.ActiveBrowser.Actions.Click(addbutton);
+                      
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            //CommonFunctionCreateDIuser.AdduserDI(myManager, _url, _operatorid, _firstname, _lastname, _email, _phone, _department, false);
+            creatediuser();
+            //verifydiuser();
+        }
+
+        public void creatediuser()
+        {
+            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+
+            HtmlInputText oprid = objadddiuser.operatoridtxt.As<HtmlInputText>();
+            HtmlInputText fn = objadddiuser.txtfirstname.As<HtmlInputText>();
+            HtmlInputText ln = objadddiuser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail em = objadddiuser.txtemail.As<HtmlInputEmail>();
+            HtmlInputText phn = objadddiuser.txtphone.As<HtmlInputText>();
+
+            oprid.Text = _operatorid;
+            fn.Text = _firstname;
+            ln.Text = _lastname;
+            em.Text = _email;
+            phn.Text = _phone;
+
+            HtmlSelect dpt = objadddiuser.txtdept.As<HtmlSelect>();
+
+            dpt.MouseClick();
+            Thread.Sleep(1000);
+            dpt.SelectByText(_department);
+            dpt.MouseHover();
+            dpt.SelectByText(_department,true);
+
+            Element moveto = objadddiuser.movetobtn;
+            myManager.ActiveBrowser.Actions.Click(moveto);
 
             Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element savebutton = objadddiuser.savebtn;
+            myManager.ActiveBrowser.Actions.Click(savebutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifysave = objadddiuser.savesuccessmsgdi;
+            Assert.IsTrue(verifysave.InnerText.Contains("User has been created successfully"));
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
+
+        /*
+        public void verifydiuser()
+        {
+            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //search by operator id
+            HtmlInputText operid = objadddiuser.searchdiuser.As<HtmlInputText>();
+
+            operid.Text = _operatorid;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, operid.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlTable ditbl = objadddiuser.ditable.As<HtmlTable>();
+
+            Assert.AreEqual(ditbl.BodyRows[0].Cells[2].InnerText, _operatorid);
+
+        }
+        */
 
         public void readData()
         {
@@ -189,7 +257,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            //_operatorid = CommonFunctionsCreateCasatUser.GenarateRandom(_operatorid);
+            _operatorid = CommonGenerateRandom.GenarateRandom(_operatorid);
         }
 
 
@@ -207,7 +275,8 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
-
+            Thread.Sleep(2000);
+            myManager.Dispose();
             #region WebAii CleanUp
 
             // Shuts down WebAii manager and closes all browsers currently running

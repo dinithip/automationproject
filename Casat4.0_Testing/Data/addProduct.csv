@@ -1,2 +1,2 @@
-url,username,password,productname,variant,freetext,searchproduct,batcheditvariant,batcheditfreetext,invalidvariant,productname2
-http://146.185.172.122:8280/QA/#/login,admin,admin,Test1,V1,test3,TestProduct,GLOBALVARIANT,batchtext1,"V1,G1",Test001
+url,username,password,productname,variant,freetext,searchproduct,batcheditvariant,batcheditfreetext,invalidvariant,productname2,prodnamemandatory,variantmandatory
+http://146.185.172.122:8280/QA/#/login,admin,admin,Test1,V1,test3,TestProduct,GLOBALVARIANT,batchtext1,"V1,G1",Test001,,

@@ -57,6 +57,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         string _password;
 
         string _searchoperatorid;
+        string _existingdi;
+        string _firstname;
+        string _lastname;
+        string _email;
+        string _phone;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -184,12 +189,46 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
         }
 
+        public void updateexistingdi()
+        {
+            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            HtmlInputText oprid = objeditdiuser.operatoridtxt.As<HtmlInputText>();
+            HtmlInputText fn = objeditdiuser.firstnametxt.As<HtmlInputText>();
+            HtmlInputText ln = objeditdiuser.lastnametxt.As<HtmlInputText>();
+            HtmlInputEmail em = objeditdiuser.emailtxt.As<HtmlInputEmail>();
+            HtmlInputText phn = objeditdiuser.phonetxt.As<HtmlInputText>();
+
+            oprid.Text = _existingdi;
+            fn.Text = _firstname;
+            ln.Text = _lastname;
+            em.Text = _email;
+            phn.Text = _phone;
+
+            Element updatebutton = objeditdiuser.updatebtn;
+            myManager.ActiveBrowser.Actions.Click(updatebutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyexisting = objeditdiuser.existingdimsg;
+            Assert.IsTrue(verifyexisting.InnerText.Contains("Operator ID already exist"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+        }
+
         public void readData()
         {
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
             _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+            _existingdi = TestContext.DataRow["existingdi"].ToString();
+            _firstname = TestContext.DataRow["firstname"].ToString();
+            _lastname = TestContext.DataRow["lastname"].ToString();
+            _email = TestContext.DataRow["email"].ToString();
+            _phone = TestContext.DataRow["phone"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run
@@ -197,9 +236,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         public void MyTestCleanup()
         {
 
-            //
-            // Place any additional cleanup here
-            //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

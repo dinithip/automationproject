@@ -53,7 +53,7 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
         Manager myManager;
 
 
-        string _username1;
+        string _existinguser;
         string _firstname;
         string _lastname;
         string _emailaddress;
@@ -63,6 +63,7 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
         string _url;
         string _username;
         string _password;
+        
 
 
         //Use ClassInitialize to run code before running the first test in the class
@@ -164,17 +165,70 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjAdduser userpg = new ObjAdduser(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            Element addbtn = userpg.createbtn;
+            Element addbtn = objadduser.createbtn;
             myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            CommonFunctionsCreateCasatUser.AddCasatUser(myManager, _url, _username1, _firstname, _lastname, _emailaddress, _phone, _accessrole, _dept, true);
+           
 
             Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            addexisting();
+        }
+
+        public void addexisting()
+        {
+            ObjAdduser objadduser = new ObjAdduser(myManager);
+
+            HtmlInputText usernametxt = objadduser.usernametxt.As<HtmlInputText>();
+            HtmlInputText firstname = objadduser.txtfrstname.As<HtmlInputText>();
+            HtmlInputText lastname = objadduser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
+            HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();
+            HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();
+            HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
+
+            Element savebtn = objadduser.btnsave;
+
+            usernametxt.Text = _existinguser;
+            firstname.Text = _firstname;
+            lastname.Text = _lastname;
+            emailaddress.Text = _emailaddress;
+            phone.Text = _phone;
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
+            accessR.MouseClick();
+            Thread.Sleep(1000);
+            accessR.SelectByText(_accessrole);
+            accessR.MouseHover();
+            accessR.SelectByText(_accessrole,true);
+
+
+            deptm.MouseClick();
+            Thread.Sleep(1000);
+            deptm.SelectByText(_dept);
+            deptm.MouseHover();
+            deptm.SelectByText(_dept);
+
+            Element assignbtn = objadduser.moveto;
+            myManager.ActiveBrowser.Actions.Click(assignbtn);
+
+            myManager.ActiveBrowser.Actions.Click(savebtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyexisting = objadduser.existingMsg;
+            Assert.IsTrue(verifyexisting.InnerText.Contains("Username already exist.Please try again"));
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
@@ -182,7 +236,7 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
 
         public void readData()
         {
-            _username1 = TestContext.DataRow["username1"].ToString();
+            _existinguser = TestContext.DataRow["existinguser"].ToString();
             _firstname = TestContext.DataRow["firstname"].ToString();
             _lastname = TestContext.DataRow["lastname"].ToString();
             _emailaddress = TestContext.DataRow["emailaddress"].ToString();
@@ -208,6 +262,8 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

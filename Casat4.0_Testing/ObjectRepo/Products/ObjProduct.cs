@@ -96,6 +96,12 @@ namespace Casat4._0_Testing.ObjectRepo.Products
 
         public Element existingmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
+        // Mandatory messages
+
+        public Element prodnamemandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[1]/div[2]/span"); } }
+        //Product Name is mandatory
+        public Element variantmandatorymsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span[1]"); } }
+        //Variant String is mandatory
 
         // ---------- BATCH EDIT Products ---------
 

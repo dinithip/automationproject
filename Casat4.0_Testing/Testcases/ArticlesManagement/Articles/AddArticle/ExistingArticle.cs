@@ -56,10 +56,10 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
         string _username;
         string _password;
 
-        string _articlenumber;
+        string _existingarticle;
         string _articlename;
-        string _amount;
         string _articletype;
+        string _fromco;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -164,11 +164,54 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            CommonFunctionAddArticle.Addaticle(myManager, _url, _articlenumber, _articlename, _amount, _articletype, true);
 
+
+            addexisting();
+
+        }
+
+        public void addexisting()
+        {
+            ObjArticle objarticle = new ObjArticle(myManager);
+
+            HtmlInputText existarticle = objarticle.numbertxt.As<HtmlInputText>();
+            HtmlInputText artname = objarticle.nametxt.As<HtmlInputText>();
+
+            existarticle.Text = _existingarticle;
+            artname.Text = _articlename;
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlSelect arttype = objarticle.typetxt.As<HtmlSelect>();
+            arttype.MouseClick();
+            Thread.Sleep(1000);
+            arttype.SelectByText(_articletype, true);
 
             Thread.Sleep(1000);
+
+            HtmlSelect fromcodropdwn = objarticle.fromcotxt.As<HtmlSelect>();
+            fromcodropdwn.MouseClick();
+            Thread.Sleep(1000);
+            fromcodropdwn.SelectByText(_fromco, true);
+
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
+
+            //Element savebutton = objarticle.savebtn;
+            //myManager.ActiveBrowser.Actions.Click(savebutton);
+
+            HtmlButton save = objarticle.savebtn.As<HtmlButton>();
+            save.Click();
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
+
+            //Element verifyexisting = objarticle.existarticlemsg;
+            //Assert.IsTrue(verifyexisting.InnerText.Contains("Article number must be unique. Please try again"));
+
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
+            
 
         }
 
@@ -177,10 +220,10 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _articlenumber = TestContext.DataRow["articlenumber"].ToString();
-            _articlename = TestContext.DataRow["articlename"].ToString();
-            _amount = TestContext.DataRow["amount"].ToString();
+            _existingarticle = TestContext.DataRow["existingarticle"].ToString();
+            _articlename = TestContext.DataRow["articlename"].ToString();          
             _articletype = TestContext.DataRow["articletype"].ToString();
+            _fromco = TestContext.DataRow["fromco"].ToString();
         }
 
 
@@ -190,7 +233,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
         public void MyTestCleanup()
         {
 
-            //Screen_shot
+            ///Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
                 System.Drawing.Image img = myManager.ActiveBrowser.Capture();
@@ -198,6 +241,8 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

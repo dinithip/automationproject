@@ -61,6 +61,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         string _editoperatorid;
         string _firstname;
         string _lastname;
+        string _phone;
+        string _email;
+        string _department;
+        string _status;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -220,15 +224,51 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             HtmlInputText firstnm = objeditdiuser.firstnametxt.As<HtmlInputText>();
             HtmlInputText lastnm = objeditdiuser.lastnametxt.As<HtmlInputText>();
+            HtmlInputText phn = objeditdiuser.phonetxt.As<HtmlInputText>();
+            HtmlInputEmail em = objeditdiuser.emailtxt.As<HtmlInputEmail>();
             Element updatebutton = objeditdiuser.updatebtn;
 
             firstnm.Text = _firstname;
             lastnm.Text = _lastname;
+            em.Text = _email;
+            phn.Text = _phone;
+            
+            Thread.Sleep(1000);
+
+            HtmlSelect selectStatus = objeditdiuser.statustxt.As<HtmlSelect>();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            selectStatus.MouseClick();
+            Thread.Sleep(1000);
+            selectStatus.SelectByText(_status, true);
+
+            Thread.Sleep(5000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element yesbutton = objeditdiuser.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlSelect dpt = objeditdiuser.departmenttxt.As<HtmlSelect>();
+
+            dpt.MouseClick();
+            Thread.Sleep(1000);
+            dpt.SelectByText(_department);
+            dpt.MouseHover();
+            dpt.SelectByText(_department);
+
+            Element moveto = objeditdiuser.movetobtn;
+            myManager.ActiveBrowser.Actions.Click(moveto);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             myManager.ActiveBrowser.Actions.Click(updatebutton);
-
-            //Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span");
-            //Assert.AreEqual(verifymandatorymsg.InnerText, "tttt");
-
+          
         }
 
         public void VerifyUser()
@@ -237,6 +277,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifysuccessmsg = objeditdiuser.editsuccessmsg;
             Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved."));
@@ -256,22 +299,17 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             Assert.AreEqual(DItable.BodyRows[0].Cells[3].InnerText, _firstname);
             Assert.AreEqual(DItable.BodyRows[0].Cells[4].InnerText, _lastname);
-
-
+            Assert.AreEqual(DItable.BodyRows[0].Cells[5].InnerText, _phone);
+            Assert.AreEqual(DItable.BodyRows[0].Cells[6].InnerText, _email);
+            Assert.AreEqual(DItable.BodyRows[0].Cells[7].InnerText, _status);
         }
 
-        public void readData()
-        {
-            _url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
-            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
-            _editoperatorid = TestContext.DataRow["editoperatorid"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
-            _lastname = TestContext.DataRow["lastname"].ToString();
-        }
+        
 
         public void updateuser()
         {
@@ -294,20 +332,39 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             firstn.Text = _firstname;
             lastn.Text = _lastname;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
-
-            
-
+           
         }
 
+        public void readData()
+        {
+            _url = TestContext.DataRow["url"].ToString();
+            _username = TestContext.DataRow["username"].ToString();
+            _password = TestContext.DataRow["password"].ToString();
+            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+            _editoperatorid = TestContext.DataRow["editoperatorid"].ToString();
+            _firstname = TestContext.DataRow["firstname"].ToString();
+            _lastname = TestContext.DataRow["lastname"].ToString();
+            _phone = TestContext.DataRow["phone"].ToString();
+            _email = TestContext.DataRow["email"].ToString();
+            _department = TestContext.DataRow["department"].ToString();
+            _status = TestContext.DataRow["status"].ToString();
+        }
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //    //
-            //    // Place any additional cleanup here
-            //    //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

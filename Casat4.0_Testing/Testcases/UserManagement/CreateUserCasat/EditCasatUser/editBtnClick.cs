@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser;
+using Casat4._0_Testing.ObjectRepo.CasatUser.Edit;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUser
 {
     /// <summary>
-    /// Summary description for EditdiBackButton
+    /// Summary description for editBtnClick
     /// </summary>
     [TestClass]
-    public class EditdiBackButton : BaseTest
+    public class editBtnClick : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -55,8 +55,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         string _url;
         string _username;
         string _password;
-
-        string _searchoperatorid;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -129,16 +127,14 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\editUserDI.csv", "editUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\editUserDI.csv")]
-        public void TestMethod_editDIBackButton()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
+        public void TestMethod_EditButtonClick()
         {
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _url);
 
             myManager.ActiveBrowser.Window.Maximize();
-
-            // -- End of Login ---
 
             ObjMenus menus = new ObjMenus(myManager);
 
@@ -156,39 +152,22 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Search DI user to Edit
+            // CLick on EDIT button wthout selecting users
 
-            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+            ObjEditUser objedit = new ObjEditUser(myManager);
 
-            HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
-
-            HtmlInputText operid = objeditdiuser.searchoperatorid.As<HtmlInputText>();
-            operid.Text = _searchoperatorid;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, operid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+            Element edit = objedit.editbutton;
+            myManager.ActiveBrowser.Actions.Click(edit);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Select one DI user                    
-
-            HtmlInputCheckBox firstrowcheck = objeditdiuser.row1.As<HtmlInputCheckBox>();
-            firstrowcheck.Check(true);
-
-            Element editbutton = objeditdiuser.editdibtn;
-            myManager.ActiveBrowser.Actions.Click(editbutton);
-
-            Thread.Sleep(4000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element backbutton = objeditdiuser.backbtn;
-            myManager.ActiveBrowser.Actions.Click(backbutton);
-
-            Element verifypg = objeditdiuser.userpgtitle;
-            Assert.IsTrue(verifypg.InnerText.Contains("DI Users"));
+            Element verifymsg = objedit.clickonEditbtnMsg;
+            Assert.IsTrue(verifymsg.InnerText.Contains("Please select atleast one user"));
 
             Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
         }
 
         public void readData()
@@ -196,15 +175,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+          
         }
+
+
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
                 System.Drawing.Image img = myManager.ActiveBrowser.Capture();

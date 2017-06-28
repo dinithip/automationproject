@@ -15,14 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Casat4._0_Testing.Utilities;
+using Casat4._0_Testing.ObjectRepo.Menus;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 {
     /// <summary>
-    /// Summary description for MandatoryFields
+    /// Summary description for diEditBtnClick
     /// </summary>
     [TestClass]
-    public class MandatoryFields : BaseTest
+    public class diEditBtnClick : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -51,14 +55,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         string _url;
         string _username;
         string _password;
-
-        string _username1;
-        string _firstname;
-        string _lastname;
-        string _emailaddress;
-        string _phone;
-
-        
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -131,35 +127,73 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         }
 
         [TestMethod]
-
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUsers.csv", "addUsers#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUsers.csv")]
-        public void TestMethod_addUserMandatryFields()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
+        public void TestMethod_clikconDIEditBtn()
         {
+            readData();
+
+            CommonFunctions.Login(myManager, _username, _password, _url);
+
+            myManager.ActiveBrowser.Window.Maximize();
+
+            // -- End of Login ---
+
+            ObjMenus menus = new ObjMenus(myManager);
+
+            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
+            system.MouseHover();
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
+            users.MouseClick();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            Element editbutton = objeditdiuser.editdibtn;
+            myManager.ActiveBrowser.Actions.Click(editbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objeditdiuser.clickonmsgdiedit;
+            Assert.IsTrue(verifymsg.InnerText.Contains("Please select atleast one user"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
         public void readData()
         {
-            _username1 = TestContext.DataRow["username1"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
-            _lastname = TestContext.DataRow["lastname"].ToString();
-            _emailaddress = TestContext.DataRow["emailaddress"].ToString();
-            _phone = TestContext.DataRow["phone"].ToString();
-            
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
             
         }
 
+
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //
-            // Place any additional cleanup here
-            //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

@@ -76,6 +76,11 @@ namespace Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser
 
         public Element backbtn { get { return _manager.ActiveBrowser.Find.ById("back"); } }
 
+        public Element yesbtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[2]"); } }
+
+        public Element nobtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[1]"); } }
+
+
         // Checkbox
         public Element row1 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr/td[1]/input"); } }
 
@@ -102,6 +107,11 @@ namespace Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser
         // existing message
 
         public Element existingdimsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
+
+        // click on edit di button without selecting users
+
+        public Element clickonmsgdiedit { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
+
 
     }
 }

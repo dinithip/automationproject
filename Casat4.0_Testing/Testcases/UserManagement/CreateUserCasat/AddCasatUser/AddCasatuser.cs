@@ -164,24 +164,98 @@ namespace Casat4._0_Testing
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjAdduser user = new ObjAdduser(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
 
-            Element addbtn = user.createbtn;            
+            Element addbtn = objadduser.createbtn;            
             myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            CommonFunctionsCreateCasatUser.AddCasatUser(myManager, _url, _username1, _firstname, _lastname, _emailaddress, _phone, _accessrole, _dept, true);
+            //CommonFunctionsCreateCasatUser.AddCasatUser(myManager, _url, _username1, _firstname, _lastname, _emailaddress, _phone, _accessrole, _dept, true);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
-            
 
-            
+            create();
+            verifyuser();
 
         }
 
+        public void create()
+        {
+            ObjAdduser objadduser = new ObjAdduser(myManager);
+
+            HtmlInputText usernametxt = objadduser.usernametxt.As<HtmlInputText>();
+            HtmlInputText firstname = objadduser.txtfrstname.As<HtmlInputText>();
+            HtmlInputText lastname = objadduser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
+            HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();            
+            HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();
+            HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
+
+            Element savebtn = objadduser.btnsave;
+
+            usernametxt.Text = _username1;
+            firstname.Text = _firstname;
+            lastname.Text = _lastname;
+            emailaddress.Text = _emailaddress;
+            phone.Text = _phone;
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
+            accessR.MouseClick();
+            Thread.Sleep(1000);
+            accessR.SelectByText(_accessrole);
+            accessR.MouseHover();
+            accessR.SelectByText(_accessrole,true);
+
+
+            deptm.MouseClick();
+            Thread.Sleep(1000);
+            deptm.SelectByText(_dept);
+            deptm.MouseHover();
+            deptm.SelectByText(_dept);
+
+            Element assignbtn = objadduser.moveto;
+            myManager.ActiveBrowser.Actions.Click(assignbtn);
+
+            myManager.ActiveBrowser.Actions.Click(savebtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifySave = objadduser.saveMsg;
+            Assert.IsTrue(verifySave.InnerText.Contains("CASAT user has been created successfully..!"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+        }
+
+        public void verifyuser()
+        {
+            ObjAdduser objadduser = new ObjAdduser(myManager);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText usernm = objadduser.searchusername.As<HtmlInputText>();
+
+            usernm.Text = _username1;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usernm.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlTable casattbl = objadduser.casattable.As<HtmlTable>();
+
+            Assert.AreEqual(casattbl.BodyRows[0].Cells[2].InnerText, _username1);
+
+        }
 
         public void readData()
         {
@@ -195,7 +269,7 @@ namespace Casat4._0_Testing
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _username1 = CommonFunctionsCreateCasatUser.GenarateRandom(_username1);
+            _username1 = CommonGenerateRandom.GenarateRandom(_username1);
         }
 
         // Use TestCleanup to run code after each test has run
@@ -203,7 +277,7 @@ namespace Casat4._0_Testing
         public void MyTestCleanup()
         {
 
-            //Screen_shot
+            ////Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
                 System.Drawing.Image img = myManager.ActiveBrowser.Capture();
@@ -211,6 +285,8 @@ namespace Casat4._0_Testing
                 img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
             }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

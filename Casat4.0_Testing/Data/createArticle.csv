@@ -1,2 +1,2 @@
-url,username,password,articlenumber,articlename,amount,articletype
-http://146.185.172.122:8280/QA/#/login,admin,admin,35503,Test Article1,4,Tool
+url,username,password,articlenumber,articlename,articletype,fromco,toco,articlenummandatory,articlenmmandatory,existingarticle
+http://146.185.172.122:8280/QA/#/login,admin,admin,35503,Test Article1,Tool,changeOrder1,,,,533252

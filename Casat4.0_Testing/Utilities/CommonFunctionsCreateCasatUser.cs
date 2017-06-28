@@ -15,7 +15,7 @@ namespace Casat4._0_Testing.Utilities
 {
     class CommonFunctionsCreateCasatUser
     {
-        
+        /*
         public static void AddCasatUser(Manager m,string url,string un,string firstnm,string lastnm,string em,string phn,string accrl,string dept, bool isexisting)
         {
                        
@@ -122,6 +122,6 @@ namespace Casat4._0_Testing.Utilities
             strRandomText = strPrefix + strNumber;
 
             return strRandomText;
-        }
+        }*/
     }
 }

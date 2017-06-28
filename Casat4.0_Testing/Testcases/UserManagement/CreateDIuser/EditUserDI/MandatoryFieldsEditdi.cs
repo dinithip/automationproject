@@ -196,19 +196,19 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             phn.Text = "";
 
             Element oprMandatory = objeditdiuser.opridMandatoryMsg;
-            Assert.IsTrue(oprMandatory.InnerText.Contains(""));
+            Assert.IsTrue(oprMandatory.InnerText.Contains("Operator ID is mandatory."));
 
             Element fnMandatory = objeditdiuser.fnMandatoryMsg;
-            Assert.IsTrue(fnMandatory.InnerText.Contains(""));
+            Assert.IsTrue(fnMandatory.InnerText.Contains("First name is mandatory."));
 
             Element lnMandatory = objeditdiuser.lnMandatoryMsg;
-            Assert.IsTrue(lnMandatory.InnerText.Contains(""));
+            Assert.IsTrue(lnMandatory.InnerText.Contains("Last name is mandatory"));
 
             Element emailMandatory = objeditdiuser.emailMandatoryMsg;
-            Assert.IsTrue(emailMandatory.InnerText.Contains(""));
+            Assert.IsTrue(emailMandatory.InnerText.Contains("Email is mandatory"));
 
             Element phoneMandatory = objeditdiuser.phoneMandatoryMsg;
-            Assert.IsTrue(phoneMandatory.InnerText.Contains(""));
+            Assert.IsTrue(phoneMandatory.InnerText.Contains("Phone number is mandatory"));
 
             Thread.Sleep(2000);
         }
@@ -230,9 +230,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         public void MyTestCleanup()
         {
 
-            //
-            // Place any additional cleanup here
-            //
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 
