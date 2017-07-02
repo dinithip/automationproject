@@ -19,6 +19,7 @@ using Casat4._0_Testing.Utilities;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using Casat4._0_Testing.ObjectRepo.Articles;
+using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
 
 namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
 {
@@ -130,7 +131,6 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
         public void TestMethod_SingleDeleteArticle()
         {
-
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
@@ -156,6 +156,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjArticle objarticle = new ObjArticle(myManager);
+            ObjDeleteArticle objdeletearticle = new ObjDeleteArticle(myManager);
 
             // Search Article to Delete
 
@@ -164,7 +165,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
             searchnum = objarticle.searcharticlenum.As<HtmlInputText>();
             searchnum.MouseClick();
 
-            searchnum.Text = "355039996";
+            searchnum.Text = "5746857";
 
             myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchnum.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
@@ -180,11 +181,11 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
 
             if (articletbl.BodyRows.Count > 0)
             {
-                rowcheck = objarticle.rowcheckdelete1.As<HtmlInputCheckBox>();
+                rowcheck = objdeletearticle.rowcheckdelete1.As<HtmlInputCheckBox>();
                 rowcheck.Check(true);
 
                 // click on Delete Article button
-                HtmlButton deletebutton = objarticle.deletebtn.As<HtmlButton>();
+                HtmlButton deletebutton = objdeletearticle.deletebtn.As<HtmlButton>();
                 deletebutton.Click();
             }
             else
@@ -192,24 +193,52 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
                 throw new Exception("no matching Article to Delete");
             }
 
-
             // --- Scenario 1: Delete user successfully --- //
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             // Verify Confirmation popup
-            //Element verifyconfirmation = objarticle.confirmation1;
-            //Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected article(s)? "));
+            Element verifyconfirmation = objdeletearticle.confirmation1;
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected article(s)?"));
 
-
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             // Click Yes
-            Element yesbutton = objarticle.yesbtn;
+            Element yesbutton = objdeletearticle.yesbtn;
             myManager.ActiveBrowser.Actions.Click(yesbutton);
 
-            //Element verifysuccess = objarticle.deletesuccess;
-            //Assert.IsTrue(verifysuccess.InnerText.Contains("Selected articles has been deleted successfully"));
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifysuccess = objdeletearticle.deletesuccess;
+            Assert.IsTrue(verifysuccess.InnerText.Contains("Selected articles has been deleted successfully"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypg = objarticle.articlepagetitle;
+            Assert.IsTrue(verifypg.InnerText.Contains("Article"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //  --- End of YES ---
+
+            /*
+            // NO
+            Element nobutton = objdeletearticle.nobtn;
+            myManager.ActiveBrowser.Actions.Click(nobutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verify = objarticle.articlepagetitle;
+            Assert.IsTrue(verify.InnerText.Contains("Article"));
+            // --- End of NO ---
+            */
+
 
             verifyDeleteArticle();
         }
@@ -222,7 +251,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
             myManager.ActiveBrowser.RefreshDomTree();
 
             HtmlInputText artesearch = objarticle.searcharticlenum.As<HtmlInputText>();
-            artesearch.Text = "355039996";
+            artesearch.Text = "5746857";
 
             myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, artesearch.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);

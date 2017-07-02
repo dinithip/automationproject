@@ -39,8 +39,18 @@ namespace Casat4._0_Testing.ObjectRepo.Login
 
         public Element usertable { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]"); } }
 
-        
+        // Login screen view
 
+        public Element loginpgheading { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div/div/div/div[2]/h3"); } }
 
+        public Element usernamelabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[1]/label"); } }
+
+        public Element passwordlabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[2]/label"); } }
+
+        public Element remembermelabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[3]/div/label"); } }
+
+        public Element forgotlabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[3]/a"); } }
+
+        public Element signinname { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[4]/button"); } }
     }
 }

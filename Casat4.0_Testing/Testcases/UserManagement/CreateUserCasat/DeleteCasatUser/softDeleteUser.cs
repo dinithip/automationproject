@@ -16,18 +16,18 @@ using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
-using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Menus;
-using Casat4._0_Testing.ObjectRepo.Articles;
-using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.CasatUser;
+using Casat4._0_Testing.ObjectRepo.Adduser;
 
-namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.DeleteCasatUser
 {
     /// <summary>
-    /// Summary description for EditArticle
+    /// Summary description for softDeleteUser
     /// </summary>
     [TestClass]
-    public class EditArticle : BaseTest
+    public class softDeleteUser : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -57,14 +57,15 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         string _username;
         string _password;
 
-        string _articlenumber;
-        string _articlename;
-        string _amount;
-        string _articletype;
-        string _editarticle;
-        //string _fromco;
-        //string _toco;
+        string _softdelete;
 
+        
+        string _firstname;
+        string _lastname;
+        string _email;
+        string _phone;
+        string _accessrole;
+        
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -137,150 +138,139 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\EditArticle.csv", "EditArticle#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\EditArticle.csv")]
-        public void TestMethod_EditArticle()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\deleteuser.csv", "deleteuser#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\deleteuser.csv")]
+        public void TestMethod_softdeleteCasatUser()
         {
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
 
-            myManager.ActiveBrowser.Window.Maximize();           
+            myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
+
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
-            data.MouseHover();
+            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
+            system.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlAnchor articles = menus.Articlelink.As<HtmlAnchor>();
-            articles.MouseClick();
+            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
+            users.MouseClick();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjArticle objarticle = new ObjArticle(myManager);
+            // Search Casat user to Delete
 
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            ObjDeleteUser objdelete = new ObjDeleteUser(myManager);
 
-            // Search Article to Edit
+            HtmlInputText usern = objdelete.searchusername.As<HtmlInputText>();
+            usern.MouseClick();
 
-            HtmlInputText articleno = objarticle.searcharticlenum.As<HtmlInputText>();
-            
-            articleno.Text = _editarticle;
+            usern.Text = _softdelete;
 
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articleno.GetRectangle());
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usern.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Select one Article to Edit
-            HtmlInputCheckBox firstrowcheck;
+            // Select one user to Delete
+
+            HtmlTable Usertable = objdelete.usertbl.As<HtmlTable>();
             
-            HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
+            HtmlInputCheckBox rowcheck = objdelete.rowcheck1.As<HtmlInputCheckBox>();
+            rowcheck.Check(true);
 
-            if (articletbl.BodyRows.Count > 0)
-            {
-                firstrowcheck = objeditarticle.editrowcheck1.As<HtmlInputCheckBox>();
-                firstrowcheck.Check(true);
+                // click on Delete user button
+            HtmlButton deletebutton = objdelete.deletebtn.As<HtmlButton>();
+            deletebutton.Click();
 
-                // click on Edit Article button
-                Element editbutton = objeditarticle.editbtn;   
-                myManager.ActiveBrowser.Actions.Click(editbutton);
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            }
-            else
-            {
-                throw new Exception("no matching data to edit");
-            }
+            // Verify Confirmation popup
+            Element verifyconfirmation = objdelete.confirmationtxt;
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected user/s?"));
 
-            updateArticle();
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            verifyArticle();
+            // Click Yes
+            Element yesbtn = objdelete.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            verifysoftdelete();
         }
 
-       
-
-        public void updateArticle()
+        public void verifysoftdelete()
         {
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            ObjAdduser objadduser = new ObjAdduser(myManager);
+
+            Element addbtn = objadduser.createbtn;
+            myManager.ActiveBrowser.Actions.Click(addbtn);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText usernametxt = objadduser.usernametxt.As<HtmlInputText>();
+            HtmlInputText firstname = objadduser.txtfrstname.As<HtmlInputText>();
+            HtmlInputText lastname = objadduser.txtlastname.As<HtmlInputText>();
+            HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
+            HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();
+            HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();           
+
+            Element savebtn = objadduser.btnsave;
+
+            usernametxt.Text = _softdelete;
+            firstname.Text = _firstname;
+            lastname.Text = _lastname;
+            emailaddress.Text = _email;
+            phone.Text = _phone;
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
+            accessR.MouseClick();
+            Thread.Sleep(1000);
+            accessR.SelectByText(_accessrole);
+            accessR.MouseHover();
+            accessR.SelectByText(_accessrole, true);
+
+            myManager.ActiveBrowser.Actions.Click(savebtn);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText artnum = objeditarticle.editnumbertxt.As<HtmlInputText>();
-            HtmlInputText artname =objeditarticle.editnametxt.As<HtmlInputText>();
-            //HtmlInputText amt;
-            HtmlSelect arttype = objeditarticle.edittypetxt.As<HtmlSelect>();
-           // HtmlSelect fromco = objeditarticle.editfromcotxt.As<HtmlSelect>();
-            HtmlSelect toco = objeditarticle.edittocotxt.As<HtmlSelect>();
-            Element updatebtn = objeditarticle.updatebtn;
-                       
-            //amt = myManager.ActiveBrowser.Find.ById("l4").As<HtmlInputText>();          
-            artnum.Text = _articlenumber;
-            artname.Text = _articlename;
-            //amt.Text = _amount;
+            Element verifyexisting = objadduser.existingMsg;
+            Assert.IsTrue(verifyexisting.InnerText.Contains("Username already exist.Please try again"));
 
-            arttype.MouseClick();
-            Thread.Sleep(1000);
-            arttype.SelectByText(_articletype, true);
-
-            /*
-            fromco.MouseClick();
-            Thread.Sleep(1000);
-            fromco.SelectByText(_fromco, true);
-            */
-
-            /*
-            toco.MouseClick();
-            Thread.Sleep(1000);
-            toco.SelectByText(_toco, true);
-            */
-
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
-            //Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span");
-            //Assert.AreEqual(verifymandatorymsg.InnerText, "tttt");
-
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
-        private void verifyArticle()
-        {
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText articlesearch;
-            articlesearch = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[2]/th[3]/input").As<HtmlInputText>();
-
-            articlesearch.Text = _articlenumber;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articlesearch.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-
-
-        }
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _articlenumber = TestContext.DataRow["articlenumber"].ToString();
-            _articlename = TestContext.DataRow["articlename"].ToString();
-            _amount = TestContext.DataRow["amount"].ToString();
-            _articletype = TestContext.DataRow["articletype"].ToString();
-            _editarticle = TestContext.DataRow["editarticle"].ToString();
-            //_fromco = TestContext.DataRow["fromco"].ToString();
-            //_toco = TestContext.DataRow["toco"].ToString();
+            _softdelete = TestContext.DataRow["softdelete"].ToString();
+            _firstname = TestContext.DataRow["firstname"].ToString();
+            _lastname = TestContext.DataRow["lastname"].ToString();
+            _email = TestContext.DataRow["email"].ToString();
+            _phone = TestContext.DataRow["phone"].ToString();
+            _accessrole = TestContext.DataRow["accessrole"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run
@@ -288,16 +278,9 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         public void MyTestCleanup()
         {
 
-            //Screen_shot
-            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
-            {
-                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
-                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
-                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            }
-            Thread.Sleep(2000);
-            myManager.Dispose();
+            //
+            // Place any additional cleanup here
+            //
 
             #region WebAii CleanUp
 

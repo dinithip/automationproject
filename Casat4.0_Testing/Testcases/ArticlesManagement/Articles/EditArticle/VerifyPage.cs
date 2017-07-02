@@ -17,6 +17,9 @@ using ArtOfTest.WebAii.Silverlight.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using System.Threading;
+using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
+using Casat4._0_Testing.ObjectRepo.Articles;
 
 namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.EditArticle
 {
@@ -136,7 +139,9 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.EditArticle
 
             // -- End of Login ---
 
-            HtmlAnchor data = myManager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[3]/a").As<HtmlAnchor>();
+            ObjMenus menus = new ObjMenus(myManager);
+
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
             data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
@@ -144,43 +149,50 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.EditArticle
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlAnchor articles = myManager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[3]/ul/li[2]/a").As<HtmlAnchor>();
+            HtmlAnchor articles = menus.Articlelink.As<HtmlAnchor>();
             articles.MouseClick();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputCheckBox rowcheckedit;
+            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            ObjArticle objarticle = new ObjArticle(myManager);
 
-            rowcheckedit = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/tbody/tr[2]/td[1]/input").As<HtmlInputCheckBox>();
+
+            HtmlInputCheckBox rowcheckedit = objeditarticle.editrowcheck1.As<HtmlInputCheckBox>();
             rowcheckedit.MouseClick();
 
-            Element editbutton;
-            editbutton = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/p[2]/button");
+            Element editbutton = objarticle.editArticlebtn;
             myManager.ActiveBrowser.Actions.Click(editbutton);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifytitle = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2");
+            Element verifytitle = objeditarticle.editpagetitle;
             Assert.IsTrue(verifytitle.InnerText.Contains("Edit Article"));
             
-            Element verifyLabel1 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[1]/div[1]/label");
-            Assert.IsTrue(verifyLabel1.InnerText.Contains("Article Number *"));
+            Element articlenum = objeditarticle.editnumberlabel;
+            Assert.IsTrue(articlenum.InnerText.Contains("Article Number *"));
 
-            Element verifyLabel2 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[1]/label");
-            Assert.IsTrue(verifyLabel2.InnerText.Contains("Article Name*"));
+            Element articlename = objeditarticle.editnamelabel;
+            Assert.IsTrue(articlename.InnerText.Contains("Article Name*"));
 
-            Element verifyLabel3 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[3]/div[1]/label");
-            Assert.IsTrue(verifyLabel3.InnerText.Contains("Amount *"));
+            Element amount = objeditarticle.editamountlabel;
+            Assert.IsTrue(amount.InnerText.Contains("Amount *"));
 
-            Element verifyLabel4 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[4]/div[1]/label");
-            Assert.IsTrue(verifyLabel4.InnerText.Contains("Article Type *"));
+            Element artitype = objeditarticle.edittypelabel;
+            Assert.IsTrue(artitype.InnerText.Contains("Article Type *"));
+
+            Element fromco = objeditarticle.editfromcolabel;
+            Assert.IsTrue(fromco.InnerText.Contains("From CO"));
+
+            Element toco = objeditarticle.edittocolabel;
+            Assert.IsTrue(toco.InnerText.Contains("To CO"));
 
             //Element verifybutton1 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div/div[2]/div[1]/input");
             //Assert.IsTrue(verifybutton1.InnerText.Contains("Update"));
 
-            Element verifybutton2 = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div/div[2]/div[2]/button");
+            Element verifybutton2 = objeditarticle.updatebackbtn;
             Assert.IsTrue(verifybutton2.InnerText.Contains("Back"));
 
             Thread.Sleep(1000);

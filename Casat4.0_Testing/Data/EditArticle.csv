@@ -1,2 +1,2 @@
-url,username,password,editarticle,articlenumber,articlename,amount,articletype
-http://146.185.172.122:8280/QA/#/login,admin,admin,5600,56006,Edit Article2,5,Tool
+url,username,password,editarticle,articlenumber,articlename,articletype,fromco,toco
+http://146.185.172.122:8280/QA/#/login,admin,admin,5600,56006,Edit Article2,Tool,,

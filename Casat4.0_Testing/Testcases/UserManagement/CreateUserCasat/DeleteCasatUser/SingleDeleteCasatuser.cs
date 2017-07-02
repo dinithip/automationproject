@@ -49,12 +49,14 @@ namespace Casat4._0_Testing
                 testContextInstance = value;
             }
         }
+
         Settings mySettings;
         Manager myManager;
 
         string _Url;
         string _username;
         string _password;
+
         string _searchusername;
 
         //Use ClassInitialize to run code before running the first test in the class
@@ -175,20 +177,17 @@ namespace Casat4._0_Testing
            
             if (Usertable.BodyRows.Count > 0)
             {
-
                 HtmlInputCheckBox rowcheck = objdelete.rowcheck1.As<HtmlInputCheckBox>();
                 rowcheck.Check(true);
                 
                 // click on Delete user button
                 HtmlButton deletebutton = objdelete.deletebtn.As<HtmlButton>();                
-                deletebutton.Click();
-               
+                deletebutton.Click();             
             }
             else
             {
                 throw new Exception("no matching data to Delete");
             }
-
 
             // --- Scenario 1: Delete user successfully --- //
 
@@ -209,15 +208,12 @@ namespace Casat4._0_Testing
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-
             // --- Scenario 2: Click No --- //
             /*
             Element nobutton = objdelete.nobtn;         
             myManager.ActiveBrowser.Actions.Click(nobutton);
          
-            */
-                   
-
+            */                  
             verifyDeleteUser();
         }
 

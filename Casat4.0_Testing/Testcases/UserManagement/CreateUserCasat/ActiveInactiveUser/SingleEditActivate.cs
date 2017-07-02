@@ -20,6 +20,7 @@ using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.ActiveDeactiveuser;
 using Casat4._0_Testing.ObjectRepo.CasatUser.Edit;
+using Casat4._0_Testing.ObjectRepo.Login;
 
 namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInactiveUser
 {
@@ -254,7 +255,40 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             Assert.AreEqual(casattable.BodyRows[0].Cells[7].InnerText, _status);
 
         }
+        /*
+        public void logintoActiveUser()
+        {
+            ObjMenus menus = new ObjMenus(myManager);
+            ObjLogin objlogin = new ObjLogin(myManager);
+            ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
 
+            HtmlListItem uslink = menus.user.As<HtmlListItem>();
+            uslink.MouseHover();
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor logout = menus.logoutlink.As<HtmlAnchor>();
+            logout.MouseClick();
+
+            Thread.Sleep(30000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifylg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div/div/div/div[2]/h3");
+            Assert.IsTrue(verifylg.InnerText.Contains("Welcome to Casat"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText un = objlogin.txtusername.As<HtmlInputText>();
+            HtmlInputPassword pw = objlogin.txtpassword.As<HtmlInputPassword>();
+            Element log = objlogin.btnlogin;
+
+
+        }
+        */
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();

@@ -223,6 +223,8 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.BatchEditProduct
            
             Element pgverify2 = objproduct.batcheditpgtitle;
             Assert.IsTrue(pgverify2.InnerText.Contains("Batch Edit Products"));
+
+
         }
 
 

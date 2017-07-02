@@ -16,18 +16,17 @@ using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
-using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Menus;
-using Casat4._0_Testing.ObjectRepo.Articles;
-using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
+namespace Casat4._0_Testing.Testcases.Products.Prouct.BatchEditProduct
 {
     /// <summary>
-    /// Summary description for EditArticle
+    /// Summary description for updateWithoutData
     /// </summary>
     [TestClass]
-    public class EditArticle : BaseTest
+    public class updateWithoutData : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -57,14 +56,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         string _username;
         string _password;
 
-        string _articlenumber;
-        string _articlename;
-        string _amount;
-        string _articletype;
-        string _editarticle;
-        //string _fromco;
-        //string _toco;
-
+        string _searchproduct;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -137,16 +129,17 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\EditArticle.csv", "EditArticle#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\EditArticle.csv")]
-        public void TestMethod_EditArticle()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addProduct.csv", "addProduct#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addProduct.csv")]
+        public void TestMethod_batchprodupdateWithoutData()
         {
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
 
-            myManager.ActiveBrowser.Window.Maximize();           
+            myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
+
             ObjMenus menus = new ObjMenus(myManager);
 
             HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
@@ -157,130 +150,74 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlAnchor articles = menus.Articlelink.As<HtmlAnchor>();
-            articles.MouseClick();
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjArticle objarticle = new ObjArticle(myManager);
+            ObjProduct objproduct = new ObjProduct(myManager);
 
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            HtmlInputText search = objproduct.namesearch.As<HtmlInputText>();
+            search.Text = _searchproduct;
 
-            // Search Article to Edit
-
-            HtmlInputText articleno = objarticle.searcharticlenum.As<HtmlInputText>();
-            
-            articleno.Text = _editarticle;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articleno.GetRectangle());
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, search.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Select one Article to Edit
-            HtmlInputCheckBox firstrowcheck;
-            
-            HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
+            // Select multiple Products
 
-            if (articletbl.BodyRows.Count > 0)
+            HtmlTable producttbl = objproduct.producttable.As<HtmlTable>();
+
+            if (producttbl.BodyRows.Count > 0)
             {
-                firstrowcheck = objeditarticle.editrowcheck1.As<HtmlInputCheckBox>();
+                HtmlInputCheckBox firstrowcheck = objproduct.row1.As<HtmlInputCheckBox>();
                 firstrowcheck.Check(true);
 
-                // click on Edit Article button
-                Element editbutton = objeditarticle.editbtn;   
-                myManager.ActiveBrowser.Actions.Click(editbutton);
+                HtmlInputCheckBox secondrowcheck = objproduct.row2.As<HtmlInputCheckBox>();
+                secondrowcheck.Check(true);
 
+                // click on Edit button
+                HtmlButton editbtn = objproduct.editproductbtn.As<HtmlButton>();
+                editbtn.Click();
             }
             else
             {
                 throw new Exception("no matching data to edit");
             }
 
-            updateArticle();
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            verifyArticle();
-        }
-
-       
-
-        public void updateArticle()
-        {
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            Element update = objproduct.batchupdatebtn;
+            myManager.ActiveBrowser.Actions.Click(update);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText artnum = objeditarticle.editnumbertxt.As<HtmlInputText>();
-            HtmlInputText artname =objeditarticle.editnametxt.As<HtmlInputText>();
-            //HtmlInputText amt;
-            HtmlSelect arttype = objeditarticle.edittypetxt.As<HtmlSelect>();
-           // HtmlSelect fromco = objeditarticle.editfromcotxt.As<HtmlSelect>();
-            HtmlSelect toco = objeditarticle.edittocotxt.As<HtmlSelect>();
-            Element updatebtn = objeditarticle.updatebtn;
-                       
-            //amt = myManager.ActiveBrowser.Find.ById("l4").As<HtmlInputText>();          
-            artnum.Text = _articlenumber;
-            artname.Text = _articlename;
-            //amt.Text = _amount;
-
-            arttype.MouseClick();
-            Thread.Sleep(1000);
-            arttype.SelectByText(_articletype, true);
-
-            /*
-            fromco.MouseClick();
-            Thread.Sleep(1000);
-            fromco.SelectByText(_fromco, true);
-            */
-
-            /*
-            toco.MouseClick();
-            Thread.Sleep(1000);
-            toco.SelectByText(_toco, true);
-            */
-
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
-            //Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span");
-            //Assert.AreEqual(verifymandatorymsg.InnerText, "tttt");
-
-
-        }
-
-        private void verifyArticle()
-        {
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText articlesearch;
-            articlesearch = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[2]/th[3]/input").As<HtmlInputText>();
-
-            articlesearch.Text = _articlenumber;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articlesearch.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+            Element verifymsg = objproduct.nobatchupdatemsg;
+            Assert.IsTrue(verifymsg.InnerText.Contains("You haven't done any changes"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element pgverify = objproduct.batcheditpgtitle;
+            Assert.IsTrue(pgverify.InnerText.Contains("Batch Edit Products"));
 
-
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
+
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _articlenumber = TestContext.DataRow["articlenumber"].ToString();
-            _articlename = TestContext.DataRow["articlename"].ToString();
-            _amount = TestContext.DataRow["amount"].ToString();
-            _articletype = TestContext.DataRow["articletype"].ToString();
-            _editarticle = TestContext.DataRow["editarticle"].ToString();
-            //_fromco = TestContext.DataRow["fromco"].ToString();
-            //_toco = TestContext.DataRow["toco"].ToString();
+            _searchproduct = TestContext.DataRow["searchproduct"].ToString();
+
         }
 
         // Use TestCleanup to run code after each test has run
@@ -288,16 +225,9 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         public void MyTestCleanup()
         {
 
-            //Screen_shot
-            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
-            {
-                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
-                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
-                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            }
-            Thread.Sleep(2000);
-            myManager.Dispose();
+            //
+            // Place any additional cleanup here
+            //
 
             #region WebAii CleanUp
 

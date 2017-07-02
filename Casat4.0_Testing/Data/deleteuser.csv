@@ -1,2 +1,2 @@
-url,username,password,searchusername,searchbatchdelete
-http://146.185.172.122:8280/QA/#/login,admin,admin,singledelete,batchdelete
+url,username,password,searchusername,searchbatchdelete,softdelete,firstname,lastname,email,phone,accessrole,batchsooftdelete
+http://146.185.172.122:8280/QA/#/login,admin,admin,singledelete,batchdelete,softdelete4,userdelete1,last1,u1@mvv.se,7775654566,ROLE_ADMIN,testsofftbatch1

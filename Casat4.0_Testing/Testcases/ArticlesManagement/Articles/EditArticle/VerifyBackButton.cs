@@ -19,6 +19,7 @@ using Casat4._0_Testing.Utilities;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using Casat4._0_Testing.ObjectRepo.Articles;
+using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
 
 namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.EditArticle
 {
@@ -156,31 +157,36 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.EditArticle
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjArticle objarticle = new ObjArticle(myManager);
+            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
 
-            HtmlInputCheckBox rowcheckedit;
-
-            rowcheckedit = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/tbody/tr[2]/td[1]/input").As<HtmlInputCheckBox>();
+            HtmlInputCheckBox rowcheckedit = objeditarticle.check1.As<HtmlInputCheckBox>();
             rowcheckedit.MouseClick();
 
-            Element editbutton;
-            editbutton = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/p[2]/button");
+            Element editbutton = objeditarticle.editbtn;
             myManager.ActiveBrowser.Actions.Click(editbutton);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            /*
+            // Back with data
             HtmlInputText artnumb = myManager.ActiveBrowser.Find.ById("l0").As<HtmlInputText>();
             HtmlInputText artnm = myManager.ActiveBrowser.Find.ById("l1").As<HtmlInputText>();
             HtmlInputText amn = myManager.ActiveBrowser.Find.ById("l4").As<HtmlInputText>();
-            Element bckbutton = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div/div[2]/div[2]/button");
-
+            
             artnumb.Text = "5678";
             artnm.Text = "edit";
             amn.Text = "5";
+            */
+
+            Element bckbutton = objeditarticle.updatebackbtn;
             myManager.ActiveBrowser.Actions.Click(bckbutton);
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             // Redirect to Article Page
-            Element verifyPage = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h3");
+            Element verifyPage = objarticle.articlepagetitle;
             Assert.AreEqual(verifyPage.InnerText, "Article");
 
             Thread.Sleep(1000);

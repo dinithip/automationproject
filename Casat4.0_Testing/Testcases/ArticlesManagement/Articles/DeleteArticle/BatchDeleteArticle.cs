@@ -19,6 +19,7 @@ using Casat4._0_Testing.Utilities;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Articles;
 using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
 
 namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
 {
@@ -155,6 +156,8 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjArticle objarticle = new ObjArticle(myManager);
+            ObjDeleteArticle objdeletearticle = new ObjDeleteArticle(myManager);
+
 
             // Search Articles to Batch Delete
 
@@ -174,26 +177,66 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.DeleteArticle
             // Select Articles to Delete
 
             HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
-
-            
-            
-
+                      
             if (articletbl.BodyRows.Count > 0)
             {
-                HtmlInputCheckBox rowcheck1 = objarticle.deleterowcheck1.As<HtmlInputCheckBox>();
+                HtmlInputCheckBox rowcheck1 = objdeletearticle.deleterowcheck1.As<HtmlInputCheckBox>();
                 rowcheck1.Check(true);
 
-                HtmlInputCheckBox rowcheck2 = objarticle.deleterowcheck2.As<HtmlInputCheckBox>();
+                HtmlInputCheckBox rowcheck2 = objdeletearticle.deleterowcheck2.As<HtmlInputCheckBox>();
                 rowcheck2.Check(true);
 
                 // click on Delete Article button
-                HtmlButton deletebutton = objarticle.deletebtn.As<HtmlButton>();
+                HtmlButton deletebutton = objdeletearticle.deletebtn.As<HtmlButton>();
                 deletebutton.Click();
             }
             else
             {
                 throw new Exception("no matching Article to Delete");
             }
+
+            // Verify Confirmation popup
+            Element verifyconfirmation = objdeletearticle.batchdeleteconfirmation;
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected article(s)?"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+
+            // Click Yes
+            Element yesbutton = objdeletearticle.yesbtnbatchdelete;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifysuccess = objdeletearticle.batchdeletesuccess;
+            Assert.IsTrue(verifysuccess.InnerText.Contains(""));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypg = objarticle.articlepagetitle;
+            Assert.IsTrue(verifypg.InnerText.Contains("Article"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //  --- End of YES ---
+
+            /*
+            // NO
+            Element nobutton = objdeletearticle.nobtnbatchdelete;
+            myManager.ActiveBrowser.Actions.Click(nobutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verify = objarticle.articlepagetitle;
+            Assert.IsTrue(verify.InnerText.Contains("Article"));
+            // --- End of NO ---
+            */
+
 
             verifyDeleteArticle();
 

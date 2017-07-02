@@ -108,42 +108,7 @@ namespace Casat4._0_Testing.ObjectRepo.Articles
 
         // ------------------------------------------------------------------------------------------------ //
 
-        // EDIT ARTICLE PAGE
-
-        public Element editpagetitle { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2"); } }
-
-        // Label names
-        public Element editnumberlabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[1]/div[1]/label"); } }
-
-        public Element editnamelabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[1]/label"); } }
-
-        public Element editamountlabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[3]/div[1]/label"); } }
-
-        public Element edittypelabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[4]/div[1]/label"); } }
-
-        public Element editfromcolabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div[1]/label"); } }
-
-        public Element edittocolabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[6]/div[1]/label"); } }
-
-        // Text fields
-
-        public Element editnumbertxt { get { return _manager.ActiveBrowser.Find.ById("l0"); } }
-
-        public Element editnameltxt { get { return _manager.ActiveBrowser.Find.ById("l1"); } }
-
-        public Element editamounttxt { get { return _manager.ActiveBrowser.Find.ById("l4"); } }
-
-        public Element edittypetxt { get { return _manager.ActiveBrowser.Find.ById("type"); } }
-
-        public Element editfromcotxt { get { return _manager.ActiveBrowser.Find.ById("fromCo"); } }
-
-        public Element edittocotxt { get { return _manager.ActiveBrowser.Find.ById("toCo"); } }
-
-        // Buttons
-        public Element updatebtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[5]/div/div[2]/div[1]/input"); } }
-
-        public Element updatebackbtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[7]/div/div[2]/div[2]/button"); } }
-
+        
         // ------------------------------------------------------------------------------------------- //
         // BATCH EDIT PAGE
 
@@ -167,32 +132,7 @@ namespace Casat4._0_Testing.ObjectRepo.Articles
 
 
         // ----------------------------------------------------------------------------------------------------- //
-        // DELETE ARTICLE
-
-        // SINGLE DELETE ARTICLE
-
-        public Element deletebtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/p[4]/button"); } }
-
-        // Row check
-        public Element rowcheckdelete1 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/tbody/tr/td[1]/input"); } }
-
-        public Element confirmation1 { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[2]/p[2]"); } }
-
-        public Element yesbtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[2]"); } }
-
-        // delete success message
-        public Element deletesuccess { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
-
-            // BATCH DELETE ARTICLE
-
-        // Row check
-        public Element deleterowcheck1 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/tbody/tr[3]/td[1]/input"); } }
-
-        public Element deleterowcheck2 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/tbody/tr[4]/td[1]/input"); } }
-
-        public Element batchdeleteconfirmation { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
-
-        public Element yesbtnbatchdelete { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
+        
 
 
     }

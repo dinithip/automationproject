@@ -15,19 +15,16 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Articles;
-using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
+using Casat4._0_Testing.ObjectRepo.Login;
 
-namespace Casat4._0_Testing.Testcases.ArticlesManagement.PageVerifications
+namespace Casat4._0_Testing.Testcases.LoginCasat
 {
     /// <summary>
-    /// Summary description for EditArticlePage
+    /// Summary description for loginPageContents
     /// </summary>
     [TestClass]
-    public class EditArticlePage : BaseTest
+    public class loginPageContents : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +49,6 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.PageVerifications
 
         Settings mySettings;
         Manager myManager;
-
-        string _Url;
-        string _username;
-        string _password;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -128,81 +121,31 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.PageVerifications
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_editArticlePage()
+        public void TestMethod_loginPageContents()
         {
-            readData();
-
-            CommonFunctions.Login(myManager, _username, _password, _Url);
-
+            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122:8280/QA/#/login");
             myManager.ActiveBrowser.Window.Maximize();
 
-            // -- End of Login ---
-
-            ObjMenus menus = new ObjMenus(myManager);
-
-            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
-            data.MouseHover();
-
+            Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            ObjLogin objlogin = new ObjLogin(myManager);
 
-            HtmlAnchor articles = menus.Articlelink.As<HtmlAnchor>();
-            articles.MouseClick();
+            Element heading = objlogin.loginpgheading;
+            Assert.IsTrue(heading.InnerText.Contains("Welcome to Casat"));
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            Element usernamelbl = objlogin.usernamelabel;
+            Assert.IsTrue(usernamelbl.InnerText.Contains("Username"));
 
-            ObjArticle objarticle = new ObjArticle(myManager);
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
+            Element passwordlbl = objlogin.passwordlabel;
+            Assert.IsTrue(passwordlbl.InnerText.Contains("Password"));
 
-            HtmlInputCheckBox firstrowcheck;
+            Element remembermelbl = objlogin.remembermelabel;
+            Assert.IsTrue(remembermelbl.InnerText.Contains("Remember me"));
 
-            HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
-       
-            firstrowcheck = objeditarticle.check1.As<HtmlInputCheckBox>();
-            firstrowcheck.Check(true);
+            //Element forgotlbl = objlogin.remembermelabel;
+            //Assert.IsTrue(forgotlbl.InnerText.Contains("Forgot Password?"));
 
-                // click on Edit Article button
-            Element editbutton = objeditarticle.editbtn;
-            myManager.ActiveBrowser.Actions.Click(editbutton);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element editpgTitle = objeditarticle.editpagetitle;
-            Assert.IsTrue(editpgTitle.InnerText.Contains("Edit Article"));
-
-            // Verify labelnames
-            Element editnumlabl = objeditarticle.editnumberlabel;
-            Assert.IsTrue(editnumlabl.InnerText.Contains("Article Number *"));
-
-            Element editnamelbl = objeditarticle.editnamelabel;
-            Assert.IsTrue(editnamelbl.InnerText.Contains("Article Name*"));
-
-            Element editamountlbl = objeditarticle.editamountlabel;
-            Assert.IsTrue(editamountlbl.InnerText.Contains("Amount"));
-
-            Element edittypelbl = objeditarticle.edittypelabel;
-            Assert.IsTrue(edittypelbl.InnerText.Contains("Article Type *"));
-
-            Element fromcolbl = objeditarticle.editfromcolabel;
-            Assert.IsTrue(fromcolbl.InnerText.Contains("From CO"));
-
-            Element tocolbl = objeditarticle.edittocolabel;
-            Assert.IsTrue(tocolbl.InnerText.Contains("To CO"));
-
-            Thread.Sleep(1000);
-        }
-
-
-        public void readData()
-        {
-            _Url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
         }
 
 

@@ -67,6 +67,8 @@
     <Compile Include="ObjectRepo\AccessRole\ObjAccessroleMessages.cs" />
     <Compile Include="ObjectRepo\ActiveDeactiveuser\ObjActiveDeactive.cs" />
     <Compile Include="ObjectRepo\Articles\AddArticle\ObjAddArticle.cs" />
+    <Compile Include="ObjectRepo\Articles\AddArticle\ObjDeleteArticle.cs" />
+    <Compile Include="ObjectRepo\Articles\AddArticle\ObjEditArticle.cs" />
     <Compile Include="ObjectRepo\Articles\ObjArticle.cs" />
     <Compile Include="ObjectRepo\ArticleUsageGroup\ObjArticleUsageGroup.cs" />
     <Compile Include="ObjectRepo\CasatUser\Adduser\ObjCasatPageContents.cs" />
@@ -98,6 +100,8 @@
     <Compile Include="Testcases\ArticlesManagement\Articles\AddArticle\VerifyBackButton.cs" />
     <Compile Include="Testcases\ArticlesManagement\Articles\BatchEditArticle\BatchEditArticle.cs" />
     <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\BatchDeleteArticle.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\deleteArticlePopup.cs" />
+    <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\deleteConnectedArticle.cs" />
     <Compile Include="Testcases\ArticlesManagement\Articles\DeleteArticle\SingleDeleteArticle.cs" />
     <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\EditArticle.cs" />
     <Compile Include="Testcases\ArticlesManagement\Articles\EditArticle\ExistingEditArticle.cs" />
@@ -109,10 +113,13 @@
     <Compile Include="Testcases\ArticlesManagement\PageVerifications\ViewArticlePage.cs" />
     <Compile Include="Testcases\LoginCasat\FirstTimeLogin\passwordMismatchFirsttime.cs" />
     <Compile Include="Testcases\LoginCasat\InvalidLogin.cs" />
+    <Compile Include="Testcases\LoginCasat\loginPageContents.cs" />
     <Compile Include="Testcases\LoginCasat\UserLocked\userLocked.cs" />
     <Compile Include="Testcases\Orders\CreateOrder.cs" />
+    <Compile Include="Testcases\Orders\createOrderBackBtn.cs" />
     <Compile Include="Testcases\Orders\createOrderTable.cs" />
     <Compile Include="Testcases\Orders\ExistingOrder.cs" />
+    <Compile Include="Testcases\Orders\invalidOrderVariant.cs" />
     <Compile Include="Testcases\Products\PageVerifications\productPage.cs" />
     <Compile Include="Testcases\Products\PageVerifications\variantPage.cs" />
     <Compile Include="Testcases\Products\Prouct\AddProducts\addInvalidProduct.cs" />
@@ -125,6 +132,7 @@
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProdBackbtn.cs" />
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProduct.cs" />
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\invalidBatchEditProduct.cs" />
+    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\updateWithoutData.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActBackbtn.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />
@@ -134,6 +142,7 @@
     <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIMandatoryFields.cs" />
     <Compile Include="Testcases\UserManagement\CreateDIuser\EditUserDI\diEditBtnClick.cs" />
     <Compile Include="Testcases\UserManagement\CreateUserCasat\AddCasatUser\loginToCreatedUser.cs" />
+    <Compile Include="Testcases\UserManagement\CreateUserCasat\DeleteCasatUser\softDeleteUser.cs" />
     <Compile Include="Testcases\UserManagement\CreateUserCasat\EditCasatUser\editBtnClick.cs" />
     <Compile Include="Testcases\UserManagement\CreateUserCasat\UnlockUser\batchLockedtoActive.cs" />
     <Compile Include="Testcases\UserManagement\CreateUserCasat\UnlockUser\lockedToInactive.cs" />

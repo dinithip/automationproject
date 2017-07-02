@@ -184,31 +184,31 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.ViewArticle
             // Verify table heading names
 
             Element idheadingname = objarticle.idheading;
-            Assert.IsTrue(idheadingname.InnerText.Contains(""));
+            Assert.IsTrue(idheadingname.InnerText.Contains("Id"));
 
             Element numheadingname = objarticle.numberheading;
-            Assert.IsTrue(numheadingname.InnerText.Contains(""));
+            Assert.IsTrue(numheadingname.InnerText.Contains("Article Number"));
 
             Element nameheadingname = objarticle.nameheading;
-            Assert.IsTrue(nameheadingname.InnerText.Contains(""));
+            Assert.IsTrue(nameheadingname.InnerText.Contains("Name"));
 
             Element typeheadingname = objarticle.typeheading;
-            Assert.IsTrue(typeheadingname.InnerText.Contains(""));
+            Assert.IsTrue(typeheadingname.InnerText.Contains("Type"));
 
             Element amountheadingname = objarticle.amountheading;
-            Assert.IsTrue(amountheadingname.InnerText.Contains(""));
+            Assert.IsTrue(amountheadingname.InnerText.Contains("Amount"));
 
             Element fromcoheadingname = objarticle.fromcoheading;
-            Assert.IsTrue(fromcoheadingname.InnerText.Contains(""));
+            Assert.IsTrue(fromcoheadingname.InnerText.Contains("From CO"));
 
             Element tocoheadingname = objarticle.tocoheading;
-            Assert.IsTrue(tocoheadingname.InnerText.Contains(""));
+            Assert.IsTrue(tocoheadingname.InnerText.Contains("To CO"));
 
             Element createdateheadingname = objarticle.typeheading;
-            Assert.IsTrue(typeheadingname.InnerText.Contains(""));
+            Assert.IsTrue(typeheadingname.InnerText.Contains("Create Date"));
 
             Element updatedateheadingname = objarticle.updatedateheading;
-            Assert.IsTrue(updatedateheadingname.InnerText.Contains(""));
+            Assert.IsTrue(updatedateheadingname.InnerText.Contains("Update Date"));
 
             Thread.Sleep(1000);
 

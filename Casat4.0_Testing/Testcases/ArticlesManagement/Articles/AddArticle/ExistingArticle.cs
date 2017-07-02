@@ -197,8 +197,7 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
             //Thread.Sleep(2000);
             //myManager.ActiveBrowser.RefreshDomTree();
 
-            //Element savebutton = objarticle.savebtn;
-            //myManager.ActiveBrowser.Actions.Click(savebutton);
+            
 
             HtmlButton save = objarticle.savebtn.As<HtmlButton>();
             save.Click();
@@ -207,11 +206,14 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.AddArticle
             myManager.ActiveBrowser.RefreshDomTree();
 
             //Element verifyexisting = objarticle.existarticlemsg;
-            //Assert.IsTrue(verifyexisting.InnerText.Contains("Article number must be unique. Please try again"));
+            //Assert.IsTrue(verifyexisting.InnerText.Contains("Article number must be unique."));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             //Thread.Sleep(2000);
             //myManager.ActiveBrowser.RefreshDomTree();
-            
+
 
         }
 

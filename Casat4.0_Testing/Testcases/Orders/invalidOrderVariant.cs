@@ -18,18 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.ActiveDeactiveuser;
-using Casat4._0_Testing.ObjectRepo.UnlockUser;
-using Casat4._0_Testing.ObjectRepo.CasatUser.Edit;
-using Casat4._0_Testing.ObjectRepo.Login;
+using Casat4._0_Testing.ObjectRepo.Orders;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
+namespace Casat4._0_Testing.Testcases.Orders
 {
     /// <summary>
-    /// Summary description for unlockToActive
+    /// Summary description for invalidOrderVariant
     /// </summary>
     [TestClass]
-    public class lockToActive : BaseTest
+    public class invalidOrderVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -59,12 +56,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
         string _username;
         string _password;
 
-        string _searchstatus;
-        string _status1;
-        string _status;
-
-        string _username1;
-        string _password1;
+        string _ordernumber;
+        
+        string _invalidvariant;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -137,8 +131,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\userlocked.csv", "userlocked#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\userlocked.csv")]
-        public void TestMethod_lockToActive()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\createOrder.csv", "createOrder#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\createOrder.csv")]
+        public void TestMethod_invalidCreateOrderVariant()
         {
             readData();
 
@@ -147,185 +141,71 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
-
             ObjMenus menus = new ObjMenus(myManager);
-            ObjLogin objlogin = new ObjLogin(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlListItem di = menus.DI.As<HtmlListItem>();
+            di.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
-            ObjUnlockUser objunlockuser = new ObjUnlockUser(myManager);
-            ObjEditUser objedit = new ObjEditUser(myManager);
-
-            // Search locked users
-            HtmlSelect status = objunlockuser.searchstatus.As<HtmlSelect>();
-            status.MouseClick();
             Thread.Sleep(1000);
-            status.SelectByText(_searchstatus, true);
-
-            Thread.Sleep(2000);
-
-            //HtmlTable casattable = objunlockuser.usertable.As<HtmlTable>();
-            //Assert.AreEqual(casattable.BodyRows[0].Cells[7].InnerText, _searchstatus);
-
-            Thread.Sleep(2000);
-
-            HtmlInputCheckBox check1 = objunlockuser.rowcheck1.As<HtmlInputCheckBox>();
-            check1.Check(true);
-            Thread.Sleep(2000);
-
-            Element edit = objunlockuser.editbtn;
-            myManager.ActiveBrowser.Actions.Click(edit);
-
-            Thread.Sleep(2000);
-
-            activeuser();
-            verifyActivation();
-            loginToactivateUser();            
-
-        }
-
-        public void activeuser()
-        {
-            ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
-            ObjUnlockUser objunlockuser = new ObjUnlockUser(myManager);
-            ObjEditUser objedit = new ObjEditUser(myManager);
-
-
-            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlSelect selectStatus = objedit.status.As<HtmlSelect>();
+            HtmlAnchor order = menus.orderlink.As<HtmlAnchor>();
+            order.MouseClick();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            selectStatus.MouseClick();
             Thread.Sleep(1000);
-            selectStatus.SelectByText(_status1, true);
-
-            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyconfirmation = objunlockuser.popupconfirmationmsg;
-            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to unlock the selected user?"));
+            ObjOrderTable objordertable = new ObjOrderTable(myManager);
+            ObjCreateOrder objcreateorder = new ObjCreateOrder(myManager);
 
-            Thread.Sleep(5000);
+            Element pagetitle = objordertable.ordertabletitle;
+            Assert.IsTrue(pagetitle.InnerText.Contains("Orders"));
+
+            Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element yesbtn = objactive.yebtn;
-            myManager.ActiveBrowser.Actions.Click(yesbtn);
-            
-            /*
-            Element nobtn = objactive.nobtn;
-            myManager.ActiveBrowser.Actions.Click(nobtn);
+            Element orderstabname = objordertable.ordertab;
+            Assert.IsTrue(orderstabname.InnerText.Contains("Orders"));
 
-            Element verifypg = objedit.titletxt;
-            Assert.IsTrue(verifypg.InnerText.Contains(""));
-            */
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element createbutton = objordertable.createorderbtn;
+            myManager.ActiveBrowser.Actions.Click(createbutton);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element pgtitle = objcreateorder.createorderpgtitle;
+            Assert.IsTrue(pgtitle.InnerText.Contains("Create New Order"));
+
+            HtmlInputText number = objcreateorder.ordernumtxt.As<HtmlInputText>();           
+            HtmlInputText variant = objcreateorder.ordervarianttxt.As<HtmlInputText>();
+
+            number.Text = _ordernumber;          
+            variant.Text = _invalidvariant;
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element save = objcreateorder.savebtn;
+            myManager.ActiveBrowser.Actions.Click(save);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element updatebtn = objedit.btnupdate;
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
+            Element invalidmsg = objcreateorder.variantinvalidmsg;
+            Assert.IsTrue(invalidmsg.InnerText.Contains("Variant(s) (G1) does not exist"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypage = objcreateorder.createorderpgtitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Create New Order"));
+
         }
-
-        public void verifyActivation()
-        {
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjUnlockUser objunlockuser = new ObjUnlockUser(myManager);
-            ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
-            ObjEditUser objedit = new ObjEditUser(myManager);
-            
-
-            Element successmsg = objactive.activesuccessmsg;
-            Assert.IsTrue(successmsg.InnerText.Contains("Changes to the user has been saved. The user account has been unlocked successfully. Password has been reset to default"));
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText searchuser = objactive.searchusername.As<HtmlInputText>();
-            searchuser.Text = "chana";
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchuser.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-                    
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlTable casattable = objedit.usertable.As<HtmlTable>();
-
-            Assert.AreEqual(casattable.BodyRows[0].Cells[7].InnerText, _status1);
-
-            Thread.Sleep(2000);         
-        }
-
-        
-        public void loginToactivateUser()
-        {
-            ObjMenus menus = new ObjMenus(myManager);
-            ObjLogin objlogin = new ObjLogin(myManager);
-            ObjUnlockUser objunlockuser = new ObjUnlockUser(myManager);
-
-            //Thread.Sleep(2000);
-            //myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlListItem uslink = menus.user.As<HtmlListItem>();
-            uslink.MouseHover();
-
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor logout = menus.logoutlink.As<HtmlAnchor>();
-            logout.MouseClick();
-
-            Thread.Sleep(30000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element verifylg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div/div/div/div[2]/h3");
-            Assert.IsTrue(verifylg.InnerText.Contains("Welcome to Casat"));
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText un = objlogin.txtusername.As<HtmlInputText>();
-            HtmlInputPassword pw = objlogin.txtpassword.As<HtmlInputPassword>();
-            Element log = objlogin.btnlogin;
-
-            un.Text = _username1;
-            pw.Text = _password1;
-            myManager.ActiveBrowser.Actions.Click(log);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element verifyresetpg = objunlockuser.pageheadingtxt;
-            Assert.IsTrue(verifyresetpg.InnerText.Contains("You are logging in for the first time. Please change your password first."));
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-        }
-
 
 
         public void readData()
@@ -333,12 +213,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _searchstatus = TestContext.DataRow["searchstatus"].ToString();
-            _status1 = TestContext.DataRow["status1"].ToString();
-            _status = TestContext.DataRow["status"].ToString();
-
-            _username1 = TestContext.DataRow["username1"].ToString();
-            _password1 = TestContext.DataRow["password1"].ToString();
+            _ordernumber = TestContext.DataRow["ordernumber"].ToString();           
+            _invalidvariant = TestContext.DataRow["invalidvariant"].ToString();         
         }
 
         // Use TestCleanup to run code after each test has run

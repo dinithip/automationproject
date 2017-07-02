@@ -15,19 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
 using System.Threading;
+using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
-using Casat4._0_Testing.ObjectRepo.Articles;
 using Casat4._0_Testing.ObjectRepo.Articles.AddArticle;
 
-namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
+namespace Casat4._0_Testing.Testcases.ArticlesManagement.Articles.DeleteArticle
 {
     /// <summary>
-    /// Summary description for EditArticle
+    /// Summary description for deleteArticlePopup
     /// </summary>
     [TestClass]
-    public class EditArticle : BaseTest
+    public class deleteArticlePopup : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -56,15 +55,6 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
         string _Url;
         string _username;
         string _password;
-
-        string _articlenumber;
-        string _articlename;
-        string _amount;
-        string _articletype;
-        string _editarticle;
-        //string _fromco;
-        //string _toco;
-
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -136,17 +126,20 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
 
         }
 
+
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\EditArticle.csv", "EditArticle#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\EditArticle.csv")]
-        public void TestMethod_EditArticle()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
+        public void TestMethod_deleteArticlePopup()
+
         {
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
 
-            myManager.ActiveBrowser.Window.Maximize();           
+            myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
+
             ObjMenus menus = new ObjMenus(myManager);
 
             HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
@@ -163,125 +156,42 @@ namespace Casat4._0_Testing.Testcases.ArticlesManagement.EditArticle
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjArticle objarticle = new ObjArticle(myManager);
-
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
-
-            // Search Article to Edit
-
-            HtmlInputText articleno = objarticle.searcharticlenum.As<HtmlInputText>();
             
-            articleno.Text = _editarticle;
+            ObjDeleteArticle objdeletearticle = new ObjDeleteArticle(myManager);
 
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articleno.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+            HtmlInputCheckBox rowcheck1 = objdeletearticle.deleterowcheck1.As<HtmlInputCheckBox>();
+            rowcheck1.Check(true);
+
+            HtmlButton deletebutton = objdeletearticle.deletebtn.As<HtmlButton>();
+            deletebutton.Click();
+
+            // Verify Confirmation popup
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Select one Article to Edit
-            HtmlInputCheckBox firstrowcheck;
-            
-            HtmlTable articletbl = objarticle.articletable.As<HtmlTable>();
+            Element verifypopuptitle = objdeletearticle.deletepopuptitle;
+            Assert.IsTrue(verifypopuptitle.InnerText.Contains("Delete Articles"));
 
-            if (articletbl.BodyRows.Count > 0)
-            {
-                firstrowcheck = objeditarticle.editrowcheck1.As<HtmlInputCheckBox>();
-                firstrowcheck.Check(true);
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-                // click on Edit Article button
-                Element editbutton = objeditarticle.editbtn;   
-                myManager.ActiveBrowser.Actions.Click(editbutton);
+            Element verifyconfirmation = objdeletearticle.confirmation1;
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected article(s)?"));
 
-            }
-            else
-            {
-                throw new Exception("no matching data to edit");
-            }
-
-            updateArticle();
-
-            verifyArticle();
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
-       
 
-        public void updateArticle()
-        {
-            ObjEditArticle objeditarticle = new ObjEditArticle(myManager);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText artnum = objeditarticle.editnumbertxt.As<HtmlInputText>();
-            HtmlInputText artname =objeditarticle.editnametxt.As<HtmlInputText>();
-            //HtmlInputText amt;
-            HtmlSelect arttype = objeditarticle.edittypetxt.As<HtmlSelect>();
-           // HtmlSelect fromco = objeditarticle.editfromcotxt.As<HtmlSelect>();
-            HtmlSelect toco = objeditarticle.edittocotxt.As<HtmlSelect>();
-            Element updatebtn = objeditarticle.updatebtn;
-                       
-            //amt = myManager.ActiveBrowser.Find.ById("l4").As<HtmlInputText>();          
-            artnum.Text = _articlenumber;
-            artname.Text = _articlename;
-            //amt.Text = _amount;
-
-            arttype.MouseClick();
-            Thread.Sleep(1000);
-            arttype.SelectByText(_articletype, true);
-
-            /*
-            fromco.MouseClick();
-            Thread.Sleep(1000);
-            fromco.SelectByText(_fromco, true);
-            */
-
-            /*
-            toco.MouseClick();
-            Thread.Sleep(1000);
-            toco.SelectByText(_toco, true);
-            */
-
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
-            //Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span");
-            //Assert.AreEqual(verifymandatorymsg.InnerText, "tttt");
-
-
-        }
-
-        private void verifyArticle()
-        {
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText articlesearch;
-            articlesearch = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[2]/th[3]/input").As<HtmlInputText>();
-
-            articlesearch.Text = _articlenumber;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, articlesearch.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-
-
-        }
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _articlenumber = TestContext.DataRow["articlenumber"].ToString();
-            _articlename = TestContext.DataRow["articlename"].ToString();
-            _amount = TestContext.DataRow["amount"].ToString();
-            _articletype = TestContext.DataRow["articletype"].ToString();
-            _editarticle = TestContext.DataRow["editarticle"].ToString();
-            //_fromco = TestContext.DataRow["fromco"].ToString();
-            //_toco = TestContext.DataRow["toco"].ToString();
         }
+
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
