@@ -153,9 +153,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            
+
             ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
 
+
             Element addbutton = objadddiuser.addbtn;
+            
             myManager.ActiveBrowser.Actions.Click(addbutton);
 
             Thread.Sleep(3000);

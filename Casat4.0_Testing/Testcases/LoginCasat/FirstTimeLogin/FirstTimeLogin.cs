@@ -143,12 +143,14 @@ namespace Casat4._0_Testing
 
             // --- First time Login screen ---
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             //Verify First time login screen
             Element verifyFisrttimescreen = firstTime.pageheadingtxt;
             Assert.IsTrue(verifyFisrttimescreen.InnerText.Contains("You are logging in for the first time. Please change your password first."));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             HtmlInputPassword newpassword = firstTime.newpw1.As<HtmlInputPassword>();
@@ -159,7 +161,7 @@ namespace Casat4._0_Testing
             reenterpassword.Text = "pleasechange1A#";
             myManager.ActiveBrowser.Actions.Click(changebtn);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
 
@@ -167,7 +169,7 @@ namespace Casat4._0_Testing
             Element verificationtext = firstTime.verifylogtitle;
             Assert.AreEqual(verificationtext.InnerText, "CASAT Users");
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 

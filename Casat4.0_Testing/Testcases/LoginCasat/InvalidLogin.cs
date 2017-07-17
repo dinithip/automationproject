@@ -53,8 +53,11 @@ namespace Casat4._0_Testing.Testcases.LoginCasat
         Manager myManager;
 
         string _Url;
-        string _username;
-        string _password;
+        //string _username;
+       // string _password;
+
+        string _invalidun;
+        string _invalidpw;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -133,25 +136,42 @@ namespace Casat4._0_Testing.Testcases.LoginCasat
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _Url);
+            myManager.ActiveBrowser.NavigateTo(_Url);
+            //CommonFunctions.Login(myManager, _username, _password, _Url);
             myManager.ActiveBrowser.Window.Maximize();
 
             ObjLogin objlogin = new ObjLogin(myManager);
 
             // Verify Invalid Login
 
+            HtmlInputText un = objlogin.txtusername.As<HtmlInputText>();
+            HtmlInputPassword pw = objlogin.txtpassword.As<HtmlInputPassword>();
+
+            un.Text = _invalidun;
+            pw.Text = _invalidpw;
+
+            Element logbtn = objlogin.btnlogin;
+            myManager.ActiveBrowser.Actions.Click(logbtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+
             Element verifyError = objlogin.invalidloginMsg;
             Assert.IsTrue(verifyError.InnerText.Contains("The entered username & password combination is incorrect"));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
+            //_username = TestContext.DataRow["username"].ToString();
+            //_password = TestContext.DataRow["password"].ToString();
+            _invalidun = TestContext.DataRow["invalidun"].ToString();
+            _invalidpw = TestContext.DataRow["invalidpw"].ToString();
+
         }
 
 

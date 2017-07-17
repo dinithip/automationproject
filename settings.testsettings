@@ -1,9 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<TestSettings
-  id="73b14fbe-45c3-4626-925b-62a46bdb5cfc"
-  name="settings"
-  enableDefaultDataCollectors="false"
-  xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <Description><!--_locID_text="Description1"-->These are default test settings for a local test run.</Description>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="settings" id="73b14fbe-45c3-4626-925b-62a46bdb5cfc" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>These are default test settings for a local test run.</Description>
   <Deployment enabled="false" />
+  <Scripts setupScript="E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing\Casat4.0_Testing\runningscript\DeleteResults.bat" />
+  <Execution>
+    <TestTypeSpecific>
+      <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+        <AssemblyResolution>
+          <TestDirectory useLoadContext="true" />
+        </AssemblyResolution>
+      </UnitTestRunConfig>
+    </TestTypeSpecific>
+    <AgentRule name="Execution Agents">
+    </AgentRule>
+  </Execution>
+  <Properties />
 </TestSettings>
