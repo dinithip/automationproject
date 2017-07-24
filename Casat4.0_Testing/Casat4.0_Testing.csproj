@@ -87,6 +87,7 @@
     <Compile Include="ObjectRepo\Orders\ObjOrderTable.cs" />
     <Compile Include="ObjectRepo\Process\ObjAddStandardActivity.cs" />
     <Compile Include="ObjectRepo\Process\ObjStandardActivity.cs" />
+    <Compile Include="ObjectRepo\Products\ObjDeleteVariant.cs" />
     <Compile Include="ObjectRepo\Products\ObjProduct.cs" />
     <Compile Include="ObjectRepo\Products\ObjVariant.cs" />
     <Compile Include="ObjectRepo\TableLayout\ObjTableLayout.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProduct.cs" />
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\invalidBatchEditProduct.cs" />
     <Compile Include="Testcases\Products\Prouct\BatchEditProduct\updateWithoutData.cs" />
+    <Compile Include="Testcases\Products\Variants\deleteVariant.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActBackbtn.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />

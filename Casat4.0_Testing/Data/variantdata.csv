@@ -1,0 +1,2 @@
+url,username,password,variantname,family,alias,group,groupname,freetext,searchtodelete,searchtobatchdelete,searchtoedit,searchtobatchedit
+http://146.185.172.122:8280/QA/#/login,admin,admin,TESTVARIANT,test family,test alias,2,test group,test freetext,,,,

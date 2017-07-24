@@ -1,4 +1,4 @@
-set location="E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing"  
+set location="D:\Community\Community\Community"  
 @echo off  
 set hh=%time:~0,2%  
 if "%time:~0,1%"==" " set hh=0%hh:~1,1%    
@@ -9,3 +9,5 @@ cd %location%
 cd "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE"  
 echo %DATE% %TIME% > E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing\TestResults\Summary.log  
 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\MSTest.exe" /testcontainer:"E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing\Casat4.0_Testing\bin\Debug\TestOrder.orderedtest" /testsettings:"E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing\settings.testsettings" >>"E:\Mvv\CASAT 4.0\Casat_4.0\TestAutomation\Casat4.0_Testing\TestResults\Summary.log"  
+
+cmd /k

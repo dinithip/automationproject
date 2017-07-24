@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.AdduserDI;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
+namespace Casat4._0_Testing.Testcases.Products.Variants
 {
     /// <summary>
-    /// Summary description for addDIBackbutton
+    /// Summary description for deleteVariant
     /// </summary>
     [TestClass]
-    public class addDIBackbutton : BaseTest
+    public class deleteVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,9 +52,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         Settings mySettings;
         Manager myManager;
 
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _searchtodelete;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -127,60 +129,151 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMehod_addDIBackbutton()
+        public void TestMethod_DeleteVariant()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
-
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjDeleteVariant objdeletevariant = new ObjDeleteVariant(myManager);
+
+            // Search Variant to DELETE
+
+            HtmlInputText variant = objdeletevariant.searchvariant.As<HtmlInputText>();
+
+            variant.Text = _searchtodelete;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, variant.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
+            ObjVariant objvariant = new ObjVariant(myManager);
+
+            // Select one Variant to Delete
+            HtmlInputCheckBox row1;
+
+            HtmlTable varianttbl = objvariant.varianttable.As<HtmlTable>();
+
+            row1 = objdeletevariant.rowcheck1.As<HtmlInputCheckBox>();
+            row1.Check(true);
+
+            // click on Delete button
+            Element deletebutton = objdeletevariant.deletevariantbtn;
+            myManager.ActiveBrowser.Actions.Click(deletebutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            verifycontent();
+
+            // Clck on YES
+            Element yesbutton = objdeletevariant.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
-           
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
 
-
-            Element addbutton = objadddiuser.addbtn;
-            
-            myManager.ActiveBrowser.Actions.Click(addbutton);
-
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element backbuton = objadddiuser.backbtn;
-            myManager.ActiveBrowser.Actions.Click(backbuton);
+            Element verifysuccess = objdeletevariant.deletesuccessmsg;
+            Assert.IsTrue(verifysuccess.InnerText.Contains(""));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifypage = objadddiuser.ditabletitle;
-            Assert.IsTrue(verifypage.InnerText.Contains("DI Users"));
+            Element verifyredirect = objvariant.varianttabletitle;
+            Assert.IsTrue(verifyredirect.InnerText.Contains(""));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
+
+            verifydelete();
+
+            // End of YES
+
+            /*
+            // Click on NO
+            Element nobutton = objdeletevariant.nobtn;
+            myManager.ActiveBrowser.Actions.Click(nobutton);
+
+            Element verifypage = objvariant.varianttabletitle;
+            Assert.IsTrue(verifypage.InnerText.Contains(""));
+            */
+
         }
+
+        public void verifycontent()
+        {
+            ObjDeleteVariant objdeletevariant = new ObjDeleteVariant(myManager);
+
+            // Delete confirmation popup contents
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objdeletevariant.deleteconfirmation;
+            Assert.IsTrue(verifymsg.InnerText.Contains(""));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Artifact connect delete confirmation popup contents
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verify = objdeletevariant.artifactconfirmation;
+            Assert.IsTrue(verify.InnerText.Contains(""));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+        }
+
+        public void verifydelete()
+        {
+            ObjDeleteVariant objdeletevariant = new ObjDeleteVariant(myManager);
+            ObjVariant objvariant = new ObjVariant(myManager);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText searchvariant = objdeletevariant.searchvariant.As<HtmlInputText>();
+            searchvariant.Text = _searchtodelete;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchvariant.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+        }
+        
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();            
+            _password = TestContext.DataRow["password"].ToString();
+            _searchtodelete = TestContext.DataRow["searchtodelete"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run
@@ -198,6 +291,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             }
             Thread.Sleep(2000);
             myManager.Dispose();
+
             #region WebAii CleanUp
 
             // Shuts down WebAii manager and closes all browsers currently running
