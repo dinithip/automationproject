@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for existingVariant
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class existingVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +52,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _existingvariant;
+        string _family;
+        string _alias;
+        string _group;
+        string _groupname;
+        string _freetext;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -124,63 +130,100 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
-
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_existingVariant()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
-
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Validate Username length
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
+            ObjAddVariant objaddvariant = new ObjAddVariant(myManager);
+
+            Element addbutton = objaddvariant.addvariantbtn;
+            myManager.ActiveBrowser.Actions.Click(addbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypage = objaddvariant.createpagetitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Create New Variant"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            addexisting();
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
+        }
+
+        public void addexisting()
+        {
+            ObjAddVariant objaddvariant = new ObjAddVariant(myManager);
+
+            HtmlInputText variantname = objaddvariant.variantnametxt.As<HtmlInputText>();
+            HtmlInputText family = objaddvariant.familytxt.As<HtmlInputText>();
+            HtmlInputText alias = objaddvariant.aliastxt.As<HtmlInputText>();
+            HtmlInputText group = objaddvariant.grouptxt.As<HtmlInputText>();
+            HtmlInputText groupname = objaddvariant.groupnametxt.As<HtmlInputText>();
+            HtmlInputText freetext = objaddvariant.freetexttxt.As<HtmlInputText>();
+
+            variantname.Text = _existingvariant;
+            family.Text = _family;
+            alias.Text = _alias;
+            group.Text = _group;
+            groupname.Text = _groupname;
+            freetext.Text = _freetext;
+
+            Element savebutton = objaddvariant.savebtn;
+            myManager.ActiveBrowser.Actions.Click(savebutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyexisting = objaddvariant.existingmsg;
+            Assert.IsTrue(verifyexisting.InnerText.Contains("Variant name must be unique. Please try again."));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+
 
         }
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            _existingvariant = TestContext.DataRow["existingvariant"].ToString();
+            _family = TestContext.DataRow["family"].ToString();
+            _alias = TestContext.DataRow["alias"].ToString();
+            _group = TestContext.DataRow["group"].ToString();
+            _groupname = TestContext.DataRow["groupname"].ToString();
+            _freetext = TestContext.DataRow["freetext"].ToString();
         }
 
 

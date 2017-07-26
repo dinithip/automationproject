@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.PageVerifications
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for addVariantPage
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class addVariantPage : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,8 +52,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
 
@@ -128,12 +127,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\datasheet.csv", "datasheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\datasheet.csv")]
+        public void TestMethod_addVariantPage()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -141,35 +140,48 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Validate Username length
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
+            ObjAddVariant objaddvariant = new ObjAddVariant(myManager);
+
+            Element addbutton = objaddvariant.addvariantbtn;
+            myManager.ActiveBrowser.Actions.Click(addbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element pgtitle = objaddvariant.createpagetitle;
+            Assert.IsTrue(pgtitle.InnerText.Contains("Create New Variant"));
+
+            Element variantname = objaddvariant.createpagetitle;
+            Assert.IsTrue(variantname.InnerText.Contains("Variant Name *"));
+
+            Element family = objaddvariant.createpagetitle;
+            Assert.IsTrue(family.InnerText.Contains("Family"));
+
+            Element alias = objaddvariant.createpagetitle;
+            Assert.IsTrue(alias.InnerText.Contains("Alias"));
+
+            Element group = objaddvariant.createpagetitle;
+            Assert.IsTrue(group.InnerText.Contains("Group *"));
+
+            Element groupname = objaddvariant.createpagetitle;
+            Assert.IsTrue(groupname.InnerText.Contains("Group Name"));
+
+            Element freetext = objaddvariant.createpagetitle;
+            Assert.IsTrue(freetext.InnerText.Contains("Free Text"));
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -178,11 +190,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            
         }
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for addVariantMandatory
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class addVariantMandatory : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +52,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _variantmandatory;
+        string _groupmandatory;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -128,61 +130,76 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_addVariantMandatoryfields()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
-
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Validate Username length
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
+            ObjAddVariant objaddvariant = new ObjAddVariant(myManager);
+
+            Element addbutton = objaddvariant.addvariantbtn;
+            myManager.ActiveBrowser.Actions.Click(addbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypage = objaddvariant.createpagetitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Create New Variant"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText variantname = objaddvariant.variantnmmandatory.As<HtmlInputText>();
+            HtmlInputText group = objaddvariant.groupmandatory.As<HtmlInputText>();
+
+            variantname.Text = _variantmandatory;
+            group.Text = _groupmandatory;
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element variantmandatorymsg = objaddvariant.variantnmmandatory;
+            Assert.IsTrue(variantmandatorymsg.InnerText.Contains(""));
+
+            Element groupmandatorymsg = objaddvariant.groupmandatory;
+            Assert.IsTrue(groupmandatorymsg.InnerText.Contains(""));
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
+
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            _variantmandatory = TestContext.DataRow["variantmandatory"].ToString();
+            _groupmandatory = TestContext.DataRow["groupmandatory"].ToString();
+            
         }
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

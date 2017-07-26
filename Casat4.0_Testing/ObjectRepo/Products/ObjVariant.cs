@@ -23,6 +23,8 @@ namespace Casat4._0_Testing.ObjectRepo.Products
 
         public Element searchvariant { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
 
+       
+
         // table headings
 
         public Element variantidheading { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[1]/th[2]"); } }
@@ -51,7 +53,10 @@ namespace Casat4._0_Testing.ObjectRepo.Products
 
         public Element variantupdatedheading { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[1]/th[14]"); } }
 
-            // Buttons
+
+        
+
+        // Buttons
 
         public Element addvariantbtn { get { return _manager.ActiveBrowser.Find.ById("create"); } }
 
@@ -66,7 +71,6 @@ namespace Casat4._0_Testing.ObjectRepo.Products
         
 
 
-        
 
     }
 }

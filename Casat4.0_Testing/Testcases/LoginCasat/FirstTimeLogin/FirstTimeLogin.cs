@@ -169,7 +169,7 @@ namespace Casat4._0_Testing
             Element verificationtext = firstTime.verifylogtitle;
             Assert.AreEqual(verificationtext.InnerText, "CASAT Users");
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 

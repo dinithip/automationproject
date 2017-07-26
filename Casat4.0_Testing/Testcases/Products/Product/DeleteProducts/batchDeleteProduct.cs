@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for batchDeleteProduct
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class batchDeleteProduct : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +52,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
+        string _searchtobatchdelete;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -128,12 +128,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_batchDeleteProduct()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -141,64 +141,115 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Validate Username length
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
+            ObjDeleteProduct objdeleteproduct = new ObjDeleteProduct(myManager);
+
+            // Search Product to batch DELETE
+
+            HtmlInputText product = objdeleteproduct.searchproduct.As<HtmlInputText>();
+
+            product.Text = _searchtobatchdelete;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, product.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Select Products to Delete
+            HtmlInputCheckBox row1;
+            HtmlInputCheckBox row2;
+
+            HtmlTable producttbl = objdeleteproduct.producttable.As<HtmlTable>();
+
+            row1 = objdeleteproduct.rowselect1.As<HtmlInputCheckBox>();
+            row1.Check(true);
+
+            row2 = objdeleteproduct.rowselect2.As<HtmlInputCheckBox>();
+            row2.Check(true);
+
+            // click on Delete button
+            Element deletebutton = objdeleteproduct.deletebtn;
+            myManager.ActiveBrowser.Actions.Click(deletebutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objdeleteproduct.deleteconfirmationmsg;
+            Assert.IsTrue(verifymsg.InnerText.Contains("Are you sure you want to delete the selected product/s?"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // If YES
+            // Click on YES
+            Element yesbutton = objdeleteproduct.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifydelete = objdeleteproduct.producttabletitle;
+            Assert.IsTrue(verifydelete.InnerText.Contains("Selected product/s have been deleted successfully."));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyredirect = objdeleteproduct.producttabletitle;
+            Assert.IsTrue(verifyredirect.InnerText.Contains("Products"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            /*
+            // Click on NO
+            Element nobutton = objdeleteproduct.nobtn;
+            myManager.ActiveBrowser.Actions.Click(nobutton);
+
+            Element verifypage = objdeleteproduct.producttabletitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Products"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+            */
+
+            //verifysingledelete();
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
-
         }
+
+
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            _searchtobatchdelete = TestContext.DataRow["searchtobatchdelete"].ToString();
         }
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //Screen_shot
-            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
-            {
-                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
-                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
-                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            }
-            Thread.Sleep(2000);
-            myManager.Dispose();
+            //
+            // Place any additional cleanup here
+            //
 
             #region WebAii CleanUp
 

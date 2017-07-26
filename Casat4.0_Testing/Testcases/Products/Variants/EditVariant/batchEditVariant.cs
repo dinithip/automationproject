@@ -15,18 +15,15 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for batchEditVariant
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class batchEditVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +49,19 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _searchtobatchedit;
+        string _variantbatchedit;
+        string _familybatchedit;
+        string _aliasbatchedit;
+        string _groupbatchedit;
+        string _groupnamebatchedit;
+        string _freetextbatchedit;
+
+
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -127,60 +133,22 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
         }
 
-        [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
-        {
-            readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
-
-            myManager.ActiveBrowser.Window.Maximize();
-
-            // -- End of Login ---
-
-            ObjMenus menus = new ObjMenus(myManager);
-
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
-
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            // Validate Username length
-
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
-
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
-
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-        }
 
         public void readData()
         {
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            
+            _searchtobatchedit = TestContext.DataRow["searchtobatchedit"].ToString();
+            _variantbatchedit = TestContext.DataRow["variantbatchedit"].ToString(); ;
+            _familybatchedit = TestContext.DataRow["familybatchedit"].ToString(); ;
+            _aliasbatchedit = TestContext.DataRow["aliasbatchedit"].ToString(); ;
+            _groupbatchedit = TestContext.DataRow["groupbatchedit"].ToString(); ;
+            _groupnamebatchedit = TestContext.DataRow["groupnamebatchedit"].ToString(); ;
+            _freetextbatchedit = TestContext.DataRow["freetextbatchedit"].ToString(); ;
+
         }
 
 

@@ -18,15 +18,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
+using Casat4._0_Testing.ObjectRepo.Products;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUser
+namespace Casat4._0_Testing.Testcases.Products.Variants
 {
     /// <summary>
-    /// Summary description for ValidateUsername
+    /// Summary description for deleteartifactconnectedVariant
     /// </summary>
     [TestClass]
-    public class ValidateUsername : BaseTest
+    public class deleteartifactconnectedVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,10 +52,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         Settings mySettings;
         Manager myManager;
 
-
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _searchtodelete;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -128,12 +129,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_ValidateUsernameLength()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_deleteArtifactconnectedVariant()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -141,64 +142,134 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Validate Username length
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
 
-            HtmlInputText usernm = objadduser.usernametxt.As<HtmlInputText>();            
-            usernm.Text = "234";
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyLength = objadduser.usernamelength;
-            Assert.IsTrue(verifyLength.InnerText.Contains("Username should contains minimum of 5"));
+            ObjDeleteVariant objdeletevariant = new ObjDeleteVariant(myManager);
 
-            Thread.Sleep(3000);
+            // Search Variant to DELETE
+
+            HtmlInputText variant = objdeletevariant.searchvariant.As<HtmlInputText>();
+
+            variant.Text = _searchtodelete;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, variant.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjVariant objvariant = new ObjVariant(myManager);
+
+            // Select one Variant to Delete
+            HtmlInputCheckBox row1;
+
+            HtmlTable varianttbl = objvariant.varianttable.As<HtmlTable>();
+
+            row1 = objdeletevariant.rowcheck1.As<HtmlInputCheckBox>();
+            row1.Check(true);
+
+            // click on Delete button
+            Element deletebutton = objdeletevariant.deletevariantbtn;
+            myManager.ActiveBrowser.Actions.Click(deletebutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            verifydeleteartifact();
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
-        public void readData()
+        public void verifydeleteartifact()
         {
-            _url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
+            ObjDeleteVariant objdeletevariant = new ObjDeleteVariant(myManager);
+            ObjVariant objvariant = new ObjVariant(myManager);
+
+
+            // Delete confirmation popup contents
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objdeletevariant.deleteconfirmation;
+            Assert.IsTrue(verifymsg.InnerText.Contains("Are you sure you want to delete the selected variant(s)?"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Clck on YES
+            Element yesbutton = objdeletevariant.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Artifact connect - delete confirmation popup contents
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verify = objdeletevariant.artifactconfirmation;
+            Assert.IsTrue(verify.InnerText.Contains("The selected variants are connected to artifacts. Are you sure you want to delete the selected variant(s)?"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Click on YES
+            Element yesbutton2 = objdeletevariant.yesbtn2;
+            myManager.ActiveBrowser.Actions.Click(yesbutton2);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyredirect = objvariant.varianttabletitle;
+            Assert.IsTrue(verifyredirect.InnerText.Contains(""));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            /*
+            // Click on NO
+            Element nobutton2 = objdeletevariant.nobtn2;
+            myManager.ActiveBrowser.Actions.Click(nobutton2);
+
+            Element verifypage = objvariant.varianttabletitle;
+            Assert.IsTrue(verifypage.InnerText.Contains(""));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+            */
         }
 
+        public void readData()
+        {
+            _Url = TestContext.DataRow["url"].ToString();
+            _username = TestContext.DataRow["username"].ToString();
+            _password = TestContext.DataRow["password"].ToString();
+            _searchtodelete = TestContext.DataRow["searchtodelete"].ToString();
+        }
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //Screen_shot
-            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
-            {
-                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
-                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
-                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            }
-            Thread.Sleep(2000);
-            myManager.Dispose();
+            //
+            // Place any additional cleanup here
+            //
 
             #region WebAii CleanUp
 

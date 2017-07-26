@@ -139,16 +139,17 @@ namespace Casat4._0_Testing
 
             myManager.ActiveBrowser.Window.Maximize();
 
-
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
             //  Scenario 1: Verify Login with Valid inputs
 
             Element verificationtext = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2");
             Assert.AreEqual(verificationtext.InnerText, "CASAT Users");
 
-            
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             // Scenario 3: Verify that the login screen is having option to enter username and password with submit button and option of forgot password and Remember me and Welcome title
-
 
 
         }

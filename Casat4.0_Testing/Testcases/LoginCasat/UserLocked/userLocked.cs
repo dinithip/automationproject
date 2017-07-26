@@ -162,10 +162,13 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.UserLocked
             //Element verifylockedmsg = objlogin.userlockedMsg;
             //Assert.IsTrue(verifylockedmsg.InnerText.Contains("Your account has been locked.Please contact the Administrator."));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             verifyLocked();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
         
         

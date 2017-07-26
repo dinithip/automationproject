@@ -87,6 +87,8 @@
     <Compile Include="ObjectRepo\Orders\ObjOrderTable.cs" />
     <Compile Include="ObjectRepo\Process\ObjAddStandardActivity.cs" />
     <Compile Include="ObjectRepo\Process\ObjStandardActivity.cs" />
+    <Compile Include="ObjectRepo\Products\ObjAddVariant.cs" />
+    <Compile Include="ObjectRepo\Products\ObjDeleteProduct.cs" />
     <Compile Include="ObjectRepo\Products\ObjDeleteVariant.cs" />
     <Compile Include="ObjectRepo\Products\ObjProduct.cs" />
     <Compile Include="ObjectRepo\Products\ObjVariant.cs" />
@@ -121,20 +123,31 @@
     <Compile Include="Testcases\Orders\createOrderTable.cs" />
     <Compile Include="Testcases\Orders\ExistingOrder.cs" />
     <Compile Include="Testcases\Orders\invalidOrderVariant.cs" />
+    <Compile Include="Testcases\Products\PageVerifications\addVariantPage.cs" />
     <Compile Include="Testcases\Products\PageVerifications\productPage.cs" />
     <Compile Include="Testcases\Products\PageVerifications\variantPage.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\addInvalidProduct.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\AddProduct.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\addProductBackbtn.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\addProductMandatory.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\AddProductPage.cs" />
-    <Compile Include="Testcases\Products\Prouct\AddProducts\ExistingProduct.cs" />
-    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batcgEditProdPage.cs" />
-    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProdBackbtn.cs" />
-    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\batchEditProduct.cs" />
-    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\invalidBatchEditProduct.cs" />
-    <Compile Include="Testcases\Products\Prouct\BatchEditProduct\updateWithoutData.cs" />
-    <Compile Include="Testcases\Products\Variants\deleteVariant.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\addInvalidProduct.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\AddProduct.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\addProductBackbtn.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\addProductMandatory.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\AddProductPage.cs" />
+    <Compile Include="Testcases\Products\Product\AddProducts\ExistingProduct.cs" />
+    <Compile Include="Testcases\Products\Product\BatchEditProduct\batcgEditProdPage.cs" />
+    <Compile Include="Testcases\Products\Product\BatchEditProduct\batchEditProdBackbtn.cs" />
+    <Compile Include="Testcases\Products\Product\BatchEditProduct\batchEditProduct.cs" />
+    <Compile Include="Testcases\Products\Product\BatchEditProduct\invalidBatchEditProduct.cs" />
+    <Compile Include="Testcases\Products\Product\BatchEditProduct\updateWithoutData.cs" />
+    <Compile Include="Testcases\Products\Product\DeleteProducts\batchDeleteProduct.cs" />
+    <Compile Include="Testcases\Products\Product\DeleteProducts\singleDeleteproduct.cs" />
+    <Compile Include="Testcases\Products\Product\DeleteProducts\softDeleteProduct.cs" />
+    <Compile Include="Testcases\Products\Variants\AddVariant\addVariant.cs" />
+    <Compile Include="Testcases\Products\Variants\AddVariant\addvariantBackbtn.cs" />
+    <Compile Include="Testcases\Products\Variants\AddVariant\addVariantMandatory.cs" />
+    <Compile Include="Testcases\Products\Variants\AddVariant\existingVariant.cs" />
+    <Compile Include="Testcases\Products\Variants\AddVariant\validateAddVariant.cs" />
+    <Compile Include="Testcases\Products\Variants\DeleteVariant\deleteartifactconnectedVariant.cs" />
+    <Compile Include="Testcases\Products\Variants\DeleteVariant\deleteVariant.cs" />
+    <Compile Include="Testcases\Products\Variants\EditVariant\batchEditVariant.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActBackbtn.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />
@@ -255,6 +268,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\userlocked.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\variantdata.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestOrder.orderedtest">

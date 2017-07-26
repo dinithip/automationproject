@@ -173,12 +173,12 @@ namespace Casat4._0_Testing.Testcases.CreateUserCasat.AddCasatUser
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-           
+            addexisting();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            addexisting();
+           
         }
 
         public void addexisting()

@@ -146,6 +146,8 @@ namespace Casat4._0_Testing.Testcases.LoginCasat
             //Element forgotlbl = objlogin.remembermelabel;
             //Assert.IsTrue(forgotlbl.InnerText.Contains("Forgot Password?"));
 
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
 

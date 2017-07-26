@@ -174,8 +174,18 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             Element verifypage = objaddstandardactivity.addpagetitle;
             Assert.IsTrue(verifypage.InnerText.Contains("Create New Standard Activity"));
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             addactivity();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifycreate();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void addactivity()
@@ -265,7 +275,6 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             myManager.ActiveBrowser.RefreshDomTree();
 
             
-
             Assert.AreEqual(standacttbl.BodyRows[0].Cells[2].InnerText, _standactivityname);
 
 

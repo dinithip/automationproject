@@ -157,7 +157,7 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.FirstTimeLogin
             Element verificationmsg1 = firstTime.verifypwmismatchMsg;
             Assert.IsTrue(verificationmsg1.InnerText.Contains("The entered passwords do not match. Please try again."));
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 
