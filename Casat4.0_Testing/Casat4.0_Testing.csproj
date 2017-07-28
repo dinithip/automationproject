@@ -87,11 +87,12 @@
     <Compile Include="ObjectRepo\Orders\ObjOrderTable.cs" />
     <Compile Include="ObjectRepo\Process\ObjAddStandardActivity.cs" />
     <Compile Include="ObjectRepo\Process\ObjStandardActivity.cs" />
-    <Compile Include="ObjectRepo\Products\ObjAddVariant.cs" />
+    <Compile Include="ObjectRepo\Variants\ObjAddVariant.cs" />
     <Compile Include="ObjectRepo\Products\ObjDeleteProduct.cs" />
-    <Compile Include="ObjectRepo\Products\ObjDeleteVariant.cs" />
+    <Compile Include="ObjectRepo\Variants\ObjDeleteVariant.cs" />
     <Compile Include="ObjectRepo\Products\ObjProduct.cs" />
-    <Compile Include="ObjectRepo\Products\ObjVariant.cs" />
+    <Compile Include="ObjectRepo\Variants\ObjEditVariant.cs" />
+    <Compile Include="ObjectRepo\Variants\ObjVariant.cs" />
     <Compile Include="ObjectRepo\TableLayout\ObjTableLayout.cs" />
     <Compile Include="ObjectRepo\UnlockUser\ObjUnlockUser.cs" />
     <Compile Include="Testcases\AccessRoles\CreateAccessRole\CreateAccessRole.cs" />
@@ -138,8 +139,8 @@
     <Compile Include="Testcases\Products\Product\BatchEditProduct\invalidBatchEditProduct.cs" />
     <Compile Include="Testcases\Products\Product\BatchEditProduct\updateWithoutData.cs" />
     <Compile Include="Testcases\Products\Product\DeleteProducts\batchDeleteProduct.cs" />
+    <Compile Include="Testcases\Products\Product\DeleteProducts\clickonDeleteButton.cs" />
     <Compile Include="Testcases\Products\Product\DeleteProducts\singleDeleteproduct.cs" />
-    <Compile Include="Testcases\Products\Product\DeleteProducts\softDeleteProduct.cs" />
     <Compile Include="Testcases\Products\Variants\AddVariant\addVariant.cs" />
     <Compile Include="Testcases\Products\Variants\AddVariant\addvariantBackbtn.cs" />
     <Compile Include="Testcases\Products\Variants\AddVariant\addVariantMandatory.cs" />

@@ -255,6 +255,8 @@ namespace Casat4._0_Testing
 
             Assert.AreEqual(casattbl.BodyRows[0].Cells[2].InnerText, _username1);
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()

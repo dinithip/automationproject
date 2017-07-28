@@ -16,6 +16,9 @@ using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
+using Casat4._0_Testing.Utilities;
+using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.ObjectRepo.Variants;
 
 namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
 {
@@ -54,11 +57,8 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
         string _password;
 
         string _searchtobatchedit;
-        string _variantbatchedit;
-        string _familybatchedit;
-        string _aliasbatchedit;
+        
         string _groupbatchedit;
-        string _groupnamebatchedit;
         string _freetextbatchedit;
 
 
@@ -133,6 +133,42 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
 
         }
 
+        [TestMethod]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_batchEditVariant()
+        {
+            readData();
+
+            CommonFunctions.Login(myManager, _username, _password, _Url);
+
+            myManager.ActiveBrowser.Window.Maximize();
+
+            // -- End of Login ---
+            ObjMenus menus = new ObjMenus(myManager);
+
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjEditVariant objeditvariant = new ObjEditVariant(myManager);
+
+            HtmlInputText search = objeditvariant.searchtoedit.As<HtmlInputText>();
+            search.Text = _searchtobatchedit;
+
+
+
+
+        }
 
 
         public void readData()
@@ -142,11 +178,7 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
             _password = TestContext.DataRow["password"].ToString();
             
             _searchtobatchedit = TestContext.DataRow["searchtobatchedit"].ToString();
-            _variantbatchedit = TestContext.DataRow["variantbatchedit"].ToString(); ;
-            _familybatchedit = TestContext.DataRow["familybatchedit"].ToString(); ;
-            _aliasbatchedit = TestContext.DataRow["aliasbatchedit"].ToString(); ;
             _groupbatchedit = TestContext.DataRow["groupbatchedit"].ToString(); ;
-            _groupnamebatchedit = TestContext.DataRow["groupnamebatchedit"].ToString(); ;
             _freetextbatchedit = TestContext.DataRow["freetextbatchedit"].ToString(); ;
 
         }

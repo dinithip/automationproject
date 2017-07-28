@@ -132,7 +132,6 @@ namespace Casat4._0_Testing
 
         [TestMethod]
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\editUser.csv", "editUser#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\editUser.csv")]
-
         public void TestMethod_EditCasatUser()
         {
             readData();
@@ -169,7 +168,6 @@ namespace Casat4._0_Testing
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
-
 
             // Select one user
             

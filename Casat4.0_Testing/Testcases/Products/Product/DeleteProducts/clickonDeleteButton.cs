@@ -15,14 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Casat4._0_Testing.Utilities;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.ObjectRepo.Products;
 
 namespace Casat4._0_Testing.Testcases.Products.Product.DeleteProducts
 {
     /// <summary>
-    /// Summary description for softDeleteProduct
+    /// Summary description for clickonDeleteButton
     /// </summary>
     [TestClass]
-    public class softDeleteProduct : BaseTest
+    public class clickonDeleteButton : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -51,8 +55,6 @@ namespace Casat4._0_Testing.Testcases.Products.Product.DeleteProducts
         string _Url;
         string _username;
         string _password;
-
-
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -124,18 +126,57 @@ namespace Casat4._0_Testing.Testcases.Products.Product.DeleteProducts
 
         }
 
+        [TestMethod]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        public void TestMethod_clickonDeleteproductbtn()
+        {
+            readData();
 
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
+            myManager.ActiveBrowser.Window.Maximize();
+
+            // -- End of Login ---
+
+            ObjMenus menus = new ObjMenus(myManager);
+
+            HtmlAnchor data = menus.Datalink.As<HtmlAnchor>();
+            data.MouseHover();
+
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
+            products.MouseClick();
+
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjDeleteProduct objdeleteproduct = new ObjDeleteProduct(myManager);
+
+            // click on Delete button
+            Element deletebutton = objdeleteproduct.deletebtn;
+            myManager.ActiveBrowser.Actions.Click(deletebutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objdeleteproduct.cickondeletebtn;
+            Assert.IsTrue(verifymsg.InnerText.Contains(" Please select at least one product"));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+        }
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            
+           
         }
-
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

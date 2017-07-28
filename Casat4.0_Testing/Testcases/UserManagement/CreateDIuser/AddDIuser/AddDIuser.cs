@@ -220,7 +220,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
 
         }
 
-        /*
+        
         public void verifydiuser()
         {
             ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
@@ -243,8 +243,10 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
 
             Assert.AreEqual(ditbl.BodyRows[0].Cells[2].InnerText, _operatorid);
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
-        */
+        
 
         public void readData()
         {

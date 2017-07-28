@@ -35,8 +35,10 @@ namespace Casat4._0_Testing.ObjectRepo.Products
 
         public Element deleteconfirmationmsg { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
 
-        // success message
+        // messages
         public Element deletesuccessmsg { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
+
+        public Element cickondeletebtn { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
 
         // checkboxes
 
