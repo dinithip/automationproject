@@ -75,6 +75,8 @@ namespace Casat4._0_Testing.ObjectRepo.CasatUser.Edit
 
         public Element searchUsername { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]/thead/tr[2]/th[3]/input"); } }
 
+        public Element searchfirstname { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]/thead/tr[2]/th[4]/input"); } }
+
         public Element usertable { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]"); } }
 
         // Checkbox

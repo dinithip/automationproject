@@ -180,6 +180,8 @@ namespace Casat4._0_Testing
             HtmlButton editbtn = objedit.editbutton.As<HtmlButton>();
             editbtn.Click();
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             //if (usertable.BodyRows.Count > 0)
             //{
@@ -195,13 +197,18 @@ namespace Casat4._0_Testing
             //{
             //    throw new Exception("no matching data to edit");
             //}
-            
+
             updateUser();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             VerifyUser();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
-
        
-
         public void updateUser()
         {
             ObjEditUser objedit = new ObjEditUser(myManager);
@@ -217,9 +224,14 @@ namespace Casat4._0_Testing
             lastnm.Text = _lastname;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
 
-            //Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[2]/div[2]/span");
-            //Assert.AreEqual(verifymandatorymsg.InnerText, "tttt");
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
+            Element verifymandatorymsg = myManager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]");
+            Assert.AreEqual(verifymandatorymsg.InnerText, "Changes to the user has been saved.");
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
         }
 
@@ -230,28 +242,33 @@ namespace Casat4._0_Testing
 
             ObjEditUser objedit = new ObjEditUser(myManager);
 
-            Element verifysuccessmsg = objedit.updateMsg;
-            Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved."));
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
+
+            //Element verifysuccessmsg = objedit.updateMsg;
+            //Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved."));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText usernm = objedit.searchUsername.As<HtmlInputText>();
+            HtmlInputText firstnm = objedit.searchfirstname.As<HtmlInputText>();
 
-            usernm.Text = _editusername;
+            firstnm.Text = _firstname;
 
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usernm.GetRectangle());
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, firstnm.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlTable usertable = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]").As<HtmlTable>();
+            HtmlTable usertable = objedit.usertable.As<HtmlTable>();
 
             Assert.AreEqual(usertable.BodyRows[0].Cells[3].InnerText, _firstname);
-            Assert.AreEqual(usertable.BodyRows[0].Cells[4].InnerText, _lastname);
+            //Thread.Sleep(1000);
+            //Assert.AreEqual(usertable.BodyRows[0].Cells[4].InnerText, _lastname);
 
-
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()
@@ -260,8 +277,10 @@ namespace Casat4._0_Testing
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
             _editusername = TestContext.DataRow["editusername"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
+            _firstname = CommonGenerateRandom.GenarateRandom(_firstname);
+            //_firstname = TestContext.DataRow["firstname"].ToString();
             _lastname = TestContext.DataRow["lastname"].ToString();
+            
         }
 
         // Use TestCleanup to run code after each test has run

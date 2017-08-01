@@ -1,2 +1,2 @@
 url,username,password,editusername,firstname,lastname,unmandatory,fnmandatory,lnmandatory
-http://146.185.172.122:8280/QA/#/login,admin,admin,dinithi,teste1,testedit2,,,
+http://146.185.172.122:8280/QA/#/login,admin,admin,dinithi,testedit1,testedit2,,,

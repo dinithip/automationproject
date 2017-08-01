@@ -192,7 +192,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             updateDiEdit();
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             VerifyUser();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             /*
             if (DItable.BodyRows.Count > 0)
@@ -212,7 +218,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
                 throw new Exception("no matching data to edit");
             }
             */
-
         }
 
         public void updateDiEdit()
@@ -268,7 +273,33 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             myManager.ActiveBrowser.RefreshDomTree();
 
             myManager.ActiveBrowser.Actions.Click(updatebutton);
-          
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+        }
+
+        public void updateuser()
+        {
+            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            HtmlInputText oprtid;
+            HtmlInputText firstn;
+            HtmlInputText lastn;
+            Element updatebtn;
+
+            oprtid = objeditdiuser.operatoridtxt.As<HtmlInputText>();
+            firstn = objeditdiuser.firstnametxt.As<HtmlInputText>();
+            lastn = objeditdiuser.lastnametxt.As<HtmlInputText>();
+
+            updatebtn = objeditdiuser.updatebtn;
+
+            oprtid.Text = _editoperatorid;
+            firstn.Text = _firstname;
+            lastn.Text = _lastname;
+            myManager.ActiveBrowser.Actions.Click(updatebtn);
         }
 
         public void VerifyUser()
@@ -287,11 +318,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText opertid = objeditdiuser.searchoperatorid.As<HtmlInputText>();
+            HtmlInputText firstnm = objeditdiuser.firstnametxt.As<HtmlInputText>();
 
-            opertid.Text = _searchoperatorid;
+            firstnm.Text = _firstname;
 
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, opertid.GetRectangle());
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, firstnm.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
             Thread.Sleep(2000);
@@ -307,32 +338,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Assert.AreEqual(DItable.BodyRows[0].Cells[5].InnerText, _phone);
             Assert.AreEqual(DItable.BodyRows[0].Cells[6].InnerText, _email);
             Assert.AreEqual(DItable.BodyRows[0].Cells[7].InnerText, _status);
-        }
-
-        
-
-        public void updateuser()
-        {
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputText oprtid;
-            HtmlInputText firstn;
-            HtmlInputText lastn;
-            Element updatebtn;
-
-            oprtid = myManager.ActiveBrowser.Find.ById("l0").As<HtmlInputText>();
-            firstn = myManager.ActiveBrowser.Find.ById("l1").As<HtmlInputText>();
-            lastn = myManager.ActiveBrowser.Find.ById("l2").As<HtmlInputText>();
-
-            updatebtn = myManager.ActiveBrowser.Find.ByXPath("//*[@id='update']");
-            
-            oprtid.Text = _editoperatorid;
-            firstn.Text = _firstname;
-            lastn.Text = _lastname;
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
-           
         }
 
         public void readData()
@@ -342,12 +351,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             _password = TestContext.DataRow["password"].ToString();
             _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
             _editoperatorid = TestContext.DataRow["editoperatorid"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
+            //_firstname = TestContext.DataRow["firstname"].ToString();
             _lastname = TestContext.DataRow["lastname"].ToString();
             _phone = TestContext.DataRow["phone"].ToString();
             _email = TestContext.DataRow["email"].ToString();
             _department = TestContext.DataRow["department"].ToString();
             _status = TestContext.DataRow["status"].ToString();
+            _firstname = CommonGenerateRandom.GenarateRandom(_firstname);
         }
 
         // Use TestCleanup to run code after each test has run
