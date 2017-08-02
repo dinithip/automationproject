@@ -68,6 +68,8 @@ namespace Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser
 
         public Element searchoperatorid { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[2]/th[3]/input"); } }
 
+        public Element searchfirstname { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[2]/th[4]/input"); } }
+
         public Element movetobtn { get { return _manager.ActiveBrowser.Find.ById("moveTo"); } }
 
         public Element movefrombtn { get { return _manager.ActiveBrowser.Find.ById("moveFrom"); } }

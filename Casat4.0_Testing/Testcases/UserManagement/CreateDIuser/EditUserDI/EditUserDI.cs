@@ -63,7 +63,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
         string _lastname;
         string _phone;
         string _email;
-        string _department;
+       // string _department;
         string _status;
 
         //Use ClassInitialize to run code before running the first test in the class
@@ -260,11 +260,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             HtmlSelect dpt = objeditdiuser.departmenttxt.As<HtmlSelect>();
 
-            dpt.MouseClick();
-            Thread.Sleep(1000);
-            dpt.SelectByText(_department);
-            dpt.MouseHover();
-            dpt.SelectByText(_department);
+            //dpt.MouseClick();
+            //Thread.Sleep(1000);
+            //dpt.SelectByText(_department);
+            //dpt.MouseHover();
+            //dpt.SelectByText(_department);
 
             Element moveto = objeditdiuser.movetobtn;
             myManager.ActiveBrowser.Actions.Click(moveto);
@@ -276,30 +276,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
-        }
 
-        public void updateuser()
-        {
-            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            Element verifysuccessmsg = objeditdiuser.editsuccessmsg;
+            Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved. The user account has been deactivated successfully"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText oprtid;
-            HtmlInputText firstn;
-            HtmlInputText lastn;
-            Element updatebtn;
-
-            oprtid = objeditdiuser.operatoridtxt.As<HtmlInputText>();
-            firstn = objeditdiuser.firstnametxt.As<HtmlInputText>();
-            lastn = objeditdiuser.lastnametxt.As<HtmlInputText>();
-
-            updatebtn = objeditdiuser.updatebtn;
-
-            oprtid.Text = _editoperatorid;
-            firstn.Text = _firstname;
-            lastn.Text = _lastname;
-            myManager.ActiveBrowser.Actions.Click(updatebtn);
         }
 
         public void VerifyUser()
@@ -312,13 +295,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifysuccessmsg = objeditdiuser.editsuccessmsg;
-            Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved."));
+            
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText firstnm = objeditdiuser.firstnametxt.As<HtmlInputText>();
+            HtmlInputText firstnm = objeditdiuser.searchfirstname.As<HtmlInputText>();
 
             firstnm.Text = _firstname;
 
@@ -330,13 +309,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
             Assert.AreEqual(DItable.BodyRows[0].Cells[3].InnerText, _firstname);
-            Assert.AreEqual(DItable.BodyRows[0].Cells[4].InnerText, _lastname);
-            Assert.AreEqual(DItable.BodyRows[0].Cells[5].InnerText, _phone);
-            Assert.AreEqual(DItable.BodyRows[0].Cells[6].InnerText, _email);
+            //Assert.AreEqual(DItable.BodyRows[0].Cells[4].InnerText, _lastname);
+            //Assert.AreEqual(DItable.BodyRows[0].Cells[5].InnerText, _phone);
+            //Assert.AreEqual(DItable.BodyRows[0].Cells[6].InnerText, _email);
             Assert.AreEqual(DItable.BodyRows[0].Cells[7].InnerText, _status);
 
             Thread.Sleep(2000);
@@ -351,20 +327,20 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             _password = TestContext.DataRow["password"].ToString();
             _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
             _editoperatorid = TestContext.DataRow["editoperatorid"].ToString();
+            _firstname = CommonGenerateRandom.GenarateRandom(_firstname);
             //_firstname = TestContext.DataRow["firstname"].ToString();
             _lastname = TestContext.DataRow["lastname"].ToString();
             _phone = TestContext.DataRow["phone"].ToString();
             _email = TestContext.DataRow["email"].ToString();
-            _department = TestContext.DataRow["department"].ToString();
+            //_department = TestContext.DataRow["department"].ToString();
             _status = TestContext.DataRow["status"].ToString();
-            _firstname = CommonGenerateRandom.GenarateRandom(_firstname);
+            
         }
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
-
             //Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {

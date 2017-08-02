@@ -1,2 +1,2 @@
 url,username,password,searchoperatorid,editoperatorid,firstname,lastname,email,phone,status,department,existingdi
-http://146.185.172.122:8280/QA/#/login,admin,admin,9999,6768,Editfn1,EditLn1,7878@gmail.com,9454565432,INACTIVE,dep2,8888
+http://146.185.172.122:8280/QA/#/login,admin,admin,9999,6768,Editfirstname1,EditLn1,7878@gmail.com,9454565432,INACTIVE,dep2,8888
