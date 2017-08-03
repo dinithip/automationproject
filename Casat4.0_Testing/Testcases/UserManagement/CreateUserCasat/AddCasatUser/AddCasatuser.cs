@@ -174,12 +174,18 @@ namespace Casat4._0_Testing
 
             //CommonFunctionsCreateCasatUser.AddCasatUser(myManager, _url, _username1, _firstname, _lastname, _emailaddress, _phone, _accessrole, _dept, true);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             create();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifyuser();
 
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void create()
@@ -252,6 +258,9 @@ namespace Casat4._0_Testing
             myManager.ActiveBrowser.RefreshDomTree();
 
             HtmlTable casattbl = objadduser.casattable.As<HtmlTable>();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Assert.AreEqual(casattbl.BodyRows[0].Cells[2].InnerText, _username1);
 

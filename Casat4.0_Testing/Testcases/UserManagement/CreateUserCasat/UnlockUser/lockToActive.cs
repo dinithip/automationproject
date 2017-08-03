@@ -192,9 +192,19 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
             Thread.Sleep(2000);
 
             activeuser();
-            verifyActivation();
-            loginToactivateUser();            
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            verifyActivation();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            loginToactivateUser();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void activeuser()
@@ -275,7 +285,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
 
             Assert.AreEqual(casattable.BodyRows[0].Cells[7].InnerText, _status1);
 
-            Thread.Sleep(2000);         
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         

@@ -259,7 +259,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.UnlockUser
             myManager.ActiveBrowser.RefreshDomTree();
 
             HtmlInputText searchuser = objactive.searchusername.As<HtmlInputText>();
-            searchuser.Text = "chana";
+            searchuser.Text = "lockuser";
 
             myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchuser.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);

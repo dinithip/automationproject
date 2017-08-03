@@ -202,27 +202,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
             //Element existMsg = objedit.existingUsername;
             //Assert.IsTrue(existMsg.InnerText.Contains("Username already exists. Please enter a different username"));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 
-        //public void updateUser()
-        //{
-        //    ObjEditUser objedit = new ObjEditUser(myManager);
-
-        //    Thread.Sleep(2000);
-        //    myManager.ActiveBrowser.RefreshDomTree();
-
-        //    HtmlInputText un = objedit.usernmtxt.As<HtmlInputText>();
-        //    Element updatebtn = objedit.btnupdate;
-
-        //    un.Text = _usernameexist;
-        //    myManager.ActiveBrowser.Actions.Click(updatebtn);
-
-        //    Element existMsg = objedit.existingUsername;
-        //    Assert.IsTrue(existMsg.InnerText.Contains("Username already exists. Please enter a different username"));
-        //}
-
+        
         public void readData()
         {
             _url = TestContext.DataRow["url"].ToString();

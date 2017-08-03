@@ -42,7 +42,7 @@ namespace Casat4._0_Testing.ObjectRepo.ActiveDeactiveuser
 
         public Element deactiveconfirmationtxt { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[2]/p[2]"); } }
 
-        public Element deactivesuccessmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]/text()"); } }
+        public Element deactivesuccessmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
         
 

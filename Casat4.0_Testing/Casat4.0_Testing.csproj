@@ -280,6 +280,9 @@
     <None Include="testordercasatuser.orderedtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="testOrderDIuser.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Testcases\UserManagement\CreateDIuser\DeleteDIuser\" />

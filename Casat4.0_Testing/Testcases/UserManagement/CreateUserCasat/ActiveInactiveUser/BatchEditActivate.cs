@@ -187,7 +187,14 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             editbtn.Click();
 
             batchactivateUser();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifyActivation();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void batchactivateUser()
@@ -224,7 +231,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             Element updatebtn = objactive.updatebtn;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element successmsg = objactive.activesuccessmsg;
+            Assert.IsTrue(successmsg.InnerText.Contains("The user accounts has been activated successfully"));
+
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 
@@ -235,9 +248,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
 
             ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
             ObjEditUser objedit = new ObjEditUser(myManager);
-
-            //Element successmsg = objactive.activesuccessmsg;
-            //Assert.IsTrue(successmsg.InnerText.Contains("Changes to the user has been saved. The user account has been activated successfully"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -256,6 +266,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
 
             Assert.AreEqual(casattable.BodyRows[0].Cells[7].InnerText, _status);
 
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()

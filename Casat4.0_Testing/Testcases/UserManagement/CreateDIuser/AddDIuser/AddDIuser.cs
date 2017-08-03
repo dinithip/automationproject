@@ -134,9 +134,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
         }
 
         [TestMethod]
-
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUserDI.csv", "addUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUserDI.csv")]
-
         public void TestMethod_AddDIuser()
         {
             readData();
@@ -163,6 +161,13 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+           Element duname = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(duname);
+            //duname.ScrollToVisible();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
 
             Element addbutton = objadddiuser.addbtn;            
@@ -175,6 +180,8 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             creatediuser();
             //verifydiuser();
         }
+
+        
 
         public void creatediuser()
         {

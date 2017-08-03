@@ -57,8 +57,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
         string _password;
 
         string _editusername;
-        
+        //string _editusername2;
+
         string _status;
+        //string _status2;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -224,7 +226,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             Element updatebtn = objactive.updatebtn;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element successmsg = objactive.deactivesuccessmsg;
+            Assert.IsTrue(successmsg.InnerText.Contains("The user accounts has been deactivated successfully"));
+
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 
@@ -236,8 +244,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             ObjActiveDeactive objactive = new ObjActiveDeactive(myManager);
             ObjEditUser objedit = new ObjEditUser(myManager);
 
-            //Element successmsg = objactive.deactivesuccessmsg;
-            //Assert.IsTrue(successmsg.InnerText.Contains("Changes to the user has been saved. The user account has been deactivated successfully"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -264,8 +270,9 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
             _editusername = TestContext.DataRow["editusername"].ToString();
-            
+            //editusername2 = TestContext.DataRow["editusername2"].ToString();
             _status = TestContext.DataRow["status"].ToString();
+           // _status2 = TestContext.DataRow["status2"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run

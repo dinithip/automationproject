@@ -202,7 +202,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Element statuscolumn = contents.statuscolumntxt;
             Assert.IsTrue(statuscolumn.InnerText.Contains("status"));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
 

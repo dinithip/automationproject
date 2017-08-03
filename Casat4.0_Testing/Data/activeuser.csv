@@ -1,2 +1,2 @@
-url,username,password,editusername,status
-http://146.185.172.122:8280/QA/#/login,admin,admin,user001,ACTIVE
+url,username,password,editusername,editusername2,status,status2
+http://146.185.172.122:8280/QA/#/login,admin,admin,user001,deactbatch,ACTIVE,INACTIVE

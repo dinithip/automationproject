@@ -176,6 +176,10 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             myManager.ActiveBrowser.RefreshDomTree();
 
             create();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             logintocreated();
 
             Thread.Sleep(3000);

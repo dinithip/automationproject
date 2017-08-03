@@ -181,15 +181,19 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
             HtmlInputCheckBox firstrowcheck = objactive.row1.As<HtmlInputCheckBox>();
             firstrowcheck.Check(true);
 
-            
-
             // click on Edit user button
             HtmlButton editbtn = objedit.editbutton.As<HtmlButton>();
             editbtn.Click();
 
-
             deactivateUser();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifydeacctive();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void deactivateUser()
@@ -225,6 +229,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.ActiveInact
 
             Element updatebtn = objedit.btnupdate;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            //Element successmsg = objactive.deactivesuccessmsg;
+            //Assert.IsTrue(successmsg.InnerText.Contains("Changes to the user has been saved. The user account has been deactivated successfully"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
