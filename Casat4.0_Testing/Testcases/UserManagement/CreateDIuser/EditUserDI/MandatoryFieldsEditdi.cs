@@ -157,6 +157,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             // Search DI user to Edit
 
             ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);

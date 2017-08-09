@@ -15,18 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Menus;
 using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.CasatUser.Adduser;
+using Casat4._0_Testing.ObjectRepo.Menus;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.DIuser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
+namespace Casat4._0_Testing.Testcases.UserManagement.ViewUsers
 {
     /// <summary>
-    /// Summary description for VerifyCasatUserPage
+    /// Summary description for VerifyDIusersTable
     /// </summary>
     [TestClass]
-    public class VerifyCasatUserPage : BaseTest
+    public class VerifyDIusersTable : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -117,18 +117,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             SetTestMethod(this, (string)TestContext.Properties["TestName"]);
 
             #endregion
-
             mySettings = new Settings();
             mySettings.Web.DefaultBrowser = BrowserType.InternetExplorer;
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
-
         }
 
         [TestMethod]
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_CasatTableContents()
+        public void TestMethod_DItableContents()
         {
             readData();
 
@@ -154,57 +152,60 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjCasatPageContents contents = new ObjCasatPageContents(myManager);
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
-            Element verifytitle = contents.titletxt;
-            Assert.AreEqual(verifytitle.InnerText, "CASAT Users");
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifyAddbtn = contents.addBtnName;
-            Assert.IsTrue(verifyAddbtn.InnerText.Contains("Add User"));
+            ObjDIuserPageContents dicontents = new ObjDIuserPageContents(myManager);
 
-            Element verifyEditbtn = contents.editBtnName;
-            Assert.IsTrue(verifyEditbtn.InnerText.Contains("Edit User/s"));
+            Element verifytitle = dicontents.diTitletxt;
+            Assert.IsTrue(verifytitle.InnerText.Contains("DI Users"));
 
-            Element verifyfiltertbtn = contents.savefilterBtnName;
-            Assert.IsTrue(verifyfiltertbtn.InnerText.Contains("Save Filters"));
+            Element addbtn = dicontents.addDIBtnName;
+            Assert.IsTrue(addbtn.InnerText.Contains("Add User"));
 
-            Element verifydeletebtn = contents.deleteBtnName;
-            Assert.IsTrue(verifydeletebtn.InnerText.Contains("Delete User/s"));
+            Element editbtn = dicontents.EditBtnName;
+            Assert.IsTrue(editbtn.InnerText.Contains("Edit User/s"));
 
-            Element verifyexportbtn = contents.exportBtnName;
-            Assert.IsTrue(verifyexportbtn.InnerText.Contains("Export"));
+            Element filterbtn = dicontents.saveFilterBtnName;
+            Assert.IsTrue(filterbtn.InnerText.Contains("Save Filters"));
 
-            Element verifydownloadbtn = contents.downloadBtnName;
-            Assert.IsTrue(verifydownloadbtn.InnerText.Contains("Download"));
+            Element exportbtn = dicontents.exportBtnName;
+            Assert.IsTrue(exportbtn.InnerText.Contains("Export"));
 
-            Element verifyuploadbtn = contents.uploadBtnName;
-            Assert.IsTrue(verifyuploadbtn.InnerText.Contains("Upload File"));
+            Element downloadbtn = dicontents.downloadBtnName;
+            Assert.IsTrue(downloadbtn.InnerText.Contains("Download"));
 
             // Table headings
-            Element idcolumn = contents.idcolumntxt;
-            Assert.IsTrue(idcolumn.InnerText.Contains("id"));
+            Element heading1 = dicontents.idcolumn;
+            Assert.IsTrue(heading1.InnerText.Contains("id"));
 
-            Element usernamecolumn = contents.uncolumntxt;
-            Assert.IsTrue(usernamecolumn.InnerText.Contains("username"));
+            Element heading2 = dicontents.operatoridcolumn;
+            Assert.IsTrue(heading2.InnerText.Contains("operatorId"));
 
-            Element firstnmcolumn = contents.fncolumntxt;
-            Assert.IsTrue(firstnmcolumn.InnerText.Contains("firstName"));
+            Element heading3 = dicontents.firstncolumn;
+            Assert.IsTrue(heading3.InnerText.Contains("firstName"));
 
-            Element lastnmcolumn = contents.lncolumntxt;
-            Assert.IsTrue(lastnmcolumn.InnerText.Contains("lastName"));
+            Element heading4 = dicontents.lastncolumn;
+            Assert.IsTrue(heading4.InnerText.Contains("lastName"));
 
-            Element emailcolumn = contents.emailcolumntxt;
-            Assert.IsTrue(emailcolumn.InnerText.Contains("email"));
+            Element heading5 = dicontents.emailcolumn;
+            Assert.IsTrue(heading5.InnerText.Contains("email"));
 
-            Element phonecolumn = contents.phonecolumntxt;
-            Assert.IsTrue(phonecolumn.InnerText.Contains("phone"));
+            Element heading6 = dicontents.phonecolumn;
+            Assert.IsTrue(heading6.InnerText.Contains("phone"));
 
-            Element statuscolumn = contents.statuscolumntxt;
-            Assert.IsTrue(statuscolumn.InnerText.Contains("status"));
+            Element heading7 = dicontents.statuscolumn;
+            Assert.IsTrue(heading7.InnerText.Contains("diActive"));
 
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
+
+
+
 
         public void readData()
         {
@@ -212,7 +213,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
         }
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

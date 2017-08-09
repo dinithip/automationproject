@@ -151,6 +151,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.BatchEditCa
 
             HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
             users.MouseClick();
+            
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -188,8 +189,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.BatchEditCa
 
             Element statuslbl = objbatchedit.statuslabel;
             Assert.IsTrue(statuslbl.InnerText.Contains("Status"));
-
-            
 
             Element departmentlbl = objbatchedit.departmentlabel;
             Assert.AreEqual(departmentlbl.InnerText, "Departments");

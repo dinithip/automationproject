@@ -159,6 +159,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             // Search DI users to Batch Edit
 
             ObjBatchEditDI objbatcheditdi = new ObjBatchEditDI(myManager);
@@ -201,9 +207,18 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             //{
             //    throw new Exception("no matching data to Batch edit");
             //}
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             updateBatchedit();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifybatchedit();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         
@@ -229,7 +244,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             Thread.Sleep(2000);
 
             Element verifyconfirmation = objbatcheditdi.confirmationMsg;
-            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to deactivate the selected user/s(4545, 4546)?"));
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to deactivate the selected user/s"));
 
             Thread.Sleep(2000);
            
@@ -268,6 +283,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             ObjBatchEditDI objbatcheditdi = new ObjBatchEditDI(myManager);
             
             Thread.Sleep(2000);
@@ -285,7 +306,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
 
             HtmlTable ditable = objbatcheditdi.ditable.As<HtmlTable>();
 
-            Assert.AreEqual(ditable.BodyRows[0].Cells[7].InnerText, _status);          
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Assert.AreEqual(ditable.BodyRows[0].Cells[7].InnerText, _status);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()

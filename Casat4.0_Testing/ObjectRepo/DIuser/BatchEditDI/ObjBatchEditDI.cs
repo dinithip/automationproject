@@ -32,15 +32,15 @@ namespace Casat4._0_Testing.ObjectRepo.DIuser.BatchEditDI
 
         // Row select for Batch Active
 
-        public Element rowcheck3 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[9]/td[1]/input"); } }
+        public Element rowcheck3 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[1]/td[1]/input"); } }
 
-        public Element rowcheck4 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[10]/td[1]/input"); } }
+        public Element rowcheck4 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[2]/td[1]/input"); } }
 
         // Row select for Batch Deactive
 
-        public Element rowcheck5 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[9]/td[1]/input"); } }
+        public Element rowcheck5 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[1]/td[1]/input"); } }
 
-        public Element rowcheck6 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[10]/td[1]/input"); } }
+        public Element rowcheck6 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/tbody/tr[2]/td[1]/input"); } }
 
 
         // user management page title

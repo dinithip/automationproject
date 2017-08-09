@@ -182,7 +182,7 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
             row1.Check(true);
 
             // click on Delete button
-            Element deletebutton = objdeleteproduct.deletebtn;
+            Element deletebutton = objdeleteproduct.deleteproductbtn;
             myManager.ActiveBrowser.Actions.Click(deletebutton);
 
             Thread.Sleep(4000);

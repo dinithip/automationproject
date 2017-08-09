@@ -156,6 +156,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
+            
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             // Search DI users to Batch Edit
 
@@ -180,15 +187,24 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             HtmlInputCheckBox secondrowcheck = objbatcheditdi.rowcheck4.As<HtmlInputCheckBox>();
             secondrowcheck.Check(true);
 
-            Thread.Sleep(6000);
+            Thread.Sleep(3000);
 
             // click on Edit button
             HtmlButton editbutton4 = objbatcheditdi.editbtn.As<HtmlButton>();
             editbutton4.Click();
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             updateBatchedit();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             verifybatchActive();
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         // Scenario : Batch Edit - ACTIVE
@@ -206,16 +222,19 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             selectstatus.SelectByText(_activestatus, true);
 
             Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifypopuptitle = objbatcheditdi.confirmationtitle;
             Assert.IsTrue(verifypopuptitle.InnerText.Contains("Change Status"));
 
             Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifyconfirmation = objbatcheditdi.confirmationMsg;
-            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to activate the selected user/s(4547, 4548)?"));
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to activate the selected user/s"));
 
             Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             // YES
             Element yesbtn = objbatcheditdi.yesbtnbatch;
@@ -241,10 +260,22 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             // Click on UPDATE button
             Element updatebtn = objbatcheditdi.updatebtn;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
-                       
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifysuccess = objbatcheditdi.batchActivesuccessmsg;
+            Assert.IsTrue(verifysuccess.InnerText.Contains("The user accounts has been activated successfully"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
         }
 
         public void verifybatchActive()
@@ -253,9 +284,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjBatchEditDI objbatcheditdi = new ObjBatchEditDI(myManager);
-
-            Element verifysuccess = objbatcheditdi.batchActivesuccessmsg;
-            Assert.IsTrue(verifysuccess.InnerText.Contains("The user accounts has been activated successfully"));
 
             Element verifyPage = objbatcheditdi.usermanagementtitletxt;
             Assert.IsTrue(verifyPage.InnerText.Contains("DI Users"));
@@ -275,8 +303,15 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.BatchEditDIuse
 
             HtmlTable ditable = objbatcheditdi.ditable.As<HtmlTable>();
 
-            Assert.AreEqual(ditable.BodyRows[6].Cells[7].InnerText, _activestatus);
-            Assert.AreEqual(ditable.BodyRows[7].Cells[7].InnerText, _activestatus);
+            Assert.AreEqual(ditable.BodyRows[0].Cells[7].InnerText, _activestatus);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Assert.AreEqual(ditable.BodyRows[1].Cells[7].InnerText, _activestatus);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
 

@@ -137,6 +137,8 @@ namespace Casat4._0_Testing.Testcases.Products.Product.DeleteProducts
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             ObjMenus menus = new ObjMenus(myManager);
 
@@ -150,21 +152,28 @@ namespace Casat4._0_Testing.Testcases.Products.Product.DeleteProducts
 
             HtmlAnchor products = menus.productlink.As<HtmlAnchor>();
             products.MouseClick();
+            
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[4]/table/thead/tr[1]/th[1]/button");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjDeleteProduct objdeleteproduct = new ObjDeleteProduct(myManager);
 
             // click on Delete button
-            Element deletebutton = objdeleteproduct.deletebtn;
+            Element deletebutton = objdeleteproduct.deleteproductbtn;
             myManager.ActiveBrowser.Actions.Click(deletebutton);
 
             Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifymsg = objdeleteproduct.cickondeletebtn;
-            Assert.IsTrue(verifymsg.InnerText.Contains(" Please select at least one product"));
+            Assert.IsTrue(verifymsg.InnerText.Contains("Please select at least one product"));
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();

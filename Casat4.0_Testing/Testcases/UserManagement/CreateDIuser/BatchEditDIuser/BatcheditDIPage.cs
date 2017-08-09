@@ -16,17 +16,17 @@ using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.AdduserDI;
+using Casat4._0_Testing.ObjectRepo.DIuser.BatchEditDI;
+using Casat4._0_Testing.ObjectRepo.Menus;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
+namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
 {
     /// <summary>
-    /// Summary description for AddDIpage
+    /// Summary description for BatcheditDIPage
     /// </summary>
     [TestClass]
-    public class AddDIpage : BaseTest
+    public class BatcheditDIPage : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -55,6 +55,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         string _url;
         string _username;
         string _password;
+  
+        string _searchoperatorid;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -127,8 +129,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_VerifyaddDIpage()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\DIBatchEdit.csv", "DIBatchEdit#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\DIBatchEdit.csv")]
+        public void TestMethod_BatcheditDIPage()
         {
             readData();
 
@@ -154,49 +156,66 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
-            Element addbutton = objadddiuser.addbtn;
-            myManager.ActiveBrowser.Actions.Click(addbutton);
-
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Verify Page contents
+            // Search DI users to Batch Edit
 
-            Element pgtitle = objadddiuser.titletxt;
-            Assert.IsTrue(pgtitle.InnerText.Contains("Create DI User"));
+            ObjBatchEditDI objbatcheditdi = new ObjBatchEditDI(myManager);
 
-            Element opridLabel = objadddiuser.operatoridLabel;
-            Assert.IsTrue(opridLabel.InnerText.Contains("Operator ID *"));
+            HtmlInputText searchid = objbatcheditdi.searchoperatorid.As<HtmlInputText>();
+            searchid.Text = _searchoperatorid;
 
-            Element firstnameLabel = objadddiuser.firstnameLabel;
-            Assert.IsTrue(firstnameLabel.InnerText.Contains("First Name *"));
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchid.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
-            Element lastnameLabel = objadddiuser.lastnameLabel;
-            Assert.IsTrue(lastnameLabel.InnerText.Contains("Last Name *"));
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element emailLabel = objadddiuser.emailLabel;
-            Assert.IsTrue(emailLabel.InnerText.Contains("Email Address *"));
+            // Select multiple users
 
-            Element phoneLabel = objadddiuser.phoneLabel;
-            Assert.IsTrue(phoneLabel.InnerText.Contains("Phone *"));
+            HtmlTable DItable = objbatcheditdi.ditable.As<HtmlTable>();
 
-            Element depLabel1 = objadddiuser.dptLabel1;
-            Assert.IsTrue(depLabel1.InnerText.Contains("All Departments"));
+            HtmlInputCheckBox firstrowcheck = objbatcheditdi.rowcheck1.As<HtmlInputCheckBox>();
+            firstrowcheck.Check(true);
 
-            Element depLabel2 = objadddiuser.dptLabel2;
-            Assert.IsTrue(depLabel2.InnerText.Contains("User's Departments"));
+            HtmlInputCheckBox secondrowcheck = objbatcheditdi.rowcheck2.As<HtmlInputCheckBox>();
+            secondrowcheck.Check(true);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(6000);
+
+            // click on Edit button
+            HtmlButton editbutton4 = objbatcheditdi.editbtn.As<HtmlButton>();
+            editbutton4.Click();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element pgtitle = objbatcheditdi.batcheditpgtitle;
+            Assert.IsTrue(pgtitle.InnerText.Contains("Batch Update DI Users"));
+
+            Element statuslbl = objbatcheditdi.statuslabel;
+            Assert.IsTrue(statuslbl.InnerText.Contains("Status"));
+
+            Element stationlbl = objbatcheditdi.stationlabel;
+            Assert.IsTrue(stationlbl.InnerText.Contains("Stations"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()
-        {           
+        {
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
+            
         }
+
 
 
         // Use TestCleanup to run code after each test has run

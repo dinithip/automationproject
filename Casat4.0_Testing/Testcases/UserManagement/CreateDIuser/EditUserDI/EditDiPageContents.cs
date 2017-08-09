@@ -15,18 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.ObjectRepo.Menus;
 using Casat4._0_Testing.Utilities;
+using Casat4._0_Testing.ObjectRepo.Menus;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.CasatUser.Edit;
+using Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUser
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 {
     /// <summary>
-    /// Summary description for EditUserContents
+    /// Summary description for EditDiPageContents
     /// </summary>
     [TestClass]
-    public class EditUserContents : BaseTest
+    public class EditDiPageContents : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -55,6 +55,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
         string _url;
         string _username;
         string _password;
+
+        string _searchoperatorid;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -127,14 +129,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_EditUserContents()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\editUserDI.csv", "editUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\editUserDI.csv")]
+        public void TestMethod_editDIPage()
         {
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _url);
 
             myManager.ActiveBrowser.Window.Maximize();
+
+            // -- End of Login ---
 
             ObjMenus menus = new ObjMenus(myManager);
 
@@ -152,69 +156,75 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.EditCasatUs
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjEditUser objedit = new ObjEditUser(myManager);
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
-            HtmlTable casattbl = objedit.casattable.As<HtmlTable>();
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlInputCheckBox firstrowcheck = objedit.rowcheck.As<HtmlInputCheckBox>();
+            // Search DI user to Edit
+
+            ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
+
+            HtmlTable DItable = objeditdiuser.ditable.As<HtmlTable>();
+
+            HtmlInputText operid = objeditdiuser.searchoperatorid.As<HtmlInputText>();
+            operid.Text = _searchoperatorid;
+
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, operid.GetRectangle());
+            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            // Select one DI user                    
+
+            HtmlInputCheckBox firstrowcheck = objeditdiuser.row1.As<HtmlInputCheckBox>();
             firstrowcheck.Check(true);
 
-            // click on Edit user button
-            HtmlButton editbtn = objedit.editbutton.As<HtmlButton>();
-            editbtn.Click();
+            Element editbutton = objeditdiuser.editdibtn;
+            myManager.ActiveBrowser.Actions.Click(editbutton);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element title = objedit.titletxt;
-            Assert.IsTrue(title.InnerText.Contains("Update CASAT User"));
+            // Verify Label names
 
-            Element verifylabel1 = objedit.label1;
-            Assert.IsTrue(verifylabel1.InnerText.Contains("Username*"));
+            Element opridlbl = objeditdiuser.editlabel1;
+            Assert.IsTrue(opridlbl.InnerText.Contains("Operator ID"));
 
-            Element verifylabel2 = objedit.label2;
-            Assert.IsTrue(verifylabel2.InnerText.Contains("First Name*"));
+            Element fnlbl = objeditdiuser.editlabel2;
+            Assert.IsTrue(fnlbl.InnerText.Contains("First Name"));
 
-            Element verifylabel3 = objedit.label3;
-            Assert.IsTrue(verifylabel3.InnerText.Contains("Last Name*"));
+            Element lnlbl = objeditdiuser.editlabel3;
+            Assert.IsTrue(lnlbl.InnerText.Contains("Last Name"));
 
-            Element verifylabel4 = objedit.label4;
-            Assert.IsTrue(verifylabel4.InnerText.Contains("Email Address*"));
+            Element emaillbl = objeditdiuser.editlabel4;
+            Assert.IsTrue(emaillbl.InnerText.Contains("Email Address"));
 
-            Element verifylabel5 = objedit.label5;
-            Assert.IsTrue(verifylabel5.InnerText.Contains("Phone*"));
+            Element phonelbl = objeditdiuser.editlabel5;
+            Assert.IsTrue(phonelbl.InnerText.Contains("Phone"));
 
-            Element verifylabel6 = objedit.label6;
-            Assert.IsTrue(verifylabel6.InnerText.Contains("Status"));
+            Element statuslbl = objeditdiuser.editlabel6;
+            Assert.IsTrue(statuslbl.InnerText.Contains("Status"));
 
-            Element verifylabel7 = objedit.label7;
-            Assert.IsTrue(verifylabel7.InnerText.Contains("Access Roles*"));
+            Element deptlbl1 = objeditdiuser.editlabel7;
+            Assert.IsTrue(deptlbl1.InnerText.Contains("Departments"));
 
-            Element verifylabel8 = objedit.label8;
-            Assert.IsTrue(verifylabel8.InnerText.Contains("Departments"));
+            Element deptlbl2 = objeditdiuser.editlabel8;
+            Assert.IsTrue(deptlbl2.InnerText.Contains("All Departments"));
 
-            Element verifylabel9 = objedit.label9;
-            Assert.IsTrue(verifylabel9.InnerText.Contains("All Access Roles"));
-
-            Element verifylabel10 = objedit.label10;
-            Assert.IsTrue(verifylabel10.InnerText.Contains("User's Access Roles"));
-
-            Element verifylabel11 = objedit.label11;
-            Assert.IsTrue(verifylabel11.InnerText.Contains("All Departments"));
-
-            Element verifylabel12 = objedit.label12;
-            Assert.IsTrue(verifylabel12.InnerText.Contains("User's Departments"));
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            Element deptlbl3 = objeditdiuser.editlabel9;
+            Assert.IsTrue(deptlbl3.InnerText.Contains("User's Departments"));
         }
+
 
         public void readData()
         {
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            
+            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run

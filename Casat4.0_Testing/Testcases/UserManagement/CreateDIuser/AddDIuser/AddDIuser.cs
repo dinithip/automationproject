@@ -161,11 +161,11 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-           Element duname = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
-            myManager.ActiveBrowser.Actions.ScrollToVisible(duname);
-            //duname.ScrollToVisible();
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+           
 
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
@@ -178,7 +178,7 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
             myManager.ActiveBrowser.RefreshDomTree();
 
             creatediuser();
-            //verifydiuser();
+            verifydiuser();
         }
 
         
@@ -221,6 +221,12 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
 
             Element verifysave = objadddiuser.savesuccessmsgdi;
             Assert.IsTrue(verifysave.InnerText.Contains("User has been created successfully"));
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();

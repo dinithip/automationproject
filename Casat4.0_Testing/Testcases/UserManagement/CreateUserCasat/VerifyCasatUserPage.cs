@@ -15,18 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
 using System.Threading;
-using Casat4._0_Testing.ObjectRepo.DIuser.BatchEditDI;
 using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.Utilities;
+using Casat4._0_Testing.ObjectRepo.CasatUser.Adduser;
 
-namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
+namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
 {
     /// <summary>
-    /// Summary description for BatcheditDIPage
+    /// Summary description for VerifyCasatUserPage
     /// </summary>
     [TestClass]
-    public class BatcheditDIPage : BaseTest
+    public class VerifyCasatUserPage : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -55,8 +55,6 @@ namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
         string _url;
         string _username;
         string _password;
-  
-        string _searchoperatorid;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -129,8 +127,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\DIBatchEdit.csv", "DIBatchEdit#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\DIBatchEdit.csv")]
-        public void TestMethod_BatcheditDIPage()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
+        public void TestMethod_CasatTableContents()
         {
             readData();
 
@@ -152,51 +150,61 @@ namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
 
             HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
             users.MouseClick();
+            
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            // Search DI users to Batch Edit
+            ObjCasatPageContents contents = new ObjCasatPageContents(myManager);
 
-            ObjBatchEditDI objbatcheditdi = new ObjBatchEditDI(myManager);
+            Element verifytitle = contents.titletxt;
+            Assert.AreEqual(verifytitle.InnerText, "CASAT Users");
 
-            HtmlInputText searchid = objbatcheditdi.searchoperatorid.As<HtmlInputText>();
-            searchid.Text = _searchoperatorid;
+            Element verifyAddbtn = contents.addBtnName;
+            Assert.IsTrue(verifyAddbtn.InnerText.Contains("Add User"));
 
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, searchid.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+            Element verifyEditbtn = contents.editBtnName;
+            Assert.IsTrue(verifyEditbtn.InnerText.Contains("Edit User/s"));
 
-            Thread.Sleep(2000);
+            Element verifyfiltertbtn = contents.savefilterBtnName;
+            Assert.IsTrue(verifyfiltertbtn.InnerText.Contains("Save Filters"));
+
+            Element verifydeletebtn = contents.deleteBtnName;
+            Assert.IsTrue(verifydeletebtn.InnerText.Contains("Delete User/s"));
+
+            Element verifyexportbtn = contents.exportBtnName;
+            Assert.IsTrue(verifyexportbtn.InnerText.Contains("Export"));
+
+            Element verifydownloadbtn = contents.downloadBtnName;
+            Assert.IsTrue(verifydownloadbtn.InnerText.Contains("Download"));
+
+            Element verifyuploadbtn = contents.uploadBtnName;
+            Assert.IsTrue(verifyuploadbtn.InnerText.Contains("Upload File"));
+
+            // Table headings
+            Element idcolumn = contents.idcolumntxt;
+            Assert.IsTrue(idcolumn.InnerText.Contains("id"));
+
+            Element usernamecolumn = contents.uncolumntxt;
+            Assert.IsTrue(usernamecolumn.InnerText.Contains("username"));
+
+            Element firstnmcolumn = contents.fncolumntxt;
+            Assert.IsTrue(firstnmcolumn.InnerText.Contains("firstName"));
+
+            Element lastnmcolumn = contents.lncolumntxt;
+            Assert.IsTrue(lastnmcolumn.InnerText.Contains("lastName"));
+
+            Element emailcolumn = contents.emailcolumntxt;
+            Assert.IsTrue(emailcolumn.InnerText.Contains("email"));
+
+            Element phonecolumn = contents.phonecolumntxt;
+            Assert.IsTrue(phonecolumn.InnerText.Contains("phone"));
+
+            Element statuscolumn = contents.statuscolumntxt;
+            Assert.IsTrue(statuscolumn.InnerText.Contains("status"));
+
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
-
-            // Select multiple users
-
-            HtmlTable DItable = objbatcheditdi.ditable.As<HtmlTable>();
-
-            HtmlInputCheckBox firstrowcheck = objbatcheditdi.rowcheck1.As<HtmlInputCheckBox>();
-            firstrowcheck.Check(true);
-
-            HtmlInputCheckBox secondrowcheck = objbatcheditdi.rowcheck2.As<HtmlInputCheckBox>();
-            secondrowcheck.Check(true);
-
-            Thread.Sleep(6000);
-
-            // click on Edit button
-            HtmlButton editbutton4 = objbatcheditdi.editbtn.As<HtmlButton>();
-            editbutton4.Click();
-
-            Thread.Sleep(2000);
-
-            Element pgtitle = objbatcheditdi.batcheditpgtitle;
-            Assert.IsTrue(pgtitle.InnerText.Contains("Batch Update DI Users"));
-
-            Element statuslbl = objbatcheditdi.stationlabel;
-            Assert.IsTrue(statuslbl.InnerText.Contains("Status"));
-
-            Element stationlbl = objbatcheditdi.stationlabel;
-            Assert.IsTrue(stationlbl.InnerText.Contains("Stations"));
-
-            Thread.Sleep(2000);
         }
 
         public void readData()
@@ -204,10 +212,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.PageVerifications
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _searchoperatorid = TestContext.DataRow["searchoperatorid"].ToString();
-            
         }
-
 
 
         // Use TestCleanup to run code after each test has run

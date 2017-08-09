@@ -135,7 +135,6 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
         }
 
         [TestMethod]
-
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUserDI.csv", "addUserDI#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUserDI.csv")]
         public void TestMethod_ExistinguserDI()
         {
@@ -159,6 +158,12 @@ namespace Casat4._0_Testing.Testcases.CreateDIuser
 
             HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
             users.MouseClick();
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();

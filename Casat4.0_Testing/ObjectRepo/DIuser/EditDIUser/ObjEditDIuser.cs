@@ -89,6 +89,7 @@ namespace Casat4._0_Testing.ObjectRepo.DIuser.EditDIUser
         // Success message
         public Element editsuccessmsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
+        public Element editsuccessmsg2 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 
         // Mandatory messages
 

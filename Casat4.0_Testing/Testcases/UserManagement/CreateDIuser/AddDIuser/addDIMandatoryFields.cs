@@ -160,6 +160,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             ObjAdduserDI objadddiuser = new ObjAdduserDI(myManager);
 
             Element addbutton = objadddiuser.addbtn;
@@ -211,7 +217,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
             Element phonemsg = objadddiuser.phnmandatorymsg;
             Assert.IsTrue(phonemsg.InnerText.Contains("Phone number is mandatory"));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
@@ -238,10 +244,16 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.AddDIuser
         [TestCleanup()]
         public void MyTestCleanup()
         {
+            //Screen_shot
+            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
+            {
+                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
+                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
+                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-            //
-            // Place any additional cleanup here
-            //
+            }
+            Thread.Sleep(2000);
+            myManager.Dispose();
 
             #region WebAii CleanUp
 

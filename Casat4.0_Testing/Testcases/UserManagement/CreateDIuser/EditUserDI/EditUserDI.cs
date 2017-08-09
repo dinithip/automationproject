@@ -164,6 +164,12 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             // Search DI user to Edit
 
             ObjEditDIuser objeditdiuser = new ObjEditDIuser(myManager);
@@ -239,7 +245,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             phn.Text = _phone;
             
             Thread.Sleep(1000);
-
+            /*
             HtmlSelect selectStatus = objeditdiuser.statustxt.As<HtmlSelect>();
 
             Thread.Sleep(2000);
@@ -257,8 +263,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlSelect dpt = objeditdiuser.departmenttxt.As<HtmlSelect>();
+            */
+           // HtmlSelect dpt = objeditdiuser.departmenttxt.As<HtmlSelect>();
 
             //dpt.MouseClick();
             //Thread.Sleep(1000);
@@ -266,8 +272,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             //dpt.MouseHover();
             //dpt.SelectByText(_department);
 
-            Element moveto = objeditdiuser.movetobtn;
-            myManager.ActiveBrowser.Actions.Click(moveto);
+            //Element moveto = objeditdiuser.movetobtn;
+            //myManager.ActiveBrowser.Actions.Click(moveto);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -277,9 +283,20 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateDIuser.EditUserDI
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-
+            /*
+            // If status changed
             Element verifysuccessmsg = objeditdiuser.editsuccessmsg;
             Assert.IsTrue(verifysuccessmsg.InnerText.Contains("Changes to the user has been saved. The user account has been deactivated successfully"));
+            */
+
+            Element verifysuccessmsg2 = objeditdiuser.editsuccessmsg2;
+            Assert.IsTrue(verifysuccessmsg2.InnerText.Contains("Changes to the user has been saved."));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element bottomcontent = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[2]/thead/tr[1]/th[2]");
+            myManager.ActiveBrowser.Actions.ScrollToVisible(bottomcontent);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
