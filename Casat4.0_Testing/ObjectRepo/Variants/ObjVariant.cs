@@ -19,9 +19,9 @@ namespace Casat4._0_Testing.ObjectRepo.Products
         // Variant Table
         public Element varianttable { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table"); } }
 
-        public Element varianttabletitle { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
+        public Element varianttabletitle { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2"); } }
 
-        public Element searchvariant { get { return _manager.ActiveBrowser.Find.ByXPath(""); } }
+        public Element searchvariant { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[3]/table/thead/tr[2]/th[3]/input[1]"); } }
 
        
 

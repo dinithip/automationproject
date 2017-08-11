@@ -85,8 +85,9 @@
     <Compile Include="ObjectRepo\Menus\ObjMenus.cs" />
     <Compile Include="ObjectRepo\Orders\ObjCreateOrder.cs" />
     <Compile Include="ObjectRepo\Orders\ObjOrderTable.cs" />
-    <Compile Include="ObjectRepo\Process\ObjAddStandardActivity.cs" />
-    <Compile Include="ObjectRepo\Process\ObjStandardActivity.cs" />
+    <Compile Include="ObjectRepo\StandardActivity\ObjAddStandardActivity.cs" />
+    <Compile Include="ObjectRepo\StandardActivity\ObjDeleteStandardActivity.cs" />
+    <Compile Include="ObjectRepo\StandardActivity\ObjStandardActivity.cs" />
     <Compile Include="ObjectRepo\Variants\ObjAddVariant.cs" />
     <Compile Include="ObjectRepo\Products\ObjDeleteProduct.cs" />
     <Compile Include="ObjectRepo\Variants\ObjDeleteVariant.cs" />
@@ -149,10 +150,13 @@
     <Compile Include="Testcases\Products\Variants\DeleteVariant\deleteartifactconnectedVariant.cs" />
     <Compile Include="Testcases\Products\Variants\DeleteVariant\deleteVariant.cs" />
     <Compile Include="Testcases\Products\Variants\EditVariant\batchEditVariant.cs" />
-    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActBackbtn.cs" />
+    <Compile Include="Testcases\Products\Variants\EditVariant\editVariant.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addDefaultVariant.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addInvalidStandardActivity.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandActCancelbtn.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
+    <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActMandatory.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />
-    <Compile Include="Testcases\StandardActivity\AddStandardActivity\ExistingStandardactivity.cs" />
     <Compile Include="Testcases\StandardActivity\standardActivitytable.cs" />
     <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIBackbutton.cs" />
     <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIMandatoryFields.cs" />
@@ -274,6 +278,9 @@
     <None Include="Data\variantdata.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="test.orderedtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestOrder.orderedtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -285,6 +292,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ObjectRepo\Process\" />
     <Folder Include="Testcases\UserManagement\CreateDIuser\DeleteDIuser\" />
     <Folder Include="Testcases\UserManagement\PageVerifications\" />
   </ItemGroup>

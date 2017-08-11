@@ -15,19 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
+using Casat4._0_Testing.Utilities;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Process;
-using Casat4._0_Testing.ObjectRepo.StandardActivity;
 
-namespace Casat4._0_Testing.Testcases.StandardActivity
+namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
 {
     /// <summary>
-    /// Summary description for standardActivitytable
+    /// Summary description for addStandardActMandatory
     /// </summary>
     [TestClass]
-    public class standardActivitytable : BaseTest
+    public class addStandardActMandatory : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -56,6 +55,10 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
         string _Url;
         string _username;
         string _password;
+
+       // string _namemandatory;
+       // string _variantmandatory;
+
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -124,14 +127,14 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
+
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_verifystandardActivityTable()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addstandardactivity.csv", "addstandardactivity#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addstandardactivity.csv")]
+        public void TestMethod_addStandardactMandatory()
         {
             readData();
-
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
 
@@ -151,91 +154,64 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             HtmlAnchor standardactivity = menus.standardactivitylink.As<HtmlAnchor>();
             standardactivity.MouseClick();
 
+            Thread.Sleep(1000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
+
+            Element addbutton = objaddstandardactivity.addactivitybtn;
+            myManager.ActiveBrowser.Actions.Click(addbutton);
+
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            ObjStandardActivity objstandardactivity = new ObjStandardActivity(myManager);
+            Element verifypage = objaddstandardactivity.addpagetitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Activity Details"));
 
-            Element tabletitle = objstandardactivity.standardactivitytblheading;
-            Assert.IsTrue(tabletitle.InnerText.Contains("Standard Activity"));
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            // Verify Buttons
-            Element add = objstandardactivity.addactivitybtn;
-            Assert.IsTrue(add.InnerText.Contains("Add Activity"));
+            Element savebutton = objaddstandardactivity.savebtn;
+            myManager.ActiveBrowser.Actions.Click(savebutton);
 
-            Element edit = objstandardactivity.editactivitybtn;
-            Assert.IsTrue(edit.InnerText.Contains("Edit Activity/s"));
+            /*
+            HtmlInputText name = objaddstandardactivity.standactivitynametxt.As<HtmlInputText>();
+            HtmlInputText variant = objaddstandardactivity.varianttxt.As<HtmlInputText>();
 
-            Element save = objstandardactivity.savefilterbtn;
-            Assert.IsTrue(save.InnerText.Contains("Save Filters"));
+            name.Text = _namemandatory;
+            variant.Text = _variantmandatory;
+            */
 
-            Element delete = objstandardactivity.deleteactivitybtn;
-            Assert.IsTrue(delete.InnerText.Contains("Delete Activity/s"));
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            Element convert = objstandardactivity.converttostationbtn;
-            Assert.IsTrue(convert.InnerText.Contains("Convert To Station"));
+            Element mandatorymsg = objaddstandardactivity.mandatoryMsg;
+            Assert.IsTrue(mandatorymsg.InnerText.Contains("Please fill all mandatory fields"));
 
-            Element export = objstandardactivity.exportbtn;
-            Assert.IsTrue(export.InnerText.Contains("Export"));
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
-            // Verify Table heading names
-            Element id = objstandardactivity.idlabel;
-            Assert.IsTrue(id.InnerText.Contains("ID"));
+            Element namemandatory = objaddstandardactivity.namemandatory;
+            Assert.IsTrue(namemandatory.InnerText.Contains("Activity name is mandatory"));
 
-            Element name = objstandardactivity.namelabel;
-            Assert.IsTrue(name.InnerText.Contains("Name"));
-
-            Element variant = objstandardactivity.variantlabel;
-            Assert.IsTrue(variant.InnerText.Contains("Variant String"));
-
-            Element additionalmemo = objstandardactivity.additionalmemolabel;
-            Assert.IsTrue(additionalmemo.InnerText.Contains("Additional Memo"));
-
-            Element group = objstandardactivity.grouplabel;
-            Assert.IsTrue(group.InnerText.Contains("Group"));
-
-            Element freetext = objstandardactivity.freetxtlabel;
-            Assert.IsTrue(freetext.InnerText.Contains("Free Text"));
-
-            Element memo = objstandardactivity.memolabel;
-            Assert.IsTrue(memo.InnerText.Contains("Memo"));
-
-            Element picture = objstandardactivity.picturelabel;
-            Assert.IsTrue(picture.InnerText.Contains("Picture"));
-
-            Element time = objstandardactivity.timelabel;
-            Assert.IsTrue(time.InnerText.Contains("Time"));
-
-            Element wes = objstandardactivity.weslabel;
-            Assert.IsTrue(wes.InnerText.Contains("WES"));
-            
-            Element op = objstandardactivity.oplabel;
-            Assert.IsTrue(op.InnerText.Contains("Op"));
-
-            Element pos = objstandardactivity.poslabel;
-            Assert.IsTrue(pos.InnerText.Contains("Pos"));
-
-            Element post = objstandardactivity.postlabel;
-            Assert.IsTrue(post.InnerText.Contains("Post"));
-
-            Element created = objstandardactivity.createdlabel;
-            Assert.IsTrue(created.InnerText.Contains("Created"));
-
-            Element updated = objstandardactivity.updatedlabel;
-            Assert.IsTrue(updated.InnerText.Contains("Updated"));
+            Element variantmandatory = objaddstandardactivity.variantmandatory;
+            Assert.IsTrue(variantmandatory.InnerText.Contains("Variant string is mandatory"));
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
+
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+
+           // _namemandatory = TestContext.DataRow["namemandatory"].ToString();          
+           // _variantmandatory = TestContext.DataRow["variantmandatory"].ToString();
+
         }
-
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

@@ -192,7 +192,7 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
             HtmlInputText variantname = objaddvariant.variantnametxt.As<HtmlInputText>();
             HtmlInputText family = objaddvariant.familytxt.As<HtmlInputText>();
             HtmlInputText alias = objaddvariant.aliastxt.As<HtmlInputText>();
-            HtmlInputText group = objaddvariant.grouptxt.As<HtmlInputText>();
+            HtmlInputNumber group = objaddvariant.grouptxt.As<HtmlInputNumber>();
             HtmlInputText groupname = objaddvariant.groupnametxt.As<HtmlInputText>();
             HtmlInputText freetext = objaddvariant.freetexttxt.As<HtmlInputText>();
 
@@ -206,15 +206,14 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
             Element savebutton = objaddvariant.savebtn;
             myManager.ActiveBrowser.Actions.Click(savebutton);
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element verifysuccess = objaddvariant.savesuccessmsg;
-            Assert.IsTrue(verifysuccess.InnerText.Contains("Variant has been created successfully."));
-
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            Element verifysuccess = objaddvariant.savesuccessmsg;
+            Assert.IsTrue(verifysuccess.InnerText.Contains("Variant has been created successfully"));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void verifycreate()
@@ -233,8 +232,10 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Assert.AreEqual(varianttbl.BodyRows[0].Cells[2].InnerText, _variantname);
+            Assert.AreEqual(varianttbl.BodyRows[0].Cells[1].InnerText, _variantname);
 
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
 
@@ -243,7 +244,8 @@ namespace Casat4._0_Testing.Testcases.Products.Variants.AddVariant
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _variantname = TestContext.DataRow["variantname"].ToString();
+            
+            _variantname = CommonGenerateRandom.GenarateRandom(_variantname);
             _family = TestContext.DataRow["family"].ToString();
             _alias = TestContext.DataRow["alias"].ToString();
             _group = TestContext.DataRow["group"].ToString();

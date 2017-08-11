@@ -1,2 +1,2 @@
-url,username,password,standactivityname,freetext,memo,additionalmemo,group,pos,post,op,variant
-http://146.185.172.122:8280/QA/#/login,admin,admin,Test Standard Act3,text1,test memo1,test additiomal memo1,G2,Pos1,Post2,OP1,GLOBALVARIANT
+url,username,password,standactivityname,freetext,group,pos,post,op,activitytype,variant,memo,additionalmemo,namemandatory,variantmandatory,invalidvariant,variantcombination
+http://146.185.172.122:8280/QA/#/login,admin,admin,Test Standard Act3,text1,G2,Pos1,Post2,OP1,Standard Activity,TESTVARIANT001,test memo1,test additiomal memo1,,,V1,"TESTVARIANT001,!TESTVARIANT002,TESTVARIANT"

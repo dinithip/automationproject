@@ -13,7 +13,7 @@ namespace Casat4._0_Testing.Utilities
             string strRandomText = "";
 
             Random random = new Random();
-            int intNumber = random.Next(100);
+            int intNumber = random.Next(1000);
             string strNumber = intNumber.ToString();
             strRandomText = strPrefix + strNumber;
 

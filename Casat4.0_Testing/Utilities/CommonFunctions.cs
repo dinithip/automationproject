@@ -27,8 +27,6 @@ namespace Casat4._0_Testing.Utilities
             HtmlInputPassword password = objlogin.txtpassword.As<HtmlInputPassword>();
             Element login = objlogin.btnlogin;
 
-           
-
             // Assign values
             username.Text = uname;
             password.Text = pw;

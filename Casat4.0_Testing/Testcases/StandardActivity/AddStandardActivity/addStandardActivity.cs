@@ -65,6 +65,7 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
         string _post;
         string _op;
         string _variant;
+       // string _variantcombination;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -133,7 +134,6 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
-
         }
 
         [TestMethod]
@@ -172,7 +172,7 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifypage = objaddstandardactivity.addpagetitle;
-            Assert.IsTrue(verifypage.InnerText.Contains("Create New Standard Activity"));
+            Assert.IsTrue(verifypage.InnerText.Contains("Activity Details"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -242,18 +242,24 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
 
             variant.Text = _variant;
 
+            /*
+            //variant combination
+            name.Text = _standactivityname;
+            variant.Text = _variantcombination;
+            */
+
             Thread.Sleep(3000);
 
             Element savebutton = objaddstandardactivity.savebtn;
             myManager.ActiveBrowser.Actions.Click(savebutton);
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifysave = objaddstandardactivity.savesuccessmsg;
-            Assert.IsTrue(verifysave.InnerText.Contains("Standard Activity created successfully"));
+            Assert.IsTrue(verifysave.InnerText.Contains("Standard Activity has been added successfully"));
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
         }
@@ -277,7 +283,8 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             
             Assert.AreEqual(standacttbl.BodyRows[0].Cells[2].InnerText, _standactivityname);
 
-
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void readData()
@@ -295,7 +302,7 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             _post = TestContext.DataRow["post"].ToString();
             _op = TestContext.DataRow["op"].ToString();
             _variant = TestContext.DataRow["variant"].ToString();
-            
+           // _variantcombination = TestContext.DataRow["variantcombination"].ToString();
         }
 
         

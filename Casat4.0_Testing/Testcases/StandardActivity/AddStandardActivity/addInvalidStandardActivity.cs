@@ -16,17 +16,17 @@ using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.Menus;
-using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Process;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.Menus;
 
 namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
 {
     /// <summary>
-    /// Summary description for addStandActBackbtn
+    /// Summary description for addInvalidStandardActivity
     /// </summary>
     [TestClass]
-    public class addStandActBackbtn : BaseTest
+    public class addInvalidStandardActivity : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -55,6 +55,11 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
         string _Url;
         string _username;
         string _password;
+       
+        string _standactivityname;
+        string _invalidvariant;
+
+
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -123,12 +128,11 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
-
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_addStandardActBack()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addstandardactivity.csv", "addstandardactivity#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addstandardactivity.csv")]
+        public void TestMethod_addInvalidStandardactivity()
         {
             readData();
 
@@ -154,39 +158,63 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
-            ObjStandardActivity objstandardactivity = new ObjStandardActivity(myManager);
-
 
             Element addbutton = objaddstandardactivity.addactivitybtn;
             myManager.ActiveBrowser.Actions.Click(addbutton);
 
-            Thread.Sleep(4000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifypage = objaddstandardactivity.addpagetitle;
-            Assert.IsTrue(verifypage.InnerText.Contains("Create New Standard Activity"));
+            Assert.IsTrue(verifypage.InnerText.Contains("Activity Details"));
 
             Thread.Sleep(2000);
-
-            Element backbutton = objaddstandardactivity.backbtn;
-            myManager.ActiveBrowser.Actions.Click(backbutton);
-
-            Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element tabletitle = objstandardactivity.standardacttabletitle;
-            Assert.IsTrue(tabletitle.InnerText.Contains("Standard Activity"));
+            addinvalid();
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
+
+        public void addinvalid()
+        {
+
+            ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
+
+            HtmlInputText name = objaddstandardactivity.standactivitynametxt.As<HtmlInputText>();
+            HtmlInputText invalidvariant = objaddstandardactivity.varianttxt.As<HtmlInputText>();
+
+            name.Text = _standactivityname;
+            invalidvariant.Text = _invalidvariant;
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element savebutton = objaddstandardactivity.savebtn;
+            myManager.ActiveBrowser.Actions.Click(savebutton);
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyinvalid = objaddstandardactivity.invalidvariantmsg;
+            Assert.IsTrue(verifyinvalid.InnerText.Contains("Invalid Variant(s) String (V1) . Please try again"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+        }
 
         public void readData()
         {
             _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
+
+            _standactivityname = TestContext.DataRow["standactivityname"].ToString();
+            _invalidvariant = TestContext.DataRow["invalidvariant"].ToString();
+
         }
-
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

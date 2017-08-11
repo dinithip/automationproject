@@ -150,7 +150,7 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
             HtmlAnchor standardactivity = menus.standardactivitylink.As<HtmlAnchor>();
             standardactivity.MouseClick();
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
@@ -162,19 +162,13 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifypage = objaddstandardactivity.addpagetitle;
-            Assert.IsTrue(verifypage.InnerText.Contains("Create New Standard Activity"));
+            Assert.IsTrue(verifypage.InnerText.Contains("Activity Details"));
 
             Element namelbl = objaddstandardactivity.namelabel;
-            Assert.IsTrue(namelbl.InnerText.Contains("Standard Activity Name *"));
+            Assert.IsTrue(namelbl.InnerText.Contains("Name *"));
            
             Element freetxtlbl = objaddstandardactivity.freetextlabel;
             Assert.IsTrue(freetxtlbl.InnerText.Contains("Free Text"));
-
-            Element memolbl = objaddstandardactivity.memolabel;
-            Assert.IsTrue(memolbl.InnerText.Contains("Memo"));
-
-            Element additionalmemolbl = objaddstandardactivity.additionalmemolabel;
-            Assert.IsTrue(additionalmemolbl.InnerText.Contains("Additional Memo"));
 
             Element grouplbl = objaddstandardactivity.grouplabel;
             Assert.IsTrue(grouplbl.InnerText.Contains("Group"));
@@ -187,12 +181,24 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
 
             Element oplbl = objaddstandardactivity.oplabel;
             Assert.IsTrue(oplbl.InnerText.Contains("Op"));
+          
+            Element activitytypelbl = objaddstandardactivity.activitytypelabel;
+            Assert.IsTrue(activitytypelbl.InnerText.Contains("Activity Type"));
 
             Element weslbl = objaddstandardactivity.weslabel;
             Assert.IsTrue(weslbl.InnerText.Contains("Wes"));
-
+          
             Element variantlbl = objaddstandardactivity.variantlabel;
             Assert.IsTrue(variantlbl.InnerText.Contains("Variant String *"));
+
+            Element memolbl = objaddstandardactivity.memolabel;
+            Assert.IsTrue(memolbl.InnerText.Contains("Memo"));
+
+            Element additionalmemolbl = objaddstandardactivity.additionalmemolabel;
+            Assert.IsTrue(additionalmemolbl.InnerText.Contains("Additional Memo"));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
         }
 
 

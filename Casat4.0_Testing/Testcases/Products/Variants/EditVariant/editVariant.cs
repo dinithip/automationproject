@@ -15,18 +15,14 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Casat4._0_Testing.Utilities;
-using Casat4._0_Testing.ObjectRepo.Menus;
-using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Process;
 
-namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
+namespace Casat4._0_Testing.Testcases.Products.Variants.EditVariant
 {
     /// <summary>
-    /// Summary description for ExistingStandardactivity
+    /// Summary description for editVariant
     /// </summary>
     [TestClass]
-    public class ExistingStandardactivity : BaseTest
+    public class editVariant : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -48,15 +44,6 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
                 testContextInstance = value;
             }
         }
-
-        Settings mySettings;
-        Manager myManager;
-
-        string _Url;
-        string _username;
-        string _password;
-
-        string _standactivityname;
 
 
         //Use ClassInitialize to run code before running the first test in the class
@@ -121,94 +108,20 @@ namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
 
             #endregion
 
-            mySettings = new Settings();
-            mySettings.Web.DefaultBrowser = BrowserType.InternetExplorer;
-            myManager = new Manager(mySettings);
-            myManager.Start();
-            myManager.LaunchNewBrowser();
+            //
+            // Place any additional initialization here
+            //
 
         }
-
-        [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addstandardactivity.csv", "addstandardactivity#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addstandardactivity.csv")]
-        public void TestMethod_existingStandardactivity()
-        {
-            readData();
-
-            CommonFunctions.Login(myManager, _username, _password, _Url);
-
-            myManager.ActiveBrowser.Window.Maximize();
-
-            // -- End of Login ---
-            ObjMenus menus = new ObjMenus(myManager);
-
-            HtmlAnchor process = menus.processlink.As<HtmlAnchor>();
-            process.MouseHover();
-
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor standardactivity = menus.standardactivitylink.As<HtmlAnchor>();
-            standardactivity.MouseClick();
-
-            Thread.Sleep(1000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
-
-            Element addbutton = objaddstandardactivity.addactivitybtn;
-            myManager.ActiveBrowser.Actions.Click(addbutton);
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            Element verifypage = objaddstandardactivity.addpagetitle;
-            Assert.IsTrue(verifypage.InnerText.Contains("Create New Standard Activity"));
-
-            add();
-        }
-
-        public void add()
-        {
-            ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
-
-            HtmlInputText name = objaddstandardactivity.standactivitynametxt.As<HtmlInputText>();
-            name.Text = _standactivityname;
-
-            Element savebutton = objaddstandardactivity.savebtn;
-            myManager.ActiveBrowser.Actions.Click(savebutton);
-
-            Element verifyexisting = objaddstandardactivity.existingmsg;
-            Assert.IsTrue(verifyexisting.InnerText.Contains(""));
-        }
-
-
-        public void readData()
-        {
-            _Url = TestContext.DataRow["url"].ToString();
-            _username = TestContext.DataRow["username"].ToString();
-            _password = TestContext.DataRow["password"].ToString();
-            _standactivityname = TestContext.DataRow["standactivityname"].ToString();
-        }
-
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            //Screen_shot
-            if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
-            {
-                System.Drawing.Image img = myManager.ActiveBrowser.Capture();
-                string filename = string.Format("{0}_{1}.jpg", DateTime.Now.ToString("yyyyMMdd_HHmmsss"), TestContext.TestName);
-                img.Save(@"E:\Images\Errors\" + filename, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            }
-            Thread.Sleep(2000);
-            myManager.Dispose();
+            //
+            // Place any additional cleanup here
+            //
 
             #region WebAii CleanUp
 

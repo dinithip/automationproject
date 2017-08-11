@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="test" storage="e:\mvv\casat 4.0\casat_4.0\testautomation\casat4.0_testing\casat4.0_testing\test.orderedtest" id="66764f66-7b62-4779-a0b1-1e820a6ac206" continueAfterFailure="true" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="8c74ff67-7e4e-86ae-0188-7c39100167af" name="TestMethod_AddProduct" storage="bin\debug\casat4.0_testing.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

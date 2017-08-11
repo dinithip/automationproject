@@ -57,7 +57,7 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
         string _password;
         string _searchtodelete;
 
-        string _softdetele;
+       // string _softdetele;
         string _variant;
         string _freetext;
 
@@ -132,7 +132,7 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\variantdata.csv", "variantdata#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\variantdata.csv")]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addProduct.csv", "addProduct#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addProduct.csv")]
         public void TestMethod_singleDeleteProduct()
         {
             readData();
@@ -189,7 +189,7 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifymsg = objdeleteproduct.deleteconfirmationmsg;
-            Assert.IsTrue(verifymsg.InnerText.Contains("Are you sure you want to delete the selected product/s?"));
+            Assert.IsTrue(verifymsg.InnerText.Contains("Are you sure you want to delete the selected product(s)?"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -199,13 +199,13 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
             Element yesbutton = objdeleteproduct.yesbtn;
             myManager.ActiveBrowser.Actions.Click(yesbutton);
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifydelete = objdeleteproduct.producttabletitle;
             Assert.IsTrue(verifydelete.InnerText.Contains("Selected product/s have been deleted successfully."));
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifyredirect = objdeleteproduct.producttabletitle;
@@ -231,10 +231,10 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            verifysoftdelete();
+            //verifysoftdelete();
 
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            //Thread.Sleep(3000);
+            //myManager.ActiveBrowser.RefreshDomTree();
         }
 
         public void verifysingledelete()
@@ -255,33 +255,33 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
 
         }
 
-        public void verifysoftdelete()
-        {
-            ObjProduct objproduct = new ObjProduct(myManager);
+        //public void verifysoftdelete()
+        //{
+        //    ObjProduct objproduct = new ObjProduct(myManager);
 
-            Element addproductbutton = objproduct.addproductbtn;
-            myManager.ActiveBrowser.Actions.Click(addproductbutton);
+        //    Element addproductbutton = objproduct.addproductbtn;
+        //    myManager.ActiveBrowser.Actions.Click(addproductbutton);
 
-            HtmlInputText name = objproduct.nametxt.As<HtmlInputText>();
-            HtmlInputText variant = objproduct.varianttxt.As<HtmlInputText>();
-            HtmlInputText freetxt = objproduct.freetexttxt.As<HtmlInputText>();
+        //    HtmlInputText name = objproduct.nametxt.As<HtmlInputText>();
+        //    HtmlInputText variant = objproduct.varianttxt.As<HtmlInputText>();
+        //    HtmlInputText freetxt = objproduct.freetexttxt.As<HtmlInputText>();
 
-            name.Text = _softdetele;
-            variant.Text = _variant;
-            freetxt.Text = _freetext;
+        //    name.Text = _softdetele;
+        //    variant.Text = _variant;
+        //    freetxt.Text = _freetext;
 
-            Element savebutton = objproduct.savebtn;
-            myManager.ActiveBrowser.Actions.Click(savebutton);
+        //    Element savebutton = objproduct.savebtn;
+        //    myManager.ActiveBrowser.Actions.Click(savebutton);
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
+        //    Thread.Sleep(2000);
+        //    myManager.ActiveBrowser.RefreshDomTree();
 
-            Element exit = objproduct.existingmsg;
-            Assert.IsTrue(exit.InnerText.Contains("Product Name already exist"));
+        //    Element exit = objproduct.existingmsg;
+        //    Assert.IsTrue(exit.InnerText.Contains("Product Name already exist"));
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-        }
+        //    Thread.Sleep(2000);
+        //    myManager.ActiveBrowser.RefreshDomTree();
+        //}
 
         public void readData()
         {
@@ -290,7 +290,7 @@ namespace Casat4._0_Testing.Testcases.Products.Prouct.DeleteProducts
             _password = TestContext.DataRow["password"].ToString();
             _searchtodelete = TestContext.DataRow["searchtodelete"].ToString();
 
-            _softdetele = TestContext.DataRow["softdetele"].ToString();
+            //_softdetele = TestContext.DataRow["softdetele"].ToString();
             _variant = TestContext.DataRow["variant"].ToString();
             _freetext = TestContext.DataRow["freetext"].ToString();
         }

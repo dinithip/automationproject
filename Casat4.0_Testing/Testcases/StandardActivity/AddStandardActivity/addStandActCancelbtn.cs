@@ -21,13 +21,13 @@ using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Process;
 using Casat4._0_Testing.ObjectRepo.StandardActivity;
 
-namespace Casat4._0_Testing.Testcases.StandardActivity
+namespace Casat4._0_Testing.Testcases.StandardActivity.AddStandardActivity
 {
     /// <summary>
-    /// Summary description for standardActivitytable
+    /// Summary description for addStandActBackbtn
     /// </summary>
     [TestClass]
-    public class standardActivitytable : BaseTest
+    public class addStandActCancelbtn : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -124,14 +124,14 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             myManager = new Manager(mySettings);
             myManager.Start();
             myManager.LaunchNewBrowser();
+
         }
 
         [TestMethod]
         [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\dataSheet.csv", "dataSheet#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\dataSheet.csv")]
-        public void TestMethod_verifystandardActivityTable()
+        public void TestMethod_addStandardActCancel()
         {
             readData();
-
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
 
@@ -151,82 +151,37 @@ namespace Casat4._0_Testing.Testcases.StandardActivity
             HtmlAnchor standardactivity = menus.standardactivitylink.As<HtmlAnchor>();
             standardactivity.MouseClick();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
+            ObjAddStandardActivity objaddstandardactivity = new ObjAddStandardActivity(myManager);
             ObjStandardActivity objstandardactivity = new ObjStandardActivity(myManager);
+
+
+            Element addbutton = objaddstandardactivity.addactivitybtn;
+            myManager.ActiveBrowser.Actions.Click(addbutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifypage = objaddstandardactivity.addpagetitle;
+            Assert.IsTrue(verifypage.InnerText.Contains("Activity Details"));
+
+            Thread.Sleep(2000);
+
+            Element cancelbutton = objaddstandardactivity.cancelbtn;
+            myManager.ActiveBrowser.Actions.Click(cancelbutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element tabletitle = objstandardactivity.standardactivitytblheading;
             Assert.IsTrue(tabletitle.InnerText.Contains("Standard Activity"));
 
-            // Verify Buttons
-            Element add = objstandardactivity.addactivitybtn;
-            Assert.IsTrue(add.InnerText.Contains("Add Activity"));
-
-            Element edit = objstandardactivity.editactivitybtn;
-            Assert.IsTrue(edit.InnerText.Contains("Edit Activity/s"));
-
-            Element save = objstandardactivity.savefilterbtn;
-            Assert.IsTrue(save.InnerText.Contains("Save Filters"));
-
-            Element delete = objstandardactivity.deleteactivitybtn;
-            Assert.IsTrue(delete.InnerText.Contains("Delete Activity/s"));
-
-            Element convert = objstandardactivity.converttostationbtn;
-            Assert.IsTrue(convert.InnerText.Contains("Convert To Station"));
-
-            Element export = objstandardactivity.exportbtn;
-            Assert.IsTrue(export.InnerText.Contains("Export"));
-
-            // Verify Table heading names
-            Element id = objstandardactivity.idlabel;
-            Assert.IsTrue(id.InnerText.Contains("ID"));
-
-            Element name = objstandardactivity.namelabel;
-            Assert.IsTrue(name.InnerText.Contains("Name"));
-
-            Element variant = objstandardactivity.variantlabel;
-            Assert.IsTrue(variant.InnerText.Contains("Variant String"));
-
-            Element additionalmemo = objstandardactivity.additionalmemolabel;
-            Assert.IsTrue(additionalmemo.InnerText.Contains("Additional Memo"));
-
-            Element group = objstandardactivity.grouplabel;
-            Assert.IsTrue(group.InnerText.Contains("Group"));
-
-            Element freetext = objstandardactivity.freetxtlabel;
-            Assert.IsTrue(freetext.InnerText.Contains("Free Text"));
-
-            Element memo = objstandardactivity.memolabel;
-            Assert.IsTrue(memo.InnerText.Contains("Memo"));
-
-            Element picture = objstandardactivity.picturelabel;
-            Assert.IsTrue(picture.InnerText.Contains("Picture"));
-
-            Element time = objstandardactivity.timelabel;
-            Assert.IsTrue(time.InnerText.Contains("Time"));
-
-            Element wes = objstandardactivity.weslabel;
-            Assert.IsTrue(wes.InnerText.Contains("WES"));
-            
-            Element op = objstandardactivity.oplabel;
-            Assert.IsTrue(op.InnerText.Contains("Op"));
-
-            Element pos = objstandardactivity.poslabel;
-            Assert.IsTrue(pos.InnerText.Contains("Pos"));
-
-            Element post = objstandardactivity.postlabel;
-            Assert.IsTrue(post.InnerText.Contains("Post"));
-
-            Element created = objstandardactivity.createdlabel;
-            Assert.IsTrue(created.InnerText.Contains("Created"));
-
-            Element updated = objstandardactivity.updatedlabel;
-            Assert.IsTrue(updated.InnerText.Contains("Updated"));
-
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
+
 
         public void readData()
         {
