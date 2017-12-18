@@ -52,6 +52,7 @@ namespace Casat4._0_Testing
         // Define Class Variables
         Settings mySettings;
         Manager myManager;
+
         string _Url;
         string _username;
         string _password;
@@ -135,7 +136,7 @@ namespace Casat4._0_Testing
             readData();
 
             CommonFunctions.Login(myManager, _username, _password, _Url);
-           
+            
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -143,8 +144,8 @@ namespace Casat4._0_Testing
             myManager.ActiveBrowser.RefreshDomTree();
             //  Scenario 1: Verify Login with Valid inputs
 
-            Element verificationtext = myManager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2");
-            Assert.AreEqual(verificationtext.InnerText, "CASAT Users");
+            Element verificationtext = myManager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[7]/a");
+            Assert.AreEqual(verificationtext.InnerText, "CASAT User 3");
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();

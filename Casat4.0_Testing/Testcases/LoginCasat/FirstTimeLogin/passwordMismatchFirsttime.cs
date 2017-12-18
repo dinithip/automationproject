@@ -124,7 +124,7 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.FirstTimeLogin
         public void TestMethod_firstLoginPWmismatch()
         {
 
-            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122:8280/QA/#/login");
+            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122/QA/#/login");
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -134,8 +134,8 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.FirstTimeLogin
             HtmlInputPassword password = firstTime.pwd.As<HtmlInputPassword>();
             Element login = firstTime.signbtn;
 
-            username.Text = "dinithi6093";
-            password.Text = "dinithi6093";
+            username.Text = "CasatUser8";
+            password.Text = "CasatUser8";
             myManager.ActiveBrowser.Actions.Click(login);
 
             Thread.Sleep(1000);
@@ -146,8 +146,8 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.FirstTimeLogin
             HtmlInputPassword reenterpassword = firstTime.newpw2.As<HtmlInputPassword>();
             Element changebtn = firstTime.changebutton;
 
-            newpassword.Text = "pleasechange1A#";
-            reenterpassword.Text = "pleasechangeA#";
+            newpassword.Text = "1qaz@WSX";
+            reenterpassword.Text = "1qaz@WS";
             myManager.ActiveBrowser.Actions.Click(changebtn);
 
             Thread.Sleep(2000);

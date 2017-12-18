@@ -17,6 +17,7 @@ using ArtOfTest.WebAii.Silverlight.UI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using Casat4._0_Testing.ObjectRepo.Login;
+using Casat4._0_Testing.Utilities;
 
 namespace Casat4._0_Testing
 {
@@ -49,6 +50,8 @@ namespace Casat4._0_Testing
 
         Settings mySettings;
         Manager myManager;
+
+        
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -122,7 +125,8 @@ namespace Casat4._0_Testing
         [TestMethod]
         public void TestMethod_FirstTimeLogin()
         {
-            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122:8280/QA/#/login");
+            
+            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122/QA/#/login");
 
             myManager.ActiveBrowser.Window.Maximize();
 
@@ -133,11 +137,11 @@ namespace Casat4._0_Testing
             Element login = firstTime.signbtn;
            
 
-            username.Text = "dinithi6093";
-            password.Text = "dinithi6093";
+            username.Text = "CasatUser7";
+            password.Text = "CasatUser7";
             myManager.ActiveBrowser.Actions.Click(login);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2000);
             myManager.ActiveBrowser.WaitUntilReady();
             myManager.ActiveBrowser.RefreshDomTree();
 
@@ -157,8 +161,8 @@ namespace Casat4._0_Testing
             HtmlInputPassword reenterpassword = firstTime.newpw2.As<HtmlInputPassword>();
             Element changebtn = firstTime.changebutton;
                                  
-            newpassword.Text = "pleasechange1A#";
-            reenterpassword.Text = "pleasechange1A#";
+            newpassword.Text = "1qaz@WSX";
+            reenterpassword.Text = "1qaz@WSX";
             myManager.ActiveBrowser.Actions.Click(changebtn);
 
             Thread.Sleep(2000);
@@ -166,12 +170,14 @@ namespace Casat4._0_Testing
 
 
             ////Verify login
-            Element verificationtext = firstTime.verifylogtitle;
-            Assert.AreEqual(verificationtext.InnerText, "CASAT Users");
+          //  Element verificationtext = myManager.ActiveBrowser.Find.ById("da");
+          //  Assert.AreEqual(verificationtext.InnerText, "Commit Flow Changes");
 
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }
+
+        
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]

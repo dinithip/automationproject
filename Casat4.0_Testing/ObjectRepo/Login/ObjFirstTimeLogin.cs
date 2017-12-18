@@ -21,7 +21,7 @@ namespace Casat4._0_Testing.ObjectRepo.Login
 
         public Element pwd { get { return _manager.ActiveBrowser.Find.ById("validation-password"); } }
 
-        public Element signbtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[4]/button"); } }
+        public Element signbtn { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='form-validation']/div[6]/button"); } }
 
         public Element newpw1 { get { return _manager.ActiveBrowser.Find.ById("password1"); } }
 

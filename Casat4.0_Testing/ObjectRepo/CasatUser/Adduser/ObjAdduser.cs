@@ -39,7 +39,7 @@ namespace Casat4._0_Testing.ObjectRepo.Adduser
 
         public Element txtdept { get { return _manager.ActiveBrowser.Find.ById("l6"); } }
 
-        public Element btnsave { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div/div/div/form/div[8]/div/div[2]/div[1]/input"); } }
+        public Element btnsave { get { return _manager.ActiveBrowser.Find.ById("save"); } }
 
         public Element backbtn { get { return _manager.ActiveBrowser.Find.ById("back"); } }
 
@@ -49,7 +49,7 @@ namespace Casat4._0_Testing.ObjectRepo.Adduser
 
         public Element movefrom { get { return _manager.ActiveBrowser.Find.ById("moveFrom"); } }
 
-        public Element saveMsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[1]"); } }
+        public Element saveMsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='msgBar']/div/p[2]"); } }
 
         public Element existingMsg { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[3]/div/p[2]"); } }
 

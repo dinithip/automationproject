@@ -157,6 +157,7 @@
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActivity.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActMandatory.cs" />
     <Compile Include="Testcases\StandardActivity\AddStandardActivity\addStandardActPage.cs" />
+    <Compile Include="Testcases\StandardActivity\DeleteStandardActivity\deleteStandardActivity.cs" />
     <Compile Include="Testcases\StandardActivity\standardActivitytable.cs" />
     <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIBackbutton.cs" />
     <Compile Include="Testcases\UserManagement\CreateDIuser\AddDIuser\addDIMandatoryFields.cs" />

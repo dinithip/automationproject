@@ -141,7 +141,7 @@ namespace Casat4._0_Testing.Testcases.LoginCasat.UserLocked
 
             ObjLogin objlogin = new ObjLogin(myManager);
 
-            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122:8280/QA/#/login");
+            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122/QA/#/login");
             myManager.ActiveBrowser.Window.Maximize();
 
             HtmlInputText username = objlogin.un.As<HtmlInputText>();

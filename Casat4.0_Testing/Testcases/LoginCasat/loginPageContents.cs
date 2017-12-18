@@ -123,7 +123,7 @@ namespace Casat4._0_Testing.Testcases.LoginCasat
         [TestMethod]
         public void TestMethod_loginPageContents()
         {
-            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122:8280/QA/#/login");
+            myManager.ActiveBrowser.NavigateTo("http://146.185.172.122/QA/#/login");
             myManager.ActiveBrowser.Window.Maximize();
 
             Thread.Sleep(4000);
@@ -134,18 +134,18 @@ namespace Casat4._0_Testing.Testcases.LoginCasat
             Element heading = objlogin.loginpgheading;
             Assert.IsTrue(heading.InnerText.Contains("Welcome to Casat"));
 
-            Element usernamelbl = objlogin.usernamelabel;
-            Assert.IsTrue(usernamelbl.InnerText.Contains("Username"));
+           // Element usernamelbl = objlogin.usernamelabel;
+            //Assert.IsTrue(usernamelbl.InnerText.Contains("Username"));
 
-            Element passwordlbl = objlogin.passwordlabel;
-            Assert.IsTrue(passwordlbl.InnerText.Contains("Password"));
+            //Element passwordlbl = objlogin.passwordlabel;
+            //Assert.IsTrue(passwordlbl.InnerText.Contains("Password"));
 
             Element remembermelbl = objlogin.remembermelabel;
             Assert.IsTrue(remembermelbl.InnerText.Contains("Remember me"));
 
             //Element forgotlbl = objlogin.remembermelabel;
             //Assert.IsTrue(forgotlbl.InnerText.Contains("Forgot Password?"));
-
+            
             Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
         }

@@ -15,19 +15,18 @@ using ArtOfTest.WebAii.Silverlight;
 using ArtOfTest.WebAii.Silverlight.UI;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading;
-using Casat4._0_Testing.ObjectRepo.Adduser;
 using Casat4._0_Testing.Utilities;
 using Casat4._0_Testing.ObjectRepo.Menus;
-using Casat4._0_Testing.ObjectRepo.CasatUser.Messages;
+using System.Threading;
+using Casat4._0_Testing.ObjectRepo.StandardActivity;
 
-namespace Casat4._0_Testing
+namespace Casat4._0_Testing.Testcases.StandardActivity.DeleteStandardActivity
 {
     /// <summary>
-    /// Summary description for AddCasatuser
+    /// Summary description for deleteStandardActivitycs
     /// </summary>
     [TestClass]
-    public class AddCasatuser : BaseTest
+    public class deleteStandardActivity : BaseTest
     {
 
         #region [Setup / TearDown]
@@ -52,18 +51,12 @@ namespace Casat4._0_Testing
 
         Settings mySettings;
         Manager myManager;
-       
 
-        string _username1;
-        string _firstname;
-        string _lastname;
-        string _emailaddress;
-        string _phone;
-        string _accessrole;
-        //string _dept;
-        string _url;
+        string _Url;
         string _username;
         string _password;
+
+        string _searchtodelete;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -136,167 +129,116 @@ namespace Casat4._0_Testing
         }
 
         [TestMethod]
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addUsers.csv", "addUsers#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addUsers.csv")]
-        public void TestMethod_AddCasatuser()
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.CSV", "|DataDirectory|\\Data\\addstandardactivity.csv", "addstandardactivity#csv", DataAccessMethod.Sequential), DeploymentItem("Data\\addstandardactivity.csv")]
+        public void TestMethod_deleteStandardactivity()
         {
             readData();
 
-            CommonFunctions.Login(myManager, _username, _password, _url);
+            CommonFunctions.Login(myManager, _username, _password, _Url);
 
             myManager.ActiveBrowser.Window.Maximize();
 
-            //--- Add New User ---
-
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
+            // -- End of Login ---
             ObjMenus menus = new ObjMenus(myManager);
 
-            HtmlListItem system = menus.systemlink.As<HtmlListItem>();
-            system.MouseHover();
+            HtmlAnchor process = menus.processlink.As<HtmlAnchor>();
+            process.MouseHover();
 
             myManager.ActiveBrowser.RefreshDomTree();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
-            users.MouseClick();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            Element addbtn = objadduser.createbtn;            
-            myManager.ActiveBrowser.Actions.Click(addbtn);
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            //CommonFunctionsCreateCasatUser.AddCasatUser(myManager, _url, _username1, _firstname, _lastname, _emailaddress, _phone, _accessrole, _dept, true);
+            HtmlAnchor standardactivity = menus.standardactivitylink.As<HtmlAnchor>();
+            standardactivity.MouseClick();
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            create();
-
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            verifyuser();
-
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
-        }
-
-        public void create()
-        {
-            ObjAdduser objadduser = new ObjAdduser(myManager);
-
-            HtmlInputText usernametxt = objadduser.usernametxt.As<HtmlInputText>();
-            HtmlInputText firstname = objadduser.txtfrstname.As<HtmlInputText>();
-            HtmlInputText lastname = objadduser.txtlastname.As<HtmlInputText>();
-            HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
-            HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();            
-            HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();
-            //HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
-
-            Element savebtn = objadduser.btnsave;
-
-            usernametxt.Text = _username1;
-            firstname.Text = _firstname;
-            lastname.Text = _lastname;
-            emailaddress.Text = _emailaddress;
-            phone.Text = _phone;
-
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            //used accessR.SelectByText(accrl); twice because the save button is getting enabed after a mouse action 
-            accessR.MouseClick();
             Thread.Sleep(1000);
-            accessR.SelectByText(_accessrole);
-            accessR.MouseHover();
-            accessR.SelectByText(_accessrole,true);
-
-
-            //deptm.MouseClick();
-            Thread.Sleep(1000);
-            //deptm.SelectByText(_dept);
-            //deptm.MouseHover();
-            //deptm.SelectByText(_dept);
-
-            Element assignbtn = objadduser.moveto;
-            myManager.ActiveBrowser.Actions.Click(assignbtn);
-
-            myManager.ActiveBrowser.Actions.Click(savebtn);
-
-           // Thread.Sleep(2000);
-          //  myManager.ActiveBrowser.RefreshDomTree();
-
-           // Element verifySave = objadduser.saveMsg;
-           // Assert.IsTrue(verifySave.InnerText.Contains("CASAT User(s)"));
-
-            Thread.Sleep(3000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            Element verifysave = objadduser.saveMsg;
-            Assert.IsTrue(verifysave.InnerText.Contains("has been created successfully"));
+            ObjDeleteStandardActivity objdeletestandardactivity = new ObjDeleteStandardActivity(myManager);
 
-            Thread.Sleep(3000);
-            myManager.ActiveBrowser.RefreshDomTree();
+            // Search Standard Activity to DELETE
 
-        }
+            HtmlInputText standardact = objdeletestandardactivity.searchnamefield.As<HtmlInputText>();
 
-        public void verifyuser()
-        {
-            ObjAdduser objadduser = new ObjAdduser(myManager);
+            standardact.Text = _searchtodelete;
 
-            Thread.Sleep(2000);
-            myManager.ActiveBrowser.RefreshDomTree();
-
-            HtmlInputText usernm = objadduser.searchusername.As<HtmlInputText>();
-
-            usernm.Text = _username1;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usernm.GetRectangle());
+            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, standardact.GetRectangle());
             myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlTable casattbl = objadduser.casattable.As<HtmlTable>();
+            // Select one Standard Activity to Delete
+            HtmlInputCheckBox row1;
+
+            HtmlTable standardacttbl = objdeletestandardactivity.standardactivitytable.As<HtmlTable>();
+
+            row1 = objdeletestandardactivity.rowcheck1.As<HtmlInputCheckBox>();
+            row1.Check(true);
+
+            // click on Delete button
+            Element deletebutton = objdeletestandardactivity.deletebtn;
+            myManager.ActiveBrowser.Actions.Click(deletebutton);
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifymsg = objdeletestandardactivity.deleteconfirmationmsg;
+            Assert.IsTrue(verifymsg.InnerText.Contains("Are you sure you want to delete the selected Standard Activity(s)?"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            //Assert.AreEqual(casattbl.BodyRows[0].Cells[2].InnerText, _username1);
+            // If YES
+            // Click on YES
+            Element yesbutton = objdeletestandardactivity.yesbtn;
+            myManager.ActiveBrowser.Actions.Click(yesbutton);
 
-            //Thread.Sleep(2000);
-            //myManager.ActiveBrowser.RefreshDomTree();
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifydelete = objdeletestandardactivity.deletesuccessmsg;
+            Assert.IsTrue(verifydelete.InnerText.Contains("Selected Standard Activity(s) has been deleted successfully"));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            Element verifyredirect = objdeletestandardactivity.standardacttblheading;
+            Assert.IsTrue(verifyredirect.InnerText.Contains("Standard Activity"));
+
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
+            /*
+            // Click on NO
+            Element nobutton = objdeletestandardactivity.nobtn;
+            myManager.ActiveBrowser.Actions.Click(nobutton);
+
+            Element verifypage = objdeletestandardactivity.standardacttblheading;
+            Assert.IsTrue(verifypage.InnerText.Contains("Standard Activity"));
+
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
+            */
         }
 
         public void readData()
         {
-            _username1 = TestContext.DataRow["username1"].ToString();
-            _firstname = TestContext.DataRow["firstname"].ToString();
-            _lastname = TestContext.DataRow["lastname"].ToString();
-            _emailaddress = TestContext.DataRow["emailaddress"].ToString();
-            _phone = TestContext.DataRow["phone"].ToString();
-            _accessrole = TestContext.DataRow["accessrole"].ToString();
-           // _dept = TestContext.DataRow["department"].ToString();
-            _url = TestContext.DataRow["url"].ToString();
+            _Url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
-            _username1 = CommonGenerateRandom.GenarateRandom(_username1);
+
+            _searchtodelete = TestContext.DataRow["searchtodelete"].ToString();
         }
+
 
         // Use TestCleanup to run code after each test has run
         [TestCleanup()]
         public void MyTestCleanup()
         {
 
-            ////Screen_shot
+            //Screen_shot
             if (TestContext.CurrentTestOutcome == UnitTestOutcome.Failed)
             {
                 System.Drawing.Image img = myManager.ActiveBrowser.Capture();
@@ -311,7 +253,6 @@ namespace Casat4._0_Testing
 
             // Shuts down WebAii manager and closes all browsers currently running
             // after each test. This call is ignored if recycleBrowser is set
-            myManager.Dispose();
             this.CleanUp();
 
             #endregion

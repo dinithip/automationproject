@@ -194,7 +194,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             ObjCasatPageContents cont = new ObjCasatPageContents(myManager);
 
             Element verifypage = cont.titletxt;
-            Assert.AreEqual(verifypage.InnerText, "CASAT Users");
+            Assert.AreEqual(verifypage.InnerText, "CASAT User(s)");
 
             Thread.Sleep(1000);
             myManager.ActiveBrowser.RefreshDomTree();

@@ -1,2 +1,2 @@
 url,username,password,username1,firstname,lastname,emailaddress,phone,accessrole,department,existinguser,usermandatory,fnmandatory,lnmandatory,emailmandatory,phonemandatory,username2
-http://146.185.172.122:8280/QA/#/login,admin,admin,createTestuser4,Dinithi,Poornima,dinithi@mvv.se,9411282740,ROLE_ADMIN,dep2,admin,,,,,,newuser4
+http://146.185.172.122/QA/#/login,CasatUser3,Pass@123,createTestuser1,Dinithi,Poornima,dinithi@mvv.se,9411282740,Administrator,dep2,admin,,,,,,newuser4

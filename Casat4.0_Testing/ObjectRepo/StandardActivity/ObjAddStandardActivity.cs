@@ -28,6 +28,8 @@ namespace Casat4._0_Testing.ObjectRepo.Process
 
         public Element standardactivitytable { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/table"); } }
 
+        public Element standardacttblheading { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[1]/div/h2"); } }
+
         // Label names
         public Element namelabel { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/div[2]/div[1]/form/div[1]/div[1]/div[2]/div[1]/label"); } }
 

@@ -25,7 +25,7 @@ namespace Casat4._0_Testing.ObjectRepo.Menus
 
         public Element settinglink { get { return _manager.ActiveBrowser.Find.ById("swttings"); } }
 
-        public Element systemloglink { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[2]/ul/li[4]/a"); } }
+        public Element systemloglink { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[2]/a"); } }
         
         public Element Datalink { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='header']/div/nav/div[2]/ul/li[3]/a"); } }
 
