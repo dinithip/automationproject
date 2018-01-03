@@ -60,7 +60,7 @@ namespace Casat4._0_Testing
         string _usernamebatch;
         string _selectStatus;
         string _accessrole;
-        string _department;
+       // string _department;
 
         //Use ClassInitialize to run code before running the first test in the class
         [ClassInitialize()]
@@ -142,6 +142,9 @@ namespace Casat4._0_Testing
             myManager.ActiveBrowser.Window.Maximize();
             // -- End of Login ---
 
+            Thread.Sleep(3000);
+            myManager.ActiveBrowser.RefreshDomTree();
+
             ObjMenus menus = new ObjMenus(myManager);
 
             HtmlListItem system = menus.systemlink.As<HtmlListItem>();
@@ -206,7 +209,7 @@ namespace Casat4._0_Testing
 
             HtmlSelect selectStatus = objbatchedit.status.As<HtmlSelect>();
             HtmlSelect accessrole = objbatchedit.txtaccessrole.As<HtmlSelect>();
-            HtmlSelect deptm = objbatchedit.txtdepartment.As<HtmlSelect>();
+            //HtmlSelect deptm = objbatchedit.txtdepartment.As<HtmlSelect>();
             
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -227,12 +230,14 @@ namespace Casat4._0_Testing
             accessrole.SelectByText(_accessrole);
             accessrole.MouseHover();
             accessrole.SelectByText(_accessrole);
-
+            
+            /*
             deptm.MouseClick();
             Thread.Sleep(1000);
             deptm.SelectByText(_department);
             deptm.MouseHover();
             deptm.SelectByText(_department);
+            */
 
             Element updatebtn = objbatchedit.btnupdate;
             myManager.ActiveBrowser.Actions.Click(updatebtn);
@@ -278,7 +283,7 @@ namespace Casat4._0_Testing
             _usernamebatch = TestContext.DataRow["usernamebatch"].ToString();
             _selectStatus = TestContext.DataRow["statustype"].ToString();
             _accessrole = TestContext.DataRow["accessrole"].ToString();
-            _department = TestContext.DataRow["department"].ToString();
+            //_department = TestContext.DataRow["department"].ToString();
         }
 
         // Use TestCleanup to run code after each test has run

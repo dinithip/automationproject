@@ -153,7 +153,7 @@ namespace Casat4._0_Testing
             HtmlAnchor users = menus.userslink.As<HtmlAnchor>();
             users.MouseClick();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(5000);
             myManager.ActiveBrowser.RefreshDomTree();
 
             // Search Casat user to Delete
@@ -196,7 +196,7 @@ namespace Casat4._0_Testing
 
             // Verify Confirmation popup
             Element verifyconfirmation = objdelete.confirmationtxt;
-            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected user/s?"));
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected user(s)?"));
 
             Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -224,23 +224,29 @@ namespace Casat4._0_Testing
             ObjDeleteUser objdelete = new ObjDeleteUser(myManager);
 
             Element verifysuccess = objdelete.deletesuccessmsg;
-            Assert.IsTrue(verifysuccess.InnerText.Contains("Selected user/s have been deleted successfully"));
+            Assert.IsTrue(verifysuccess.InnerText.Contains("Selected user(s) have been deleted successfully"));
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             Element verifypg = objdelete.pagetitle;
-            Assert.AreEqual(verifypg.InnerText, "CASAT Users");
-
-            HtmlInputText usernsearch = objdelete.searchusername.As<HtmlInputText>();
-            usernsearch.MouseClick();
-
-            usernsearch.Text = _searchusername;
-
-            myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usernsearch.GetRectangle());
-            myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+            Assert.AreEqual(verifypg.InnerText, "CASAT User(s)");
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();
 
-            HtmlTable casattable = objdelete.usertbl.As<HtmlTable>();
+            //HtmlInputText usernsearch = objdelete.searchusername.As<HtmlInputText>();
+            //usernsearch.MouseClick();
+
+            //usernsearch.Text = _searchusername;
+
+            //myManager.Desktop.Mouse.Click(MouseClickType.LeftClick, usernsearch.GetRectangle());
+            //myManager.Desktop.KeyBoard.KeyPress(System.Windows.Forms.Keys.Enter);
+
+            //Thread.Sleep(2000);
+            //myManager.ActiveBrowser.RefreshDomTree();
+
+            //HtmlTable casattable = objdelete.usertbl.As<HtmlTable>();
 
             //Assert.AreEqual(casattable.BodyRows[0].Cells[2].InnerText, _searchusername);
         }

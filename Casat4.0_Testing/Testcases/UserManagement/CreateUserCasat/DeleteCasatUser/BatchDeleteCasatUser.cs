@@ -200,7 +200,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.DeleteCasat
 
             // Verify Confirmation popup
             Element verifyconfirmation = objdelete.confirmationtxt;
-            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected user/s?"));
+            Assert.IsTrue(verifyconfirmation.InnerText.Contains("Are you sure you want to delete the selected user(s)?"));
 
             Thread.Sleep(4000);
             myManager.ActiveBrowser.RefreshDomTree();
@@ -230,10 +230,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.DeleteCasat
             ObjDeleteUser objdelete = new ObjDeleteUser(myManager);
 
             Element verifysuccess = objdelete.deletesuccessmsg;
-            Assert.IsTrue(verifysuccess.InnerText.Contains("Selected user/s have been deleted successfully"));
+            Assert.IsTrue(verifysuccess.InnerText.Contains("Selected user(s) have been deleted successfully"));
 
             Element verifypg = objdelete.pagetitle;
-            Assert.AreEqual(verifypg.InnerText, "CASAT Users");
+            Assert.AreEqual(verifypg.InnerText, "CASAT User(s)");
+
+            Thread.Sleep(4000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             HtmlInputText usernsearch = objdelete.searchusername.As<HtmlInputText>();
             usernsearch.MouseClick();

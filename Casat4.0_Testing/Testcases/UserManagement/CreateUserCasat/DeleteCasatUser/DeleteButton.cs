@@ -137,6 +137,8 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.DeleteCasat
             myManager.ActiveBrowser.Window.Maximize();
 
             // -- End of Login ---
+            Thread.Sleep(2000);
+            myManager.ActiveBrowser.RefreshDomTree();
 
             ObjMenus menus = new ObjMenus(myManager);
 

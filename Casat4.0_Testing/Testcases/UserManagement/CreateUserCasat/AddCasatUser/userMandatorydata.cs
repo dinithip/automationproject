@@ -207,13 +207,13 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
 
             Thread.Sleep(1000);
             
-            Element emailmsg = objadduser.emailmandatorymsg;
-            Assert.IsTrue(emailmsg.InnerText.Contains("Email is mandatory"));
+            //Element emailmsg = objadduser.emailmandatorymsg;
+           // Assert.IsTrue(emailmsg.InnerText.Contains("Email is mandatory"));
 
             Thread.Sleep(1000);
             
-            Element phnmsg = objadduser.phonemandatorymsg;
-            Assert.IsTrue(phnmsg.InnerText.Contains("Phone number is mandatory"));
+           // Element phnmsg = objadduser.phonemandatorymsg;
+           // Assert.IsTrue(phnmsg.InnerText.Contains("Phone number is mandatory"));
 
             Thread.Sleep(2000);
             myManager.ActiveBrowser.RefreshDomTree();

@@ -20,7 +20,7 @@ namespace Casat4._0_Testing.ObjectRepo.CasatUser
 
         public Element deletebtn { get { return _manager.ActiveBrowser.Find.ById("delete"); } }
 
-        public Element searchusername { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]/thead/tr[2]/th[3]/input"); } }
+        public Element searchusername { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='tblCasatUser']/thead/tr[2]/th[3]/input"); } }
 
         public Element rowcheck1 { get { return _manager.ActiveBrowser.Find.ByXPath("//*[@id='body']/div/div/table[1]/tbody/tr[1]/td[1]/input"); } }
 
@@ -28,7 +28,7 @@ namespace Casat4._0_Testing.ObjectRepo.CasatUser
 
         public Element popuptitletxt { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[1]/h3"); } }
 
-        public Element confirmationtxt { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[2]/p[2]"); } }
+        public Element confirmationtxt { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[2]/div/span"); } }
 
         public Element yesbtn { get { return _manager.ActiveBrowser.Find.ByXPath("/html/body/div[3]/div/div/div[3]/button[2]"); } }
 

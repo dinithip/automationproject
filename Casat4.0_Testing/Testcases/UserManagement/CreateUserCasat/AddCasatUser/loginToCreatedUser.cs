@@ -60,7 +60,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
         string _emailaddress;
         string _phone;
         string _accessrole;
-        string _dept;
+        //string _dept;
         string _url;
         string _username;
         string _password;
@@ -196,7 +196,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             HtmlInputEmail emailaddress = objadduser.txtemailaddress.As<HtmlInputEmail>();
             HtmlInputText phone = objadduser.txtphone.As<HtmlInputText>();
             HtmlSelect accessR = objadduser.txtaccessrole.As<HtmlSelect>();
-            HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
+           // HtmlSelect deptm = objadduser.txtdept.As<HtmlSelect>();
 
             Element savebtn = objadduser.btnsave;
 
@@ -216,11 +216,11 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             accessR.SelectByText(_accessrole,true);
 
 
-            deptm.MouseClick();
-            Thread.Sleep(1000);
-            deptm.SelectByText(_dept);
-            deptm.MouseHover();
-            deptm.SelectByText(_dept);
+           // deptm.MouseClick();
+          //  Thread.Sleep(1000);
+           // deptm.SelectByText(_dept);
+          //  deptm.MouseHover();
+           // deptm.SelectByText(_dept);
 
             Element assignbtn = objadduser.moveto;
             myManager.ActiveBrowser.Actions.Click(assignbtn);
@@ -294,7 +294,7 @@ namespace Casat4._0_Testing.Testcases.UserManagement.CreateUserCasat.AddCasatUse
             _emailaddress = TestContext.DataRow["emailaddress"].ToString();
             _phone = TestContext.DataRow["phone"].ToString();
             _accessrole = TestContext.DataRow["accessrole"].ToString();
-            _dept = TestContext.DataRow["department"].ToString();
+            //_dept = TestContext.DataRow["department"].ToString();
             _url = TestContext.DataRow["url"].ToString();
             _username = TestContext.DataRow["username"].ToString();
             _password = TestContext.DataRow["password"].ToString();
